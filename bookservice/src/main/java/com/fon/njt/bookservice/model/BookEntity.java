@@ -45,4 +45,9 @@ public class BookEntity {
     joinColumns = @JoinColumn(name="book_id"),
     inverseJoinColumns = @JoinColumn(name="author_id"))
     private Set<AuthorEntity> authors;
+
+    public void addAuthor(AuthorEntity author){
+        this.authors.add(author);
+        author.getBooks().add(this);
+    }
 }

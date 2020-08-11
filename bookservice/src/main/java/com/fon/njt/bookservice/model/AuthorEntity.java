@@ -1,0 +1,35 @@
+package com.fon.njt.bookservice.model;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Set;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
+@Table(name="author")
+public class AuthorEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @EqualsAndHashCode.Include
+    private String firstName;
+
+    @EqualsAndHashCode.Include
+    private String lastName;
+    private String biography;
+    private String imageUrl;
+
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(name="books_authors",
+            joinColumns = @JoinColumn(name="author_id"),
+            inverseJoinColumns = @JoinColumn(name="book_id"))
+    private Set<BookEntity> books;
+}

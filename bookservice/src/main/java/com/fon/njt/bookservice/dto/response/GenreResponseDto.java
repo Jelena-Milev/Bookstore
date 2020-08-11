@@ -7,10 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class AuthorResponseDto {
+public class GenreResponseDto {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String biography;
-    private String imageUrl;
+    private String name;
 }

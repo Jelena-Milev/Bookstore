@@ -6,6 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class AuthorRequestDto {
     private String firstName;
     private String lastName;

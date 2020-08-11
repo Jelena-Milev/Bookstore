@@ -10,7 +10,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "book")
@@ -26,9 +25,12 @@ public class BookEntity {
 
     private String title;
     private BigDecimal price;
-    private int pagesNumber;
+    private Integer numberOfPages;
     private String binding;
-    private int publicationYear;
+    private Integer publicationYear;
+    private String description;
+
+    private boolean inStock;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private PublisherEntity publisher;

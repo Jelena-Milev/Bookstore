@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -61,14 +62,14 @@ public class BookController {
     }
 
     @PostMapping(path = "", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity save(@RequestBody final BookRequestDto dto){
+    public ResponseEntity save(@RequestBody @Valid final BookRequestDto dto){
         BookResponseDto result = service.save(dto);
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
 
     //TODO
     @PutMapping(path = "{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity update(@PathVariable final Long id, @RequestBody final BookRequestDto dto){
+    public ResponseEntity update(@PathVariable final Long id, @RequestBody @Valid final BookRequestDto dto){
         return null;
     }
 

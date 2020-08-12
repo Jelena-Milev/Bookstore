@@ -2,6 +2,7 @@ package com.fon.njt.bookservice.mapper;
 
 import com.fon.njt.bookservice.dto.request.AuthorRequestDto;
 import com.fon.njt.bookservice.dto.response.AuthorResponseDto;
+import com.fon.njt.bookservice.exception.EntityNotFoundException;
 import com.fon.njt.bookservice.model.AuthorEntity;
 import com.fon.njt.bookservice.repository.AuthorRepository;
 import org.mapstruct.Mapper;
@@ -25,7 +26,7 @@ public abstract class AuthorMapper {
     public AuthorEntity mapToEntity(Long authorId) {
         if (authorId == null)
             return null;
-        return repository.findById(authorId).get();
+        return repository.findById(authorId).orElseThrow(()->new EntityNotFoundException("Auhtor", authorId));
     }
 
     public abstract Set<AuthorEntity> mapToEntities(List<Long> authorsIds);

@@ -2,8 +2,10 @@ package com.fon.njt.bookservice.mapper;
 
 import com.fon.njt.bookservice.dto.request.PublisherRequestDto;
 import com.fon.njt.bookservice.dto.response.PublisherResponseDto;
+import com.fon.njt.bookservice.exception.EntityNotFoundException;
 import com.fon.njt.bookservice.model.PublisherEntity;
 import com.fon.njt.bookservice.repository.PublisherRepository;
+import javassist.tools.rmi.ObjectNotFoundException;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,6 +26,6 @@ public abstract class PublisherMapper {
     public PublisherEntity mapToEntity(Long publisherId) {
         if (publisherId == null)
             return null;
-        return repository.findById(publisherId).get();
+        return repository.findById(publisherId).orElseThrow(() -> new EntityNotFoundException("Publisher", publisherId));
     }
 }

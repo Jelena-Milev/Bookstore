@@ -2,6 +2,7 @@ package com.fon.njt.bookservice.mapper;
 
 import com.fon.njt.bookservice.dto.request.GenreRequestDto;
 import com.fon.njt.bookservice.dto.response.GenreResponseDto;
+import com.fon.njt.bookservice.exception.EntityNotFoundException;
 import com.fon.njt.bookservice.model.GenreEntity;
 import com.fon.njt.bookservice.repository.GenreRepository;
 import org.mapstruct.Mapper;
@@ -26,7 +27,7 @@ public abstract class GenreMapper {
         if(genreId == null){
             return null;
         }
-        return repository.findById(genreId).get();
+        return repository.findById(genreId).orElseThrow(()->new EntityNotFoundException("Genre", genreId));
     }
 
     public abstract Set<GenreEntity> mapToEntities(List<Long> genresIds);

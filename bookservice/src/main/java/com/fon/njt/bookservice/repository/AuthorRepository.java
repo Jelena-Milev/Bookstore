@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface AuthorRepository extends JpaRepository<AuthorEntity, Long> {
     List<AuthorEntity> findByFirstNameStartingWithOrLastNameStartingWith(String author, String author1);
+
+    boolean existsByFirstNameAndLastName(String firstName, String lastName);
 }

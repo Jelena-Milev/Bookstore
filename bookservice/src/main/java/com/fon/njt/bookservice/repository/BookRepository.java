@@ -18,4 +18,6 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     List<BookEntity> findByAuthorsAndTitleStartingWithAndInStockIsTrue(AuthorEntity author, String title);
 
     List<BookEntity> findByGenresAndInStockTrue(GenreEntity genre);
+
+    boolean existsByISBN(String isbn);
 }

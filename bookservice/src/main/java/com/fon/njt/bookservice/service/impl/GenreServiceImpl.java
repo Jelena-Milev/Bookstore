@@ -2,6 +2,8 @@ package com.fon.njt.bookservice.service.impl;
 
 import com.fon.njt.bookservice.dto.request.GenreRequestDto;
 import com.fon.njt.bookservice.dto.response.GenreResponseDto;
+import com.fon.njt.bookservice.exception.EntityAlreadyExistsException;
+import com.fon.njt.bookservice.exception.EntityNotFoundException;
 import com.fon.njt.bookservice.mapper.GenreMapper;
 import com.fon.njt.bookservice.model.GenreEntity;
 import com.fon.njt.bookservice.repository.GenreRepository;
@@ -31,12 +33,14 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreResponseDto get(Long id) {
-        GenreEntity genre = repository.findById(id).get();
+        GenreEntity genre = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Genre", id));
         return mapper.mapToDto(genre);
     }
 
     @Override
     public GenreResponseDto save(GenreRequestDto dto) {
+        if(repository.existsByName(dto.getName()))
+            throw new EntityAlreadyExistsException("Genre");
         final GenreEntity genreToSave = mapper.mapToEntity(dto);
         final GenreEntity savedGenre = repository.save(genreToSave);
         return mapper.mapToDto(savedGenre);

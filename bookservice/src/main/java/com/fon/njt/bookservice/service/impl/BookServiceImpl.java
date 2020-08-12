@@ -2,6 +2,8 @@ package com.fon.njt.bookservice.service.impl;
 
 import com.fon.njt.bookservice.dto.request.BookRequestDto;
 import com.fon.njt.bookservice.dto.response.BookResponseDto;
+import com.fon.njt.bookservice.exception.EntityAlreadyExistsException;
+import com.fon.njt.bookservice.exception.EntityNotFoundException;
 import com.fon.njt.bookservice.mapper.BookMapper;
 import com.fon.njt.bookservice.model.AuthorEntity;
 import com.fon.njt.bookservice.model.BookEntity;
@@ -40,7 +42,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookResponseDto getById(Long id) {
-        final BookEntity book = bookRepository.findById(id).get();
+        final BookEntity book = bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book", id));
         return mapper.mapToDto(book);
     }
 
@@ -68,13 +70,15 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponseDto> filterByGenre(Long genreId) {
-        final GenreEntity genre = genreRepository.findById(genreId).get();
+        final GenreEntity genre = genreRepository.findById(genreId).orElseThrow(() -> new EntityNotFoundException("Genre", genreId));
         final List<BookEntity> books = bookRepository.findByGenresAndInStockTrue(genre);
         return mapper.mapToDtos(books);
     }
 
     @Override
     public BookResponseDto save(BookRequestDto dto) {
+        if(bookRepository.existsByISBN(dto.getISBN()))
+            throw new EntityAlreadyExistsException("Book");
         final BookEntity bookToSave = mapper.mapToEntity(dto);
         final BookEntity savedBook = bookRepository.save(bookToSave);
         return mapper.mapToDto(savedBook);
@@ -82,7 +86,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookResponseDto delete(Long id) {
-        final BookEntity bookToDelete = bookRepository.findById(id).get();
+        final BookEntity bookToDelete = bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book", id));
         bookToDelete.setInStock(false);
         final BookEntity deletedBook = bookRepository.save(bookToDelete);
         return mapper.mapToDto(deletedBook);

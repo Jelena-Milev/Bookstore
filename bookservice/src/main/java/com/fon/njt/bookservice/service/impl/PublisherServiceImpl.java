@@ -2,6 +2,8 @@ package com.fon.njt.bookservice.service.impl;
 
 import com.fon.njt.bookservice.dto.request.PublisherRequestDto;
 import com.fon.njt.bookservice.dto.response.PublisherResponseDto;
+import com.fon.njt.bookservice.exception.EntityAlreadyExistsException;
+import com.fon.njt.bookservice.exception.EntityNotFoundException;
 import com.fon.njt.bookservice.mapper.PublisherMapper;
 import com.fon.njt.bookservice.model.PublisherEntity;
 import com.fon.njt.bookservice.repository.PublisherRepository;
@@ -31,12 +33,14 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     public PublisherResponseDto get(Long id) {
-        PublisherEntity publisher = repository.findById(id).get();
+        PublisherEntity publisher = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Publisher", id));
         return mapper.mapToDto(publisher);
     }
 
     @Override
     public PublisherResponseDto save(PublisherRequestDto dto) {
+        if(repository.existsByName(dto.getName()))
+            throw new EntityAlreadyExistsException("Publisher");
         final PublisherEntity publisherToSave = mapper.mapToEntity(dto);
         final PublisherEntity savedPublisher = repository.save(publisherToSave);
         return mapper.mapToDto(savedPublisher);

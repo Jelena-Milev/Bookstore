@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -43,13 +44,36 @@ public class BookEntity {
     private Set<GenreEntity> genres;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(name="books_authors",
-    joinColumns = @JoinColumn(name="book_id"),
-    inverseJoinColumns = @JoinColumn(name="author_id"))
+    @JoinTable(name = "books_authors",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<AuthorEntity> authors;
 
-    public void addAuthor(AuthorEntity author){
+    public void addAuthor(AuthorEntity author) {
+        if (authors == null)
+            this.authors = new HashSet<>();
         this.authors.add(author);
         author.getBooks().add(this);
+    }
+
+    public void addGenre(GenreEntity genre) {
+        if (genres == null)
+            this.genres = new HashSet<>();
+        this.genres.add(genre);
+        genre.getBooks().add(this);
+    }
+
+    public void removeGenres() {
+        for (GenreEntity genre : this.genres) {
+            genre.getBooks().remove(this);
+        }
+        this.genres = null;
+    }
+
+    public void removeAuthors() {
+        for (AuthorEntity author : this.authors) {
+            author.getBooks().remove(this);
+        }
+        this.authors = null;
     }
 }

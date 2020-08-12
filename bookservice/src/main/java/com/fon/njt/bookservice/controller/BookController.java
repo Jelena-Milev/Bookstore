@@ -70,12 +70,13 @@ public class BookController {
     //TODO
     @PutMapping(path = "{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity update(@PathVariable final Long id, @RequestBody @Valid final BookRequestDto dto){
-        return null;
+        BookResponseDto result = service.update(id, dto);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity delete(@PathVariable final Long id){
         BookResponseDto result = service.delete(id);
-        return new ResponseEntity(result, HttpStatus.CREATED);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 }

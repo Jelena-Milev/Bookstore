@@ -27,9 +27,9 @@ public class AuthorEntity {
     private String biography;
     private String imageUrl;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(name="books_authors",
-            joinColumns = @JoinColumn(name="author_id"),
-            inverseJoinColumns = @JoinColumn(name="book_id"))
+    @ManyToMany(mappedBy = "authors")
+//    @JoinTable(name="books_authors",
+//            joinColumns = @JoinColumn(name="author_id"),
+//            inverseJoinColumns = @JoinColumn(name="book_id"))
     private Set<BookEntity> books;
 }

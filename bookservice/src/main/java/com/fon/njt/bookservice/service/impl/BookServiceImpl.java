@@ -8,9 +8,11 @@ import com.fon.njt.bookservice.mapper.BookMapper;
 import com.fon.njt.bookservice.model.AuthorEntity;
 import com.fon.njt.bookservice.model.BookEntity;
 import com.fon.njt.bookservice.model.GenreEntity;
+import com.fon.njt.bookservice.model.PublisherEntity;
 import com.fon.njt.bookservice.repository.AuthorRepository;
 import com.fon.njt.bookservice.repository.BookRepository;
 import com.fon.njt.bookservice.repository.GenreRepository;
+import com.fon.njt.bookservice.repository.PublisherRepository;
 import com.fon.njt.bookservice.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,13 +26,15 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
+    private final PublisherRepository publisherRepository;
     private final BookMapper mapper;
 
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, GenreRepository genreRepository, BookMapper mapper) {
+    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, GenreRepository genreRepository, PublisherRepository publisherRepository, BookMapper mapper) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
         this.genreRepository = genreRepository;
+        this.publisherRepository = publisherRepository;
         this.mapper = mapper;
     }
 
@@ -91,4 +95,43 @@ public class BookServiceImpl implements BookService {
         final BookEntity deletedBook = bookRepository.save(bookToDelete);
         return mapper.mapToDto(deletedBook);
     }
+
+    @Override
+    public BookResponseDto update(Long id, BookRequestDto dto) {
+        final BookEntity bookToUpdate = bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book", id));
+        updateBook(bookToUpdate, dto);
+        final BookEntity updatedBook = bookRepository.save(bookToUpdate);
+        return mapper.mapToDto(updatedBook);
+    }
+
+    private void updateBook(BookEntity bookEntity, BookRequestDto dto) {
+        bookEntity.setISBN( dto.getISBN() );
+        bookEntity.setTitle( dto.getTitle() );
+        bookEntity.setPrice( dto.getPrice() );
+        bookEntity.setNumberOfPages( dto.getNumberOfPages() );
+        bookEntity.setBinding( dto.getBinding() );
+        bookEntity.setPublicationYear( dto.getPublicationYear() );
+        bookEntity.setDescription( dto.getDescription() );
+        bookEntity.setInStock( dto.isInStock() );
+
+        final PublisherEntity publisher = this.publisherRepository.findById(dto.getPublisherId()).orElseThrow(()->new EntityNotFoundException("Publisher", dto.getPublisherId()));
+        bookEntity.setPublisher(publisher);
+
+        bookEntity.removeGenres();
+        if ( dto.getGenresIds() != null ) {
+            for ( Long genreId : dto.getGenresIds() ) {
+                final GenreEntity genre = this.genreRepository.findById(genreId).orElseThrow(()->new EntityNotFoundException("Genre", genreId));
+                bookEntity.addGenre( genre );
+            }
+        }
+
+        bookEntity.removeAuthors();
+        if ( dto.getAuthorsIds() != null ) {
+            for ( Long authorId : dto.getAuthorsIds() ) {
+                final AuthorEntity author = this.authorRepository.findById(authorId).orElseThrow(()->new EntityNotFoundException("Author", authorId));
+                bookEntity.addAuthor(author);
+            }
+        }
+    }
+
 }

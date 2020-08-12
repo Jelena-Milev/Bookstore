@@ -104,6 +104,12 @@ public class BookServiceImpl implements BookService {
         return mapper.mapToDto(updatedBook);
     }
 
+    @Override
+    public List<BookResponseDto> getByIds(List<Long> bookIds) {
+        final List<BookEntity> books = bookRepository.findByIdIn(bookIds);
+        return mapper.mapToDtos(books);
+    }
+
     private void updateBook(BookEntity bookEntity, BookRequestDto dto) {
         bookEntity.setISBN( dto.getISBN() );
         bookEntity.setTitle( dto.getTitle() );

@@ -19,4 +19,6 @@ public interface BookService {
     BookResponseDto delete(Long id);
 
     BookResponseDto update(Long id, BookRequestDto dto);
+
+    List<BookResponseDto> getByIds(List<Long> bookIds);
 }

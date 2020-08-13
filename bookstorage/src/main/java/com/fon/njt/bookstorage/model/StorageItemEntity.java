@@ -15,7 +15,6 @@ import javax.persistence.*;
 public class StorageItemEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @EqualsAndHashCode.Include
     private Long bookId;
     private Integer piecesAvailable;

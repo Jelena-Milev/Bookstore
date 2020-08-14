@@ -27,6 +27,12 @@ public class StorageController {
         this.service = service;
     }
 
+    @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity getById(@PathVariable final Long id){
+        final StorageItemResponseDto result = service.getById(id);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
     @GetMapping(path = "bestsellers", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity getBestsellers(@RequestParam(required = false) final Integer numberOfBestsellers){
         Integer numberOfBooks = numberOfBestsellers;

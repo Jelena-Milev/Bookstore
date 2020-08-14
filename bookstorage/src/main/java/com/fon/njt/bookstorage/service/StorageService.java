@@ -17,4 +17,6 @@ public interface StorageService {
     StorageItemResponseDto updatePiecesAvailable(Long id, StorageItemRequestDto dto);
 
     List<StorageItemResponseDto> updatePiecesSold(List<SoldItemRequestDto> itemsSoldDtos);
+
+    StorageItemResponseDto getById(Long id);
 }

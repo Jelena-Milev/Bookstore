@@ -28,8 +28,14 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
+    public StorageItemResponseDto getById(Long id) {
+        final StorageItemEntity storageItem = repository.findById(id).orElseThrow(()->new EntityNotFoundException("Storage item for book with id", id));
+        return mapper.mapToDto(storageItem);
+    }
+
+    @Override
     public List<Long> getBestsellersIds(Integer numberOfBestsellers) {
-        List<Long> bestSellersIds = repository.getBestSellerIds(numberOfBestsellers);
+        final List<Long> bestSellersIds = repository.getBestSellerIds(numberOfBestsellers);
         return bestSellersIds;
     }
 

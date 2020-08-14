@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@FeignClient(name="booksStorage-service", fallback = BookStorageAPIFallback.class)
+@FeignClient(name="storage-service", fallback = BookStorageAPIFallback.class)
 public interface BookStorageAPI {
 
     @GetMapping(path = "items/bestsellers", produces = APPLICATION_JSON_VALUE)

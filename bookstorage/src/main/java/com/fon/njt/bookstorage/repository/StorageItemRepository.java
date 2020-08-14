@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface StorageItemRepository extends JpaRepository<StorageItemEntity, Long> {
 
-    @Query(nativeQuery = true, value = "SELECT book_id FROM storage_item s ORDER BY pieces_sold DESC LIMIT :numberOfBestsellers")
+    @Query(nativeQuery = true, value = "SELECT book_id FROM storage_item s WHERE in_stock = true ORDER BY pieces_sold DESC LIMIT :numberOfBestsellers")
     List<Long> getBestSellerIds(@Param("numberOfBestsellers") Integer numberOfBestsellers);
 
     boolean existsByBookId(Long bookId);

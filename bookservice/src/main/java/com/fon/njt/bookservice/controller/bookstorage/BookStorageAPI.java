@@ -1,4 +1,4 @@
-package com.fon.njt.bookservice.controller;
+package com.fon.njt.bookservice.controller.bookstorage;
 
 import com.fon.njt.bookservice.dto.request.StorageItemRequestDto;
 import com.fon.njt.bookservice.dto.response.StorageItemResponseDto;
@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@FeignClient(name="booksStorage-service")
+@FeignClient(name="booksStorage-service", fallback = BookStorageAPIFallback.class)
 public interface BookStorageAPI {
 
     @GetMapping(path = "items/bestsellers", produces = APPLICATION_JSON_VALUE)

@@ -43,14 +43,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler(OperationNotAvailableException.class)
-//    public ResponseEntity<Object> handleOperationNotAvailableException(OperationNotAvailableException ex, WebRequest request){
-//        Map<String, Object> body = new LinkedHashMap<>();
-//        body.put("timestamp", LocalDate.now());
-//        body.put("message", ex.getMessage());
-//        return new ResponseEntity<>(body, HttpStatus.SERVICE_UNAVAILABLE);
-//    }
-
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex){
         Map<String, Object> body = new LinkedHashMap<>();

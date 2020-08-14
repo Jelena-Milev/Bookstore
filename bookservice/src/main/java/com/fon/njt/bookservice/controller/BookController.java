@@ -1,5 +1,6 @@
 package com.fon.njt.bookservice.controller;
 
+import com.fon.njt.bookservice.controller.bookstorage.BookStorageAPI;
 import com.fon.njt.bookservice.dto.request.BookRequestDto;
 import com.fon.njt.bookservice.dto.request.StorageItemRequestDto;
 import com.fon.njt.bookservice.dto.response.BookResponseDto;
@@ -69,21 +70,21 @@ public class BookController {
     @PostMapping(path = "", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity save(@RequestBody @Valid final BookRequestDto dto){
         BookResponseDto result = service.save(dto);
-        this.bookStorageAPI.createBookStorageItem(new StorageItemRequestDto(result.getId(), dto.getPiecesAvailable(), result.isInStock()));
+//        this.bookStorageAPI.createBookStorageItem(new StorageItemRequestDto(result.getId(), dto.getPiecesAvailable(), result.isInStock()));
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
 
     @PutMapping(path = "{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity update(@PathVariable final Long id, @RequestBody @Valid final BookRequestDto dto){
         BookResponseDto result = service.update(id, dto);
-        this.bookStorageAPI.updatePiecesAvailable(id, new StorageItemRequestDto(id, dto.getPiecesAvailable(), result.isInStock()));
+//        this.bookStorageAPI.updatePiecesAvailable(id, new StorageItemRequestDto(id, dto.getPiecesAvailable(), result.isInStock()));
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity delete(@PathVariable final Long id){
         BookResponseDto result = service.delete(id);
-        this.bookStorageAPI.deleteBookStorageItem(id);
+//        this.bookStorageAPI.deleteBookStorageItem(id);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 }

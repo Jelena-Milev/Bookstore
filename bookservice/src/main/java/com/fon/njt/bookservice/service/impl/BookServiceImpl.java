@@ -1,6 +1,8 @@
 package com.fon.njt.bookservice.service.impl;
 
+import com.fon.njt.bookservice.controller.bookstorage.BookStorageAPI;
 import com.fon.njt.bookservice.dto.request.BookRequestDto;
+import com.fon.njt.bookservice.dto.request.StorageItemRequestDto;
 import com.fon.njt.bookservice.dto.response.BookResponseDto;
 import com.fon.njt.bookservice.exception.EntityAlreadyExistsException;
 import com.fon.njt.bookservice.exception.EntityNotFoundException;
@@ -16,6 +18,7 @@ import com.fon.njt.bookservice.repository.PublisherRepository;
 import com.fon.njt.bookservice.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -30,13 +33,16 @@ public class BookServiceImpl implements BookService {
     private final PublisherRepository publisherRepository;
     private final BookMapper mapper;
 
+    private final BookStorageAPI bookStorageAPI;
+
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, GenreRepository genreRepository, PublisherRepository publisherRepository, BookMapper mapper) {
+    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, GenreRepository genreRepository, PublisherRepository publisherRepository, BookMapper mapper, BookStorageAPI bookStorageAPI) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
         this.genreRepository = genreRepository;
         this.publisherRepository = publisherRepository;
         this.mapper = mapper;
+        this.bookStorageAPI = bookStorageAPI;
     }
 
     @Override
@@ -81,27 +87,33 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public BookResponseDto save(BookRequestDto dto) {
-        if(bookRepository.existsByISBN(dto.getISBN()))
+        if (bookRepository.existsByISBN(dto.getISBN()))
             throw new EntityAlreadyExistsException("Book");
         final BookEntity bookToSave = mapper.mapToEntity(dto);
         final BookEntity savedBook = bookRepository.save(bookToSave);
+        this.bookStorageAPI.createBookStorageItem(new StorageItemRequestDto(savedBook.getId(), dto.getPiecesAvailable(), savedBook.isInStock()));
         return mapper.mapToDto(savedBook);
     }
 
     @Override
+    @Transactional
     public BookResponseDto delete(Long id) {
         final BookEntity bookToDelete = bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book", id));
         bookToDelete.setInStock(false);
         final BookEntity deletedBook = bookRepository.save(bookToDelete);
+        System.out.println(this.bookStorageAPI.deleteBookStorageItem(id));
         return mapper.mapToDto(deletedBook);
     }
 
     @Override
+    @Transactional
     public BookResponseDto update(Long id, BookRequestDto dto) {
         final BookEntity bookToUpdate = bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book", id));
         updateBook(bookToUpdate, dto);
         final BookEntity updatedBook = bookRepository.save(bookToUpdate);
+        this.bookStorageAPI.updatePiecesAvailable(updatedBook.getId(), new StorageItemRequestDto(id, dto.getPiecesAvailable(), updatedBook.isInStock()));
         return mapper.mapToDto(updatedBook);
     }
 
@@ -109,39 +121,39 @@ public class BookServiceImpl implements BookService {
     public List<BookResponseDto> getByIds(List<Long> bookIds) {
         final List<BookEntity> books = new ArrayList<>(bookIds.size());
         for (Long bookId : bookIds) {
-            if(!bookRepository.existsById(bookId))
+            if (!bookRepository.existsById(bookId))
                 continue;
-            final BookEntity book = bookRepository.findById(bookId).orElse( new BookEntity());
+            final BookEntity book = bookRepository.findById(bookId).orElse(new BookEntity());
             books.add(book);
         }
         return mapper.mapToDtos(books);
     }
 
     private void updateBook(BookEntity bookEntity, BookRequestDto dto) {
-        bookEntity.setISBN( dto.getISBN() );
-        bookEntity.setTitle( dto.getTitle() );
-        bookEntity.setPrice( dto.getPrice() );
-        bookEntity.setNumberOfPages( dto.getNumberOfPages() );
-        bookEntity.setBinding( dto.getBinding() );
-        bookEntity.setPublicationYear( dto.getPublicationYear() );
-        bookEntity.setDescription( dto.getDescription() );
-        bookEntity.setInStock( dto.isInStock() );
+        bookEntity.setISBN(dto.getISBN());
+        bookEntity.setTitle(dto.getTitle());
+        bookEntity.setPrice(dto.getPrice());
+        bookEntity.setNumberOfPages(dto.getNumberOfPages());
+        bookEntity.setBinding(dto.getBinding());
+        bookEntity.setPublicationYear(dto.getPublicationYear());
+        bookEntity.setDescription(dto.getDescription());
+        bookEntity.setInStock(dto.isInStock());
 
-        final PublisherEntity publisher = this.publisherRepository.findById(dto.getPublisherId()).orElseThrow(()->new EntityNotFoundException("Publisher", dto.getPublisherId()));
+        final PublisherEntity publisher = this.publisherRepository.findById(dto.getPublisherId()).orElseThrow(() -> new EntityNotFoundException("Publisher", dto.getPublisherId()));
         bookEntity.setPublisher(publisher);
 
         bookEntity.removeGenres();
-        if ( dto.getGenresIds() != null ) {
-            for ( Long genreId : dto.getGenresIds() ) {
-                final GenreEntity genre = this.genreRepository.findById(genreId).orElseThrow(()->new EntityNotFoundException("Genre", genreId));
-                bookEntity.addGenre( genre );
+        if (dto.getGenresIds() != null) {
+            for (Long genreId : dto.getGenresIds()) {
+                final GenreEntity genre = this.genreRepository.findById(genreId).orElseThrow(() -> new EntityNotFoundException("Genre", genreId));
+                bookEntity.addGenre(genre);
             }
         }
 
         bookEntity.removeAuthors();
-        if ( dto.getAuthorsIds() != null ) {
-            for ( Long authorId : dto.getAuthorsIds() ) {
-                final AuthorEntity author = this.authorRepository.findById(authorId).orElseThrow(()->new EntityNotFoundException("Author", authorId));
+        if (dto.getAuthorsIds() != null) {
+            for (Long authorId : dto.getAuthorsIds()) {
+                final AuthorEntity author = this.authorRepository.findById(authorId).orElseThrow(() -> new EntityNotFoundException("Author", authorId));
                 bookEntity.addAuthor(author);
             }
         }

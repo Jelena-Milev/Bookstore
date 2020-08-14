@@ -22,4 +22,6 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     List<BookEntity> findByGenresAndInStockTrue(GenreEntity genre);
 
     boolean existsByISBN(String isbn);
+
+    boolean existsById(Long id);
 }

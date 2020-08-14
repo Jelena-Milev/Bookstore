@@ -17,6 +17,7 @@ import com.fon.njt.bookservice.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -106,7 +107,13 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponseDto> getByIds(List<Long> bookIds) {
-        final List<BookEntity> books = bookRepository.findByIdIn(bookIds);
+        final List<BookEntity> books = new ArrayList<>(bookIds.size());
+        for (Long bookId : bookIds) {
+            if(!bookRepository.existsById(bookId))
+                continue;
+            final BookEntity book = bookRepository.findById(bookId).orElse( new BookEntity());
+            books.add(book);
+        }
         return mapper.mapToDtos(books);
     }
 

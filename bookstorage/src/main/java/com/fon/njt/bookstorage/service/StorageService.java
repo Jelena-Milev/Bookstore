@@ -14,7 +14,7 @@ public interface StorageService {
 
     StorageItemResponseDto save(StorageItemRequestDto dto);
 
-    StorageItemResponseDto updatePiecesAvailable(Long id, Integer piecesAvailable);
+    StorageItemResponseDto updatePiecesAvailable(Long id, StorageItemRequestDto dto);
 
     List<StorageItemResponseDto> updatePiecesSold(List<SoldItemRequestDto> itemsSoldDtos);
 }

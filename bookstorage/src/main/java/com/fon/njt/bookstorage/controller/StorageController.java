@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -36,19 +39,19 @@ public class StorageController {
     }
 
     @PostMapping(path = "", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity saveBookItem(@RequestBody final StorageItemRequestDto dto){
+    public ResponseEntity saveBookItem(@RequestBody @Valid final StorageItemRequestDto dto){
         final StorageItemResponseDto result = service.save(dto);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @PatchMapping(path = "{id}/pieces-available", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity updateBookPiecesAvailable(@PathVariable final Long id, @RequestBody final Integer piecesAvailable){
-        final StorageItemResponseDto result = service.updatePiecesAvailable(id, piecesAvailable);
+    public ResponseEntity updateBookPiecesAvailable(@PathVariable final Long id, @RequestBody @Valid final StorageItemRequestDto dto){
+        final StorageItemResponseDto result = service.updatePiecesAvailable(id, dto);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @PatchMapping(path = "pieces-sold/bulk", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity updateBooksSold(@RequestBody final List<SoldItemRequestDto> itemsSoldDtos){
+    public ResponseEntity updateBooksSold(@RequestBody @NotEmpty(message = "Sold books list cannot be empty.") final List<@Valid SoldItemRequestDto> itemsSoldDtos){
         final List<StorageItemResponseDto> result = service.updatePiecesSold(itemsSoldDtos);
         return new ResponseEntity(result, HttpStatus.OK);
     }

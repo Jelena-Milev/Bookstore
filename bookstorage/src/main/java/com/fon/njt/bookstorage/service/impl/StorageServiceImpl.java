@@ -34,6 +34,12 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
+    public List<StorageItemResponseDto> getByIds(List<Long> bookIds) {
+        List<StorageItemEntity> storageItems = repository.findByBookIdInAndInStockTrue(bookIds);
+        return mapper.mapToDtos(storageItems);
+    }
+
+    @Override
     public List<Long> getBestsellersIds(Integer numberOfBestsellers) {
         final List<Long> bestSellersIds = repository.getBestSellerIds(numberOfBestsellers);
         return bestSellersIds;

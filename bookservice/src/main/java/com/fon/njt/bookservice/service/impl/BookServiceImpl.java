@@ -103,7 +103,7 @@ public class BookServiceImpl implements BookService {
         final BookEntity bookToDelete = bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book", id));
         bookToDelete.setInStock(false);
         final BookEntity deletedBook = bookRepository.save(bookToDelete);
-        System.out.println(this.bookStorageAPI.deleteBookStorageItem(id));
+        this.bookStorageAPI.deleteBookStorageItem(id);
         return mapper.mapToDto(deletedBook);
     }
 
@@ -118,7 +118,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookResponseDto> getByIds(List<Long> bookIds) {
+    public List<BookResponseDto> getBestsellers(List<Long> bookIds) {
         final List<BookEntity> books = new ArrayList<>(bookIds.size());
         for (Long bookId : bookIds) {
             if (!bookRepository.existsById(bookId))
@@ -126,6 +126,12 @@ public class BookServiceImpl implements BookService {
             final BookEntity book = bookRepository.findById(bookId).orElse(new BookEntity());
             books.add(book);
         }
+        return mapper.mapToDtos(books);
+    }
+
+    @Override
+    public List<BookResponseDto> getByIds(List<Long> bookIds) {
+        final List<BookEntity> books = bookRepository.findByIdInAndInStockTrue(bookIds);
         return mapper.mapToDtos(books);
     }
 

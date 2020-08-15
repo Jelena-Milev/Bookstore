@@ -18,23 +18,7 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
-
-    @ExceptionHandler(BookIsNotForSaleException.class)
-    public ResponseEntity<Object> handleBookIsNotForSaleException(BookIsNotForSaleException ex){
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDate.now());
-        body.put("message", ex.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(NotEnoughBooksInStockException.class)
-    public ResponseEntity<Object> handleNotEnoughBookInStockException(NotEnoughBooksInStockException ex){
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDate.now());
-        body.put("message", ex.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-    }
-
+    
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<Object> handleFeignException(FeignException ex, WebRequest request){
         Map<String, Object> body = new LinkedHashMap<>();

@@ -20,5 +20,7 @@ public interface BookService {
 
     BookResponseDto update(Long id, BookRequestDto dto);
 
+    List<BookResponseDto> getBestsellers(List<Long> bookIds);
+
     List<BookResponseDto> getByIds(List<Long> bookIds);
 }

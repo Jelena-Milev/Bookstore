@@ -1,4 +1,4 @@
-package com.fon.njt.bookstorage.exception;
+package com.fon.njt.orderservice.exception;
 
 public class BookIsNotForSaleException extends RuntimeException {
 

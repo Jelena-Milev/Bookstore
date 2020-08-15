@@ -27,6 +27,12 @@ public class StorageController {
         this.service = service;
     }
 
+    @GetMapping(path = "/bulk", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity getInBulk(@RequestBody final List<Long> bookIds){
+        final List<StorageItemResponseDto> result = service.getByIds(bookIds);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
     @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity getById(@PathVariable final Long id){
         final StorageItemResponseDto result = service.getById(id);
@@ -34,7 +40,7 @@ public class StorageController {
     }
 
     @GetMapping(path = "bestsellers", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity getBestsellers(@RequestParam(required = false) final Integer numberOfBestsellers){
+    public ResponseEntity getBestsellersIds(@RequestParam(required = false) final Integer numberOfBestsellers){
         Integer numberOfBooks = numberOfBestsellers;
         if (numberOfBooks == null) {
             numberOfBooks = new Integer(10);

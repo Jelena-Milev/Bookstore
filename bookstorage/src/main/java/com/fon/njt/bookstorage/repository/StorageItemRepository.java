@@ -13,4 +13,6 @@ public interface StorageItemRepository extends JpaRepository<StorageItemEntity, 
     List<Long> getBestSellerIds(@Param("numberOfBestsellers") Integer numberOfBestsellers);
 
     boolean existsByBookId(Long bookId);
+
+    List<StorageItemEntity> findByBookIdInAndInStockTrue(List<Long> ids);
 }

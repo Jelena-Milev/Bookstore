@@ -2,7 +2,6 @@ package com.fon.njt.bookservice.controller;
 
 import com.fon.njt.bookservice.controller.bookstorage.BookStorageAPI;
 import com.fon.njt.bookservice.dto.request.BookRequestDto;
-import com.fon.njt.bookservice.dto.request.StorageItemRequestDto;
 import com.fon.njt.bookservice.dto.response.BookResponseDto;
 import com.fon.njt.bookservice.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,12 @@ public class BookController {
     @GetMapping(path = "", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity getAll(){
         List<BookResponseDto> result = service.getAll();
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/bulk", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity getInBulk(@RequestBody final List<Long> bookIds){
+        List<BookResponseDto> result = service.getByIds(bookIds);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
@@ -63,28 +68,25 @@ public class BookController {
     @GetMapping(path = "best-sellers", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity getBestsellers(@RequestParam(required = false) final Integer number){
         final List<Long> bestSellersIds = bookStorageAPI.getBestsellersIds(number);
-        List<BookResponseDto> result = service.getByIds(bestSellersIds);
+        List<BookResponseDto> result = service.getBestsellers(bestSellersIds);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @PostMapping(path = "", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity save(@RequestBody @Valid final BookRequestDto dto){
         BookResponseDto result = service.save(dto);
-//        this.bookStorageAPI.createBookStorageItem(new StorageItemRequestDto(result.getId(), dto.getPiecesAvailable(), result.isInStock()));
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
 
     @PutMapping(path = "{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity update(@PathVariable final Long id, @RequestBody @Valid final BookRequestDto dto){
         BookResponseDto result = service.update(id, dto);
-//        this.bookStorageAPI.updatePiecesAvailable(id, new StorageItemRequestDto(id, dto.getPiecesAvailable(), result.isInStock()));
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity delete(@PathVariable final Long id){
         BookResponseDto result = service.delete(id);
-//        this.bookStorageAPI.deleteBookStorageItem(id);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 }

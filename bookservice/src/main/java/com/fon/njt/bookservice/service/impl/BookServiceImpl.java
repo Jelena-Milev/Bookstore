@@ -111,6 +111,8 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public BookResponseDto update(Long id, BookRequestDto dto) {
         final BookEntity bookToUpdate = bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book", id));
+        if (bookRepository.existsByISBN(dto.getISBN()) && !dto.getISBN().equals(bookToUpdate.getISBN()))
+            throw new EntityAlreadyExistsException("Book");
         updateBook(bookToUpdate, dto);
         final BookEntity updatedBook = bookRepository.save(bookToUpdate);
         this.bookStorageAPI.updatePiecesAvailable(updatedBook.getId(), new StorageItemRequestDto(id, dto.getPiecesAvailable(), updatedBook.isInStock()));

@@ -12,6 +12,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @FeignClient(name="books-service")
 public interface BookServiceAPI {
 
-    @GetMapping(path = "books/bulk", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/bulk", produces = APPLICATION_JSON_VALUE)
     List<BookResponseDto> getBooksInBulk(@RequestBody final List<Long> bookIds);
 }

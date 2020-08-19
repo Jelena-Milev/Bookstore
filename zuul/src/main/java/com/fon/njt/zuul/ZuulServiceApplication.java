@@ -1,11 +1,12 @@
 package com.fon.njt.zuul;
 
+import com.fon.njt.zuul.security.SecurityTokenConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackageClasses = SecurityTokenConfig.class)
 @EnableEurekaClient
 @EnableZuulProxy
 public class ZuulServiceApplication {

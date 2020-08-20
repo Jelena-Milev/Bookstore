@@ -1,5 +1,7 @@
 package com.fon.njt.auth.security;
 
+import com.fon.njt.auth.entity.UserEntity;
+import com.fon.njt.auth.repository.UserRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // hard coding the users. All passwords must be encoded.
-        final List<AppUser> users = Arrays.asList(
+        /*final List<AppUser> users = Arrays.asList(
                 new AppUser(1, "omar", encoder.encode("12345"), "USER"),
                 new AppUser(2, "admin", encoder.encode("12345"), "ADMIN")
         );
@@ -40,9 +44,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
             }
         }
-        throw new UsernameNotFoundException("Username: "+username+" not found");
-
-
+        throw new UsernameNotFoundException("Username: "+username+" not found");*/
+        final UserEntity user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username: "+username+" not found"));
+        return new UserDetailsImpl(user);
     }
 
 

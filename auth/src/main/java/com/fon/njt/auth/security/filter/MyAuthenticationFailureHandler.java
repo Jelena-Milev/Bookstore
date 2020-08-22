@@ -1,4 +1,4 @@
-package com.fon.njt.auth.security;
+package com.fon.njt.auth.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.AuthenticationException;

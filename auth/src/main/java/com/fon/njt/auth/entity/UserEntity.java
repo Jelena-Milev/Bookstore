@@ -1,9 +1,6 @@
 package com.fon.njt.auth.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +8,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Builder
+@Setter
 @Entity
 @Table(name="user")
 public class UserEntity {
@@ -20,7 +18,7 @@ public class UserEntity {
     private Long id;
     private String username;
     private String password;
-    private String email;
+//    private String email;
     private String firstName;
     private String lastName;
     private String role;

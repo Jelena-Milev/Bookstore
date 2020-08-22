@@ -1,6 +1,7 @@
-package com.fon.njt.auth.security;
+package com.fon.njt.auth.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fon.njt.auth.security.JwtConfig;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Getter;
 import lombok.Setter;

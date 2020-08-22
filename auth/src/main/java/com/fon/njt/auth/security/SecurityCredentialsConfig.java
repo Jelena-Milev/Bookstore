@@ -1,5 +1,7 @@
 package com.fon.njt.auth.security;
 
+import com.fon.njt.auth.security.filter.JwtUsernameAndPasswordAuthenticationFilter;
+import com.fon.njt.auth.security.filter.MyAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -11,7 +13,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationFilter;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,6 +44,7 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // allow all POST requests
                 .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
+                .antMatchers(HttpMethod.POST, "/register/**").permitAll()
                 // any other requests must be authenticated
                 .anyRequest().authenticated();
     }

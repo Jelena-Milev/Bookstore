@@ -24,6 +24,7 @@ public class AuthorController {
         this.service = service;
     }
 
+    @CrossOrigin()
     @GetMapping(path="", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity getAll(){
         final List<AuthorResponseDto> result = this.service.getAll();

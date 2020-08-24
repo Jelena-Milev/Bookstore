@@ -14,6 +14,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
+@CrossOrigin()
 @RequestMapping(path = "authors")
 public class AuthorController {
 
@@ -24,7 +25,6 @@ public class AuthorController {
         this.service = service;
     }
 
-    @CrossOrigin()
     @GetMapping(path="", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity getAll(){
         final List<AuthorResponseDto> result = this.service.getAll();

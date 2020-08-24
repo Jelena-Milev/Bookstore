@@ -1,9 +1,80 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>authors</ion-title>
-  </ion-toolbar>
-</ion-header>
+<head>
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  />
+</head>
 
 <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-lg="4" offset-lg="4" no-padding>
+        <ion-searchbar [(ngModel)]="searchText"></ion-searchbar>
+      </ion-col>
+      <ion-col size-lg="1" no-padding>
+        <ion-fab-button>
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="8">
+        <ion-spinner *ngIf="isLoading"></ion-spinner>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="9">
+        <table *ngIf="!isLoading" class="table table-hover" style="width: 100%">
+          <colgroup>
+            <col span="1" style="width: 20%;">
+            <col span="1" style="width: 15%;">
+            <col span="1" style="width: 15%;">
+            <col span="1" style="width: 50%;">
+         </colgroup>
 
+          <thead>
+            <tr>
+              <th scope="col">Slika</th>
+              <th scope="col">Ime</th>
+              <th scope="col">Prezime</th>
+              <th scope="col">Biografija</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let author of authors | searchAuthors: searchText | paginate: {itemsPerPage: 3, currentPage:cp}">
+              <td>
+                <div class="author-img">
+                  <ion-text *ngIf="author.imageUrl === null || author.imageUrl === ''">Uskoro!</ion-text>
+                  <ion-img
+                    *ngIf="author.imageUrl !== null && author.imageUrl !== ''"
+                    [src]="author.imageUrl"
+                    style="width: 100px; height: 150px;"
+                  ></ion-img>
+                </div>
+              </td>
+              <td>{{author.firstName}}</td>
+              <td>{{author.lastName}}</td>
+              <td class="author-bio">{{author.biography}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-col>
+    </ion-row>
+    <ion-row  class="ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col style="text-align: center;" size-lg="8">
+        <pagination-controls
+        previousLabel="Prethodna"
+        nextLabel="Sledeca"
+        (pageChange)="cp=$event"
+        ></pagination-controls>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+<!-- <ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-grid>
+      
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer> -->

@@ -4,11 +4,6 @@
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
   />
 </head>
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>Izdavaci</ion-title>
-  </ion-toolbar>
-</ion-header> -->
 
 <ion-content>
   <ion-grid>
@@ -19,18 +14,10 @@
           placeholder="Pretraga izdavaca"
         ></ion-searchbar>
       </ion-col>
-      <!-- </ion-row>
-    <ion-row class="ion-justify-content-center"> -->
       <ion-col size-lg="1" no-padding>
-        <!-- <ion-button color="secondary" expand="full">
+        <ion-fab-button>
           <ion-icon name="add-outline"></ion-icon>
-          <ion-label>Novi izdavac</ion-label>
-        </ion-button> -->
-        <!-- <ion-fab slot="fixed"> -->
-          <ion-fab-button>
-            <ion-icon name="add-outline"></ion-icon>
-          </ion-fab-button>
-        <!-- </ion-fab> -->
+        </ion-fab-button>
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">
@@ -73,7 +60,6 @@
       <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
         <ion-col style="text-align: center;" size-lg="8">
           <pagination-controls
-            color="secondary"
             previousLabel="Prethodna"
             nextLabel="Sledeca"
             (pageChange)="cp=$event"

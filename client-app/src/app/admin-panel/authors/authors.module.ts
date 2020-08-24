@@ -7,14 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { AuthorsPageRoutingModule } from './authors-routing.module';
 
 import { AuthorsPage } from './authors.page';
+import { SearchPipe } from './search.pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    NgxPaginationModule,
     AuthorsPageRoutingModule
   ],
-  declarations: [AuthorsPage]
+  declarations: [AuthorsPage, SearchPipe]
 })
 export class AuthorsPageModule {}

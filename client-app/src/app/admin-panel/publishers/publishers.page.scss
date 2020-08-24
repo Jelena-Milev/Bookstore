@@ -6,3 +6,6 @@ th, td {
   text-align: center;
 }
 
+pagionation-control::part(li.current){
+  background:red;
+}

@@ -10,7 +10,8 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  },  {
+  },
+  {
     path: 'admin-panel',
     loadChildren: () => import('./admin-panel/admin-panel.module').then( m => m.AdminPanelPageModule)
   },

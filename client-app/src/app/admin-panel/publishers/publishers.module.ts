@@ -9,6 +9,7 @@ import { PublishersPageRoutingModule } from './publishers-routing.module';
 import { PublishersPage } from './publishers.page';
 
 import { NgxPaginationModule } from "ngx-pagination";
+import { SearchPipe } from './search.pipe';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { NgxPaginationModule } from "ngx-pagination";
     PublishersPageRoutingModule,
     NgxPaginationModule
   ],
-  declarations: [PublishersPage]
+  declarations: [PublishersPage, SearchPipe]
 })
 export class PublishersPageModule {}

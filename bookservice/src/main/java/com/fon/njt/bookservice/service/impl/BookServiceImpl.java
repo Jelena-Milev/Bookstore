@@ -61,17 +61,27 @@ public class BookServiceImpl implements BookService {
     public List<BookResponseDto> filterBooks(String title, String author) {
         List<BookEntity> filteredBooks = new LinkedList<>();
         if (title != null && author == null) {
+            title = title.trim();
             filteredBooks = bookRepository.findByTitleStartingWithAndInStockIsTrue(title);
         } else {
-            List<AuthorEntity> authors = authorRepository.findByFirstNameStartingWithOrLastNameStartingWith(author, author);
+            author = author.trim();
+            String firstName = author;
+            String lastName = author;
+            if (author.indexOf(' ') != -1) {
+                String[] authorNames = author.split(" ");
+                firstName = authorNames[0];
+                lastName = authorNames[1];
+            }
+            List<AuthorEntity> authors = authorRepository.findByFirstNameStartingWithOrLastNameStartingWith(firstName, lastName);
             List<BookEntity> books = new LinkedList<>();
             if (title == null) {
                 authors.forEach(a -> {
                     books.addAll(bookRepository.findByAuthorsAndInStockIsTrue(a));
                 });
             } else {
+                String trimmedTitle = title.trim();
                 authors.forEach(a -> {
-                    books.addAll(bookRepository.findByAuthorsAndTitleStartingWithAndInStockIsTrue(a, title));
+                    books.addAll(bookRepository.findByAuthorsAndTitleStartingWithAndInStockIsTrue(a, trimmedTitle));
                 });
             }
             filteredBooks.addAll(books);

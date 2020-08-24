@@ -1,11 +1,29 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>admin-panel</ion-title>
+    <ion-title>
+      Admin panel
+    </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <!-- <ion-tabs>
-    <ion-tab-bar></ion-tab-bar>
-  </ion-tabs> -->
+  <ion-tabs>
+    <ion-tab-bar slot="top">
+      <ion-tab-button tab="publishers">
+        <h6>IZDAVACI</h6>
+        <ion-icon name="business-outline" size="large"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button tab="authors">
+        <h6>AUTORI</h6>
+        <ion-icon name="people-outline" size="large"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button tab="genres">
+        <h6>ZANROVI</h6>
+        <ion-icon name="pricetag-outline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button tab="books">
+        <h6>KNJIGE</h6>
+        <ion-icon name="book-outline" size="large"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>

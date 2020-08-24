@@ -11,7 +11,8 @@ export class PublishersPage implements OnInit {
   publishers: Publisher[];
   isLoading: boolean;
   cp:number = 1;
-
+  seachText:string = '';
+  
   constructor(private publishersService:PublishersService) { }
 
   ngOnInit() {

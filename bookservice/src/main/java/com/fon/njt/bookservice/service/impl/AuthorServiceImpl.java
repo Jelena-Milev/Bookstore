@@ -27,7 +27,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<AuthorResponseDto> getAll() {
-        List<AuthorEntity> authors = repository.findAll();
+        List<AuthorEntity> authors = repository.findAllByOrderByFirstNameAscLastNameAsc();
         return mapper.mapToDtos(authors);
     }
 

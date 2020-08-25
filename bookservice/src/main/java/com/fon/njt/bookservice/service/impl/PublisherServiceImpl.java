@@ -27,7 +27,7 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     public List<PublisherResponseDto> getAll() {
-        List<PublisherEntity> publishers = repository.findAll();
+        List<PublisherEntity> publishers = repository.findAllByOrderByNameAsc();
         return mapper.mapToDtos(publishers);
     }
 

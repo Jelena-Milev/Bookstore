@@ -27,7 +27,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<GenreResponseDto> getAll() {
-        List<GenreEntity> genres = repository.findAll();
+        List<GenreEntity> genres = repository.findAllByOrderByNameAsc();
         return mapper.mapToDtos(genres);
     }
 

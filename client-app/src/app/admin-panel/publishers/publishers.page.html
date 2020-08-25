@@ -15,7 +15,7 @@
         ></ion-searchbar>
       </ion-col>
       <ion-col size-lg="1" no-padding>
-        <ion-fab-button>
+        <ion-fab-button (click)="onAddPublisher()">
           <ion-icon name="add-outline"></ion-icon>
         </ion-fab-button>
       </ion-col>
@@ -45,7 +45,13 @@
               <td>{{publisher.name}}</td>
               <td>{{publisher.address}}</td>
               <td>{{publisher.email}}</td>
-              <td>{{publisher.siteUrl}}</td>
+              <td>
+                <a href={{publisher.siteUrl}} target="_blank">
+                  <div style="height: 100%; width: 100%;">
+                    {{publisher.siteUrl}}
+                  </div>
+                </a>
+              </td>
             </tr>
           </tbody>
         </table>

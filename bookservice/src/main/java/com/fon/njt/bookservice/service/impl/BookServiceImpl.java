@@ -47,7 +47,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponseDto> getAll() {
-        final List<BookEntity> books = bookRepository.findAllByInStockTrue();
+        final List<BookEntity> books = bookRepository.findAllByInStockTrueOrderByTitleAsc();
         return mapper.mapToDtos(books);
     }
 

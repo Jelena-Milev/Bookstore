@@ -24,14 +24,18 @@
     </ion-row>
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="9">
-        <table *ngIf="!isLoading" class="table table-hover" style="width: 100%">
+        <table
+          *ngIf="!isLoading"
+          class="table table-hover table-responsive"
+          style="width: 100%;"
+        >
           <colgroup>
-            <col span="1" style="width: 3%;">
-            <col span="1" style="width: 17%;">
-            <col span="1" style="width: 15%;">
-            <col span="1" style="width: 15%;">
-            <col span="1" style="width: 50%;">
-         </colgroup>
+            <col span="1" style="width: 3%;" />
+            <col span="1" style="width: 17%;" />
+            <col span="1" style="width: 15%;" />
+            <col span="1" style="width: 15%;" />
+            <col span="1" style="width: 50%;" />
+          </colgroup>
 
           <thead>
             <tr>
@@ -43,11 +47,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let author of authors | searchAuthors: searchText | paginate: {itemsPerPage: 3, currentPage:cp}; index as i">
+            <tr
+              *ngFor="let author of authors | searchAuthors: searchText | paginate: {itemsPerPage: itemsPerPage, currentPage:cp}; index as i"
+            >
               <td>{{itemsPerPage*(cp-1)+i+1}}</td>
               <td>
                 <div class="author-img">
-                  <ion-text *ngIf="author.imageUrl === null || author.imageUrl === ''">Uskoro!</ion-text>
+                  <ion-text
+                    *ngIf="author.imageUrl === null || author.imageUrl === ''"
+                    >Uskoro!</ion-text
+                  >
                   <ion-img
                     *ngIf="author.imageUrl !== null && author.imageUrl !== ''"
                     [src]="author.imageUrl"
@@ -63,12 +72,12 @@
         </table>
       </ion-col>
     </ion-row>
-    <ion-row  class="ion-justify-content-center" *ngIf="!isLoading">
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
       <ion-col style="text-align: center;" size-lg="8">
         <pagination-controls
-        previousLabel="Prethodna"
-        nextLabel="Sledeca"
-        (pageChange)="cp=$event"
+          previousLabel="Prethodna"
+          nextLabel="Sledeca"
+          (pageChange)="cp=$event"
         ></pagination-controls>
       </ion-col>
     </ion-row>

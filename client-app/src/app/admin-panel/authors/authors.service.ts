@@ -37,7 +37,9 @@ export class AuthorsService {
       }),
       take(1),
       tap(authors=>{
-        this._authors.next(authors.concat(newAuthor));
+        // this._authors.next(authors.concat(newAuthor));
+        authors.splice(0, 0, newAuthor);
+        this._authors.next(authors);
       })
     )
   }

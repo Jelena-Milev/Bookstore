@@ -11,7 +11,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
     List<BookEntity> findByIdInAndInStockTrue(List<Long> ids);
 
-    List<BookEntity> findAllByInStockTrue();
+    List<BookEntity> findAllByInStockTrueOrderByTitleAsc();
 
     List<BookEntity> findByTitleStartingWithAndInStockIsTrue(String title);
 

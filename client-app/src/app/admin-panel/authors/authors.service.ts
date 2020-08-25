@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, switchMap, take } from 'rxjs/operators';
 import { Author } from './author.model';
 import {environment} from '../../../environments/environment';
 
@@ -18,6 +18,7 @@ export class AuthorsService {
   }
 
   getAuthors(){
+    // return this.http.get<Author[]>(`${environment.apiUrl}/books/authors`).pipe(
     return this.http.get<Author[]>(`${environment.apiUrl}/books/authors`).pipe(
       tap(res=>{
         this._authors.next(res);
@@ -25,4 +26,19 @@ export class AuthorsService {
     )
   }
 
+  saveAuthor(firstName:string, lastName:string, biography: string, imageUrl: string){
+    let newAuthor: Author;
+    return this.http.post<Author>(`${environment.apiUrl}/books/authors`, {
+      firstName, lastName, biography, imageUrl
+    }).pipe(
+      switchMap((author)=>{
+        newAuthor = author;
+        return this._authors;
+      }),
+      take(1),
+      tap(authors=>{
+        this._authors.next(authors.concat(newAuthor));
+      })
+    )
+  }
 }

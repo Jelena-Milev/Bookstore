@@ -12,7 +12,7 @@
         <ion-searchbar [(ngModel)]="searchText"></ion-searchbar>
       </ion-col>
       <ion-col size-lg="1" no-padding>
-        <ion-fab-button>
+        <ion-fab-button (click)="onAddAuthor()">
           <ion-icon name="add-outline"></ion-icon>
         </ion-fab-button>
       </ion-col>

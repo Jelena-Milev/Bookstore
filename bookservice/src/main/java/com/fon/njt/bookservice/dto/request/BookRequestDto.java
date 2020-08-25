@@ -41,6 +41,7 @@ public class BookRequestDto {
     private List<Long> genresIds;
 
     private boolean inStock;
+    private String imageUrl;
 
     private Integer piecesAvailable;
 }

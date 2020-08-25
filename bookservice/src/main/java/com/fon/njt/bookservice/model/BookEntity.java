@@ -30,6 +30,7 @@ public class BookEntity {
     private String binding;
     private Integer publicationYear;
     private String description;
+    private String imageUrl;
 
     private boolean inStock;
 

@@ -1,0 +1,19 @@
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.book-img ion-img {
+  width: auto;
+  margin: auto;
+  display: block;
+}

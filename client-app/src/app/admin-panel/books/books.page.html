@@ -1,0 +1,134 @@
+<head>
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  />
+</head>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-lg="4" offset-lg="4" no-padding>
+        <ion-searchbar [(ngModel)]="searchText" placeholder="Pretraga"></ion-searchbar>
+      </ion-col>
+      <ion-col size-lg="1" no-padding>
+        <ion-fab-button (click)="onAddBook()">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-lg="8" offset-lg="4" style="align-content: center;">
+        <ion-spinner *ngIf="isLoading"></ion-spinner>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="11">
+        <table
+          *ngIf="!isLoading"
+          class="table table-hover table-responsive"
+          style="width: 100%;"
+        >
+          <colgroup>
+            <col span="1" style="width: 3%;" />
+            <col span="1" style="width: 7%;" />
+            <col span="1" style="width: 10%;" />
+            <col span="1" style="width: 10%;" />
+            <col span="1" style="width: 5%;" />
+            <col span="1" style="width: 10%;" />
+            <col span="1" style="width: 5%;" />
+            <col span="1" style="width: 5%;" />
+            <col span="1" style="width: 5%;" />
+            <col span="1" style="width: 5%;" />
+            <col span="1" style="width: 10%;" />
+            <col span="1" style="width: 10%;" />
+            <col span="1" style="width: 5%;" />
+            <col span="1" style="width: 5%;" />
+            <col span="1" style="width: 5%;" />
+          </colgroup>
+
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Slika</th>
+              <th scope="col">Naslov</th>
+              <th scope="col">ISBN</th>
+              <th scope="col">Cena</th>
+              <th scope="col">Autori</th>
+              <th scope="col">Broj strana</th>
+              <th scope="col">Godina izdanja</th>
+              <th scope="col">Povez</th>
+              <th scope="col">U prodaji</th>
+              <th scope="col">Izdavac</th>
+              <th scope="col">Zanrovi</th>
+              <th scope="col">Opis</th>
+              <th scope="col">Izmena</th>
+              <th scope="col">Brisanje</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let book of books | searchBooks: searchText | paginate: {itemsPerPage: itemsPerPage, currentPage:cp}; index as i"
+            >
+              <td>{{itemsPerPage*(cp-1)+i+1}}</td>
+              <td>
+                <div class="book-img">
+                  <ion-text
+                    *ngIf="book.imageUrl === null || book.imageUrl === ''"
+                    >Uskoro!</ion-text
+                  >
+                  <ion-img
+                    *ngIf="book.imageUrl !== null && book.imageUrl !== ''"
+                    [src]="book.imageUrl"
+                    style="width: 100px; height: 150px;"
+                  ></ion-img>
+                </div>
+              </td>
+              <td>{{book.title | uppercase}}</td>
+              <td>{{book.isbn}}</td>
+              <td>{{book.price}}</td>
+              <td>{{book.authorsNames}}</td>
+              <td>{{book.numberOfPages}}</td>
+              <td>{{book.publicationYear}}</td>
+              <td>{{book.binding}}</td>
+              <td>{{book.inStock ? 'Da' : 'Ne'}}</td>
+              <td>{{book.publisher?.name}}</td>
+              <td>{{book.genresNames}}</td>
+              <td>
+                <ion-fab-button size="small" (click)="onViewDescription(book.id)">
+                  <ion-icon name="search-outline"></ion-icon>
+                </ion-fab-button>
+              </td>
+              <td>
+                <ion-fab-button size="small" (click)="onViewDescription(book.id)">
+                  <ion-icon name="pencil"></ion-icon>
+                </ion-fab-button>
+              </td>
+              <td>
+                <ion-fab-button size="small" (click)="onViewDescription(book.id)">
+                  <ion-icon name="trash"></ion-icon>
+                </ion-fab-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
+      <ion-col style="text-align: center;" size-lg="8">
+        <pagination-controls
+          previousLabel="Prethodna"
+          nextLabel="Sledeca"
+          (pageChange)="cp=$event"
+        ></pagination-controls>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<!-- <ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-grid>
+      
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer> -->

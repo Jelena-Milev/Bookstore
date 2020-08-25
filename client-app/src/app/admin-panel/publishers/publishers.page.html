@@ -11,7 +11,7 @@
       <ion-col size-lg="4" offset-lg="4" no-padding>
         <ion-searchbar
           [(ngModel)]="seachText"
-          placeholder="Pretraga izdavaca"
+          placeholder="Pretraga"
         ></ion-searchbar>
       </ion-col>
       <ion-col size-lg="1" no-padding>
@@ -27,8 +27,17 @@
     </ion-row>
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="8">
-        <table *ngIf="!isLoading" class="table table-hover">
+        <table *ngIf="!isLoading" class="table table-hover" style="width: 100%;">
           <thead>
+            
+            <colgroup>
+              <col span="1" style="width: 10%;" />
+              <col span="1" style="width: 20%;" />
+              <col span="1" style="width: 30%;" />
+              <col span="1" style="width: 20%;" />
+              <col span="1" style="width: 20%;" />
+            </colgroup>
+            
             <tr>
               <th scope="col">#</th>
               <th scope="col">Naziv</th>

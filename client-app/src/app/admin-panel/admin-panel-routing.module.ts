@@ -27,6 +27,11 @@ const routes: Routes = [
           import("./genres/genres.module").then((m) => m.GenresPageModule),
       },
       {
+        path: "books",
+        loadChildren: () =>
+          import("./books/books.module").then((m) => m.BooksPageModule),
+      },
+      {
         path: "",
         redirectTo: "/admin-panel/tabs/publishers",
         pathMatch: "full",

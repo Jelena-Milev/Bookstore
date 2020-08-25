@@ -30,7 +30,7 @@
         <table *ngIf="!isLoading" class="table table-hover">
           <thead>
             <tr>
-              <!-- <th scope="col">#</th> -->
+              <th scope="col">#</th>
               <th scope="col">Naziv</th>
               <th scope="col">Adresa</th>
               <th scope="col">Mejl</th>
@@ -39,9 +39,9 @@
           </thead>
           <tbody>
             <tr
-              *ngFor="let publisher of publishers | searchPublishers: seachText | paginate: {itemsPerPage: 7, currentPage: cp}; index as i"
+              *ngFor="let publisher of publishers | searchPublishers: seachText | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage}; index as i"
             >
-              <!-- <th scope="row">{{i+1}}</th> -->
+              <th scope="row">{{(currentPage-1)*itemsPerPage+i+1}}</th>
               <td>{{publisher.name}}</td>
               <td>{{publisher.address}}</td>
               <td>{{publisher.email}}</td>
@@ -62,7 +62,7 @@
           <pagination-controls
             previousLabel="Prethodna"
             nextLabel="Sledeca"
-            (pageChange)="cp=$event"
+            (pageChange)="currentPage=$event"
           ></pagination-controls>
         </ion-col>
       </ion-row>

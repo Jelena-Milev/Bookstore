@@ -1,34 +1,43 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
-import { AdminPanelPage } from './admin-panel.page';
+import { AdminPanelPage } from "./admin-panel.page";
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: "tabs",
     component: AdminPanelPage,
-    children:[
+    children: [
       {
-        path: 'publishers',
-        loadChildren: () => import('./publishers/publishers.module').then( m => m.PublishersPageModule)
+        path: "publishers",
+        loadChildren: () =>
+          import("./publishers/publishers.module").then(
+            (m) => m.PublishersPageModule
+          ),
       },
       {
-        path: 'authors',
-        loadChildren: () => import('./authors/authors.module').then( m => m.AuthorsPageModule)
+        path: "authors",
+        loadChildren: () =>
+          import("./authors/authors.module").then((m) => m.AuthorsPageModule),
+      },
+
+      {
+        path: "genres",
+        loadChildren: () =>
+          import("./genres/genres.module").then((m) => m.GenresPageModule),
       },
       {
-        path:'',
-        redirectTo: '/admin-panel/tabs/publishers',
-        pathMatch: 'full'
-      }
-    ]
+        path: "",
+        redirectTo: "/admin-panel/tabs/publishers",
+        pathMatch: "full",
+      },
+    ],
   },
   {
-    path:'',
-    redirectTo: '/admin-panel/tabs/publishers',
-    pathMatch: 'full'
-  }
-  
+    path: "",
+    redirectTo: "/admin-panel/tabs/publishers",
+    pathMatch: "full",
+  },
 ];
 
 @NgModule({

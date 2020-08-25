@@ -26,7 +26,6 @@ export class PublishersService {
     return this.http.get<Publisher[]>(`http://localhost:8081/publishers`).pipe(
       tap(res=>{
         this._publishers.next(res);
-        console.log(this._publishers)
       })
     )
   }

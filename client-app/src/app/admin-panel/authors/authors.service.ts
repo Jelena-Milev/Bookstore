@@ -18,7 +18,6 @@ export class AuthorsService {
   }
 
   getAuthors(){
-    // return this.http.get<Author[]>(`${environment.apiUrl}/books/authors`).pipe(
     return this.http.get<Author[]>(`${environment.apiUrl}/books/authors`).pipe(
       tap(res=>{
         this._authors.next(res);

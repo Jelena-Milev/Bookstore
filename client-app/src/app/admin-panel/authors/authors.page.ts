@@ -15,6 +15,7 @@ export class AuthorsPage implements OnInit {
   searchText: string = "";
   cp: number = 1;
   itemsPerPage:number = 5;
+  
   constructor(
     private authorsService: AuthorsService,
     private modalCtrl: ModalController,

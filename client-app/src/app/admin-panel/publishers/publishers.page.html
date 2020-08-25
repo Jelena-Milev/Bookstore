@@ -8,13 +8,13 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size-lg="4" offset-lg="4" no-padding>
+      <ion-col size-lg="4" offset-lg="4">
         <ion-searchbar
           [(ngModel)]="seachText"
           placeholder="Pretraga"
         ></ion-searchbar>
       </ion-col>
-      <ion-col size-lg="1" no-padding>
+      <ion-col size-lg="1">
         <ion-fab-button (click)="onAddPublisher()">
           <ion-icon name="add-outline"></ion-icon>
         </ion-fab-button>
@@ -22,22 +22,27 @@
     </ion-row>
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="8">
-        <ion-spinner *ngIf="isLoading"></ion-spinner>
+        <div class="ion-text-center">
+          <ion-spinner *ngIf="isLoading"></ion-spinner>
+        </div>
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="8">
-        <table *ngIf="!isLoading" class="table table-hover" style="width: 100%;">
+        <table
+          *ngIf="!isLoading"
+          class="table table-hover"
+          style="width: 100%;"
+        >
+          <colgroup>
+            <col span="1" style="width: 10%;" />
+            <col span="1" style="width: 20%;" />
+            <col span="1" style="width: 30%;" />
+            <col span="1" style="width: 20%;" />
+            <col span="1" style="width: 20%;" />
+          </colgroup>
+
           <thead>
-            
-            <colgroup>
-              <col span="1" style="width: 10%;" />
-              <col span="1" style="width: 20%;" />
-              <col span="1" style="width: 30%;" />
-              <col span="1" style="width: 20%;" />
-              <col span="1" style="width: 20%;" />
-            </colgroup>
-            
             <tr>
               <th scope="col">#</th>
               <th scope="col">Naziv</th>
@@ -50,12 +55,12 @@
             <tr
               *ngFor="let publisher of publishers | searchPublishers: seachText | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage}; index as i"
             >
-              <th scope="row">{{(currentPage-1)*itemsPerPage+i+1}}</th>
+              <td>{{(currentPage-1)*itemsPerPage+i+1}}</td>
               <td>{{publisher.name}}</td>
               <td>{{publisher.address}}</td>
               <td>{{publisher.email}}</td>
               <td>
-                <a href={{publisher.siteUrl}} target="_blank">
+                <a href="{{publisher.siteUrl}}" target="_blank">
                   <div style="height: 100%; width: 100%;">
                     {{publisher.siteUrl}}
                   </div>

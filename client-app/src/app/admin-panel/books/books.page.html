@@ -8,18 +8,20 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size-lg="4" offset-lg="4" no-padding>
+      <ion-col size-lg="4" offset-lg="4">
         <ion-searchbar [(ngModel)]="searchText" placeholder="Pretraga"></ion-searchbar>
       </ion-col>
-      <ion-col size-lg="1" no-padding>
+      <ion-col size-lg="1">
         <ion-fab-button (click)="onAddBook()">
           <ion-icon name="add-outline"></ion-icon>
         </ion-fab-button>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col size-lg="8" offset-lg="4" style="align-content: center;">
-        <ion-spinner *ngIf="isLoading"></ion-spinner>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="8">
+        <div class="ion-text-center">
+          <ion-spinner *ngIf="isLoading"></ion-spinner>
+        </div>
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">

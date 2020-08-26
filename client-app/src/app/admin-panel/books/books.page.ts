@@ -57,6 +57,10 @@ export class BooksPage implements OnInit {
     this.router.navigate(['admin-panel','tabs', 'books','new']);
   }
 
+  onEditBook(bookId:number){
+    this.router.navigate(['admin-panel','tabs', 'books','edit', bookId]);
+  }
+
   onDeleteBook(book: Book){
     if(!book.inStock){
       this.alertCtrl.create({

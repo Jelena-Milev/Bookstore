@@ -31,6 +31,10 @@ export class BooksService {
     );
   }
 
+  getBookById(bookId: string){
+    return this.http.get<Book>(`${environment.apiUrl}/books/${bookId}`);
+  }
+
   saveBook(
     isbn: string,
     title: string,
@@ -48,6 +52,51 @@ export class BooksService {
   ) {
     let newBook: Book;
     return this.http.post<Book>(`${environment.apiUrl}/books`, {
+      isbn,
+      title,
+      price,
+      numberOfPages,
+      binding,
+      publicationYear,
+      description,
+      publisherId,
+      authorsIds,
+      genresIds,
+      inStock,
+      imageUrl,
+      piecesAvailable
+    }).pipe(
+      switchMap((savedBook)=>{
+        newBook = savedBook;
+        return this._books;
+      }),
+      take(1),
+      tap((books)=>{
+        this.mapGenresAndAuthorsNames(newBook);
+        books.splice(0, 0, newBook);
+        this._books.next(books);
+      })
+    );
+  }
+
+  editBook(
+    id: number,
+    isbn: string,
+    title: string,
+    price: number,
+    numberOfPages: number,
+    binding: string,
+    publicationYear: number,
+    description: string,
+    publisherId: number,
+    authorsIds: number[],
+    genresIds: number,
+    inStock: boolean,
+    imageUrl: string,
+    piecesAvailable: number
+  ) {
+    let newBook: Book;
+    return this.http.put<Book>(`${environment.apiUrl}/books/${id}`, {
       isbn,
       title,
       price,

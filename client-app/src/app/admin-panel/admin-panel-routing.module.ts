@@ -41,6 +41,13 @@ const routes: Routes = [
                 (m) => m.NewBookPageModule
               ),
           },
+          {
+            path: "edit/:bookId",
+            loadChildren: () =>
+              import("../admin-panel/books/edit-book/edit-book.module").then(
+                (m) => m.EditBookPageModule
+              ),
+          },
         ],
       },
       {

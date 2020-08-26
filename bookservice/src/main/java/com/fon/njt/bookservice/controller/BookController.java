@@ -46,7 +46,7 @@ public class BookController {
     }
 
     @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity getBestsellers(@PathVariable final Long id){
+    public ResponseEntity getById(@PathVariable final Long id){
         BookResponseDto result = service.getById(id);
         return new ResponseEntity(result, HttpStatus.OK);
     }

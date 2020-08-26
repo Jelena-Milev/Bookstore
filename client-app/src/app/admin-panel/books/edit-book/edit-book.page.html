@@ -1,10 +1,17 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title> {{title}} </ion-title>
+    <ion-title> Izmena knjige </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form [formGroup]="bookForm" (ngSubmit)="onSaveBook()">
+  <ion-grid>
+    <ion-row *ngIf = "isLoading" class="ion-justify-content-center ion-padding">
+      <ion-col size-lg="3">
+        <ion-spinner></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <form *ngIf = "!isLoading" [formGroup]="bookForm" (ngSubmit)="onSaveBook()">
     <ion-grid>
 
       <ion-row class="ion-justify-content-center ion-padding">
@@ -111,8 +118,8 @@
           <ion-item>
             <ion-label position="floating">U prodaji</ion-label>
             <ion-select cancelText="Nazad" formControlName="inStock">
-              <ion-select-option value="true">Da</ion-select-option>
-              <ion-select-option value="false">Ne</ion-select-option>
+              <ion-select-option [value]="true">Da</ion-select-option>
+              <ion-select-option [value]="false">Ne</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>

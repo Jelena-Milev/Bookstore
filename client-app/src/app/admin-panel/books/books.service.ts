@@ -21,10 +21,7 @@ export class BooksService {
     return this.http.get<Book[]>(`${environment.apiUrl}/books`).pipe(
       map((res) => {
         res.forEach((book) => {
-          book.authorsNames = book.authors.map(
-            (author) => " " + author.firstName + " " + author.lastName
-          );
-          book.genresNames = book.genres.map((genre) => " " + genre.name);
+          this.mapGenresAndAuthorsNames(book);
         });
         return res;
       }),
@@ -71,13 +68,35 @@ export class BooksService {
       }),
       take(1),
       tap((books)=>{
-        newBook.authorsNames = newBook.authors.map(
-          (author) => " " + author.firstName + " " + author.lastName
-        );
-        newBook.genresNames = newBook.genres.map((genre) => " " + genre.name);
+        this.mapGenresAndAuthorsNames(newBook);
         books.splice(0, 0, newBook);
         this._books.next(books);
       })
     );
+  }
+
+  deleteBook(id:number){
+    let deletedBook: Book;
+    return this.http.delete<Book>(`${environment.apiUrl}/books/${id}`).pipe(
+      switchMap((res)=>{
+        deletedBook = res;
+        return this._books;
+      }),
+      take(1),
+      tap(books=>{
+        this.mapGenresAndAuthorsNames(deletedBook);
+        const deletedBookIndex = books.findIndex(book => book.id === deletedBook.id);
+        const changedBooks: Book[] = [...books];
+        changedBooks[deletedBookIndex] = deletedBook;
+        this._books.next(changedBooks);
+      })
+    )
+  }
+
+  mapGenresAndAuthorsNames(book:Book){
+    book.authorsNames = book.authors.map(
+      (author) => " " + author.firstName + " " + author.lastName
+    );
+    book.genresNames = book.genres.map((genre) => " " + genre.name);
   }
 }

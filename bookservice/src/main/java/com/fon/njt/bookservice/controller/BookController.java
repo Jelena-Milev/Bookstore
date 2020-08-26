@@ -33,6 +33,12 @@ public class BookController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/in-stock", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity getAllInStock(){
+        List<BookResponseDto> result = service.getAllInStock();
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
     @GetMapping(path = "/bulk", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity getInBulk(@RequestBody final List<Long> bookIds){
         List<BookResponseDto> result = service.getByIds(bookIds);

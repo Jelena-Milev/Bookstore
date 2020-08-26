@@ -8,6 +8,8 @@ import java.util.List;
 public interface BookService {
     List<BookResponseDto> getAll();
 
+    List<BookResponseDto> getAllInStock();
+
     BookResponseDto getById(Long id);
 
     List<BookResponseDto> filterBooks(String title, String author);
@@ -23,4 +25,5 @@ public interface BookService {
     List<BookResponseDto> getBestsellers(List<Long> bookIds);
 
     List<BookResponseDto> getByIds(List<Long> bookIds);
+
 }

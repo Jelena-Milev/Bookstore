@@ -47,6 +47,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponseDto> getAll() {
+        final List<BookEntity> books = bookRepository.findAllByOrderByTitleAsc();
+        return mapper.mapToDtos(books);
+    }
+
+    @Override
+    public List<BookResponseDto> getAllInStock() {
         final List<BookEntity> books = bookRepository.findAllByInStockTrueOrderByTitleAsc();
         return mapper.mapToDtos(books);
     }
@@ -155,7 +161,7 @@ public class BookServiceImpl implements BookService {
         bookEntity.setBinding(dto.getBinding());
         bookEntity.setPublicationYear(dto.getPublicationYear());
         bookEntity.setDescription(dto.getDescription());
-        bookEntity.setInStock(dto.isInStock());
+//        bookEntity.setInStock(dto.isInStock());
 
         final PublisherEntity publisher = this.publisherRepository.findById(dto.getPublisherId()).orElseThrow(() -> new EntityNotFoundException("Publisher", dto.getPublisherId()));
         bookEntity.setPublisher(publisher);

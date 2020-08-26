@@ -11,9 +11,7 @@ import { environment } from '../../../environments/environment';
   providedIn: "root",
 })
 export class PublishersService {
-  private _publishers: BehaviorSubject<Publisher[]> = new BehaviorSubject<
-    Publisher[]
-  >([]);
+  private _publishers: BehaviorSubject<Publisher[]> = new BehaviorSubject([]);
 
   constructor(private http: HttpClient) {}
 

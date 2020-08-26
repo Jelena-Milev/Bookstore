@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { Book } from "./book.model";
 import { BooksService } from "./books.service";
 import { ModalController, LoadingController } from "@ionic/angular";
-import { BookDescComponent } from './book-desc/book-desc.component';
+import { BookDescComponent } from "./book-desc/book-desc.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-books",
@@ -19,7 +20,8 @@ export class BooksPage implements OnInit {
   constructor(
     private booksService: BooksService,
     private modalCtrl: ModalController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -36,20 +38,13 @@ export class BooksPage implements OnInit {
     });
   }
 
-  onViewDescription(id:number){
-    const index = this.books.findIndex(book => book.id === id);
-    const book:Book = this.books[index];
-    this.modalCtrl.create({
-      component: BookDescComponent,
-      componentProps: {
-        title: book.title,
-        authors: book.authorsNames,
-        description: book.description
-      }
-    }).then((modalElem)=>{
-      modalElem.present();
-    })
+  onViewDescription(id: number) {
+    const index = this.books.findIndex((book) => book.id === id);
+    const book: Book = this.books[index];
+    
   }
 
-  onAddBook() {}
+  onAddBook() {
+    this.router.navigate(['admin-panel','tabs', 'books','new']);
+  }
 }

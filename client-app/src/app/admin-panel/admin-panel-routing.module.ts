@@ -28,8 +28,20 @@ const routes: Routes = [
       },
       {
         path: "books",
-        loadChildren: () =>
-          import("./books/books.module").then((m) => m.BooksPageModule),
+        children: [
+          {
+            path: "",
+            loadChildren: () =>
+              import("./books/books.module").then((m) => m.BooksPageModule),
+          },
+          {
+            path: "new",
+            loadChildren: () =>
+              import("../admin-panel/books/new-book/new-book.module").then(
+                (m) => m.NewBookPageModule
+              ),
+          },
+        ],
       },
       {
         path: "",

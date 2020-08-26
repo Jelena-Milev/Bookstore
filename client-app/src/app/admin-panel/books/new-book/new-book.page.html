@@ -1,0 +1,160 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> {{title}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="bookForm" (ngSubmit)="onSaveBook()">
+    <ion-grid>
+
+      <ion-row class="ion-justify-content-center ion-padding">
+        <ion-col size-lg="3">
+          <ion-item>
+            <ion-label position="floating">ISBN*</ion-label>
+            <ion-input type="text" formControlName="isbn"></ion-input>
+          </ion-item>
+          <div class="ion-padding-start ion-padding-end">
+            <ion-label class="error-label" *ngIf="bookForm.get('isbn').invalid && bookForm.get('isbn').touched">
+              Morate uneti ISBN knjige.
+            </ion-label>
+          </div>
+        </ion-col>
+        <ion-col size-lg="3">
+          <ion-item>
+            <ion-label position="floating">Naziv*</ion-label>
+            <ion-input type="text" formControlName="title"></ion-input>
+          </ion-item>
+          <div class="ion-padding-start ion-padding-end">
+            <ion-label class="error-label" *ngIf="bookForm.get('title').invalid && bookForm.get('title').touched">
+              Morate uneti naslov knjige.
+            </ion-label>
+          </div>
+        </ion-col>
+        <ion-col size-lg="3">
+          <ion-item>
+            <ion-label position="floating">Cena*</ion-label>
+            <ion-input type="number" formControlName="price" min="0"></ion-input>
+          </ion-item>
+          <div class="ion-padding-start ion-padding-end">
+            <ion-label class="error-label" *ngIf="bookForm.get('price').invalid && bookForm.get('price').touched">
+              Morate uneti cenu knjige vecu od 0.
+            </ion-label>
+          </div>
+        </ion-col>
+      </ion-row>      
+
+      <ion-row class="ion-justify-content-center ion-padding">        
+        <ion-col size-lg="3">
+          <ion-item>
+            <ion-label>Izdavac*</ion-label>
+            <ion-select formControlName="publisherId">
+              <ion-select-option *ngFor="let publisher of publishers" [value]="publisher.id">{{publisher.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="ion-padding-start ion-padding-end">
+            <ion-label class="error-label" *ngIf="bookForm.get('publisherId').invalid && bookForm.get('publisherId').touched">
+              Morate izabrati izdavaca.
+            </ion-label>
+          </div>
+        </ion-col>
+        <ion-col size-lg="3">
+          <ion-item>
+            <ion-label>Autori*</ion-label>
+            <ion-select multiple formControlName="authorsIds">
+              <ion-select-option *ngFor="let author of authors" [value]="author.id">{{author.firstName+" "+author.lastName}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="ion-padding-start ion-padding-end">
+            <ion-label class="error-label" *ngIf="bookForm.get('authorsIds').invalid && bookForm.get('authorsIds').touched">
+              Morate izabrati najmanje jednog autora.
+            </ion-label>
+          </div>
+        </ion-col>
+        <ion-col size-lg="3">
+          <ion-item>
+            <ion-label>Zanrovi*</ion-label>
+            <ion-select multiple formControlName="genresIds">
+              <ion-select-option *ngFor="let genre of genres" [value]="genre.id">{{genre.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="ion-padding-start ion-padding-end">
+            <ion-label class="error-label" *ngIf="bookForm.get('genresIds').invalid && bookForm.get('genresIds').touched">
+              Morate izabrati najmanje jedan zanr.
+            </ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center ion-padding">
+        <ion-col size-lg="3">
+          <ion-item>
+            <ion-label position="floating">Broj strana</ion-label>
+            <ion-input type="number" formControlName="numberOfPages" min="1"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size-lg="3">
+          <ion-item>
+            <ion-label position="floating">Godina izdanja</ion-label>
+            <ion-input type="number" formControlName="publicationYear" min="0"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size-lg="3">
+          <ion-item>
+            <ion-label position="floating">Povez</ion-label>
+            <ion-input type="text" formControlName="binding"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center ion-padding">
+        <ion-col size-lg="3">
+          <ion-item>
+            <ion-label position="floating">U prodaji</ion-label>
+            <ion-select formControlName="inStock">
+              <ion-select-option value="true">Da</ion-select-option>
+              <ion-select-option value="false">Ne</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size-lg="3">
+          <ion-item>
+            <ion-label position="floating">Broj primeraka na stanju</ion-label>
+            <ion-input type="number" formControlName="piecesAvailable" min="0"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-align-items-end ion-justify-content-center ion-padding">
+        <ion-col size-lg="4">
+          <ion-item>
+            <ion-label position="floating">Opis*</ion-label>
+            <ion-textarea type="text" formControlName="description"></ion-textarea>
+          </ion-item>
+          <div class="ion-padding-start ion-padding-end">
+            <ion-label class="error-label" *ngIf="bookForm.get('description').invalid && bookForm.get('description').touched">
+              Morate uneti opis knjige.
+            </ion-label>
+          </div>
+        </ion-col>
+        <ion-col size-lg="4">
+          <ion-label position="fixed">Slika</ion-label>
+          <ion-item>            
+            <ion-input
+              type="file"
+              name="imageUrl"
+              (change)="onImageSelected($event)"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col style="text-align: center">
+          <ion-button type="submit" color="primary" [disabled]="bookForm.invalid">
+            Sacuvaj knjigu
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

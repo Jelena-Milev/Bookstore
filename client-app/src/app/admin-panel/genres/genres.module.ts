@@ -8,6 +8,7 @@ import { GenresPageRoutingModule } from './genres-routing.module';
 
 import { GenresPage } from './genres.page';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SearchGenresPipe } from './search-genres.pipe';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxPaginationModule,
     GenresPageRoutingModule
   ],
-  declarations: [GenresPage]
+  declarations: [GenresPage, SearchGenresPipe]
 })
 export class GenresPageModule {}

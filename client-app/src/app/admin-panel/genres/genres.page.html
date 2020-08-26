@@ -7,21 +7,47 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row>
-      <ion-col size-lg="4" offset-lg="4">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="4">
         <ion-searchbar [(ngModel)]="searchText" placeholder="Pretraga"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="8">
+      <ion-col size-lg="4">
         <div class="ion-text-center">
           <ion-spinner *ngIf="isLoading"></ion-spinner>
         </div>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col size-lg="4" offset-lg="4" style="align-items: center;">
-        <table *ngIf="!isLoading" class="table table-hover table-responsive">
+  </ion-grid>
+  <form [formGroup]="genreForm" (ngSubmit)="onSaveGenre()" class="ion-padding-bottom">
+    <ion-grid class="ion-no-padding">
+      <ion-row *ngIf="!isLoading" class="ion-align-items-center ion-justify-content-center ion-no-padding">
+        <ion-col size-lg="3" class="ion-no-padding">
+          <ion-item>
+            <ion-label position="floating">Zanr*</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+          <div class="ion-padding-start ion-padding-end">
+            <ion-label class="error-label" *ngIf="genreForm.get('name').invalid && genreForm.get('name').touched">Morate uneti zanr.</ion-label>
+          </div>        
+        </ion-col>
+        <ion-col size-lg="1" class="ion-no-padding">
+          <ion-button (click)="onSaveGenre()" [disabled]="genreForm.invalid">Sacuvaj</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+    <ion-grid class="ion-padding-top">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="4" class="ion-align-items-center">
+        <table *ngIf="!isLoading" class="table table-hover">
+
+          <colgroup>
+            <col span="1" style="width: 20%;" />
+            <col span="1" style="width: 80%;" />
+          </colgroup>
+        
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -30,7 +56,7 @@
           </thead>
           <tbody>
             <tr
-              *ngFor="let genre of genres | paginate: {itemsPerPage: itemsPerPage, currentPage:cp}; index as i"
+              *ngFor="let genre of genres | searchGenres: searchText | paginate: {itemsPerPage: itemsPerPage, currentPage:cp}; index as i"
             >
               <td>{{itemsPerPage*(cp-1)+i+1}}</td>
               <td>{{genre.name}}</td>
@@ -39,8 +65,9 @@
         </table>
       </ion-col>
     </ion-row>
-  </ion-grid>
+    </ion-grid>
 </ion-content>
+
 <ion-footer class="ion-no-border">
   <ion-toolbar>
     <ion-grid>

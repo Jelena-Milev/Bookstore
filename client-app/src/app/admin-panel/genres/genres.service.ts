@@ -1,27 +1,44 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
-import { Genre } from './genre.model';
-import { environment } from 'src/environments/environment';
-import { tap } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject } from "rxjs";
+import { Genre } from "./genre.model";
+import { environment } from "src/environments/environment";
+import { tap, switchMap, take } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class GenresService {
   private _genres: BehaviorSubject<Genre[]> = new BehaviorSubject([]);
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  get genres(){
+  get genres() {
     return this._genres.asObservable();
   }
 
-  getGenres(){
+  getGenres() {
     return this.http.get<Genre[]>(`${environment.apiUrl}/books/genres`).pipe(
-      tap(res=>{
+      tap((res) => {
         this._genres.next(res);
       })
-    )
+    );
+  }
+
+  saveGenre(name: string) {
+    let newGenre;
+    return this.http
+      .post<Genre>(`${environment.apiUrl}/books/genres`, { name })
+      .pipe(
+        switchMap((genre) => {
+          newGenre = genre;
+          return this._genres;
+        }),
+        take(1),
+        tap((genres) => {
+          genres.splice(0, 0, newGenre);
+          this._genres.next(genres);
+        })
+      );
   }
 }

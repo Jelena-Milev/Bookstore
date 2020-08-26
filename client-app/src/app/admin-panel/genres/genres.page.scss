@@ -1,6 +1,6 @@
 table {
   table-layout: fixed;
-  width: 200%;
+  width: 100%;
 }
 
 th,
@@ -11,4 +11,8 @@ td {
 .table td {
   vertical-align: middle;
   border: none;
+}
+
+.error-label {
+  font-size: 10pt;
 }

@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
+import { BestsellerComponent } from './bestseller/bestseller.component';
+import { BookItemComponent } from './book-item/book-item.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -12,8 +15,10 @@ import { HomePageRoutingModule } from './home-routing.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    NgxPaginationModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, BestsellerComponent, BookItemComponent],
+  entryComponents: [BestsellerComponent, BookItemComponent]
 })
 export class HomePageModule {}

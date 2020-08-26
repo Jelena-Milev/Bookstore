@@ -1,0 +1,12 @@
+<div class="container ion-padding">
+  <ion-img class="flex-item" [src]="book.imageUrl" style="width: 200px; height: 250px"></ion-img>
+  <ion-label class="flex-item" style="text-align: center;">
+    <h2>{{ book.title }}</h2>
+    <p>{{book.authorsNames}}</p>
+  </ion-label>
+  <ion-title class="flex-item" >{{book.price | currency:'EUR':'symbol-narrow'}}</ion-title>
+  <ion-button class="flex-item">
+    <ion-icon name="cart-outline" style="padding-right: 5px;"></ion-icon>
+    Dodaj u korpu
+  </ion-button>
+</div>

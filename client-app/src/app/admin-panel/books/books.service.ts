@@ -10,11 +10,19 @@ import { tap, map, switchMap, take } from "rxjs/operators";
 })
 export class BooksService {
   private _books: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]);
+  private _booksInStock: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]);
+  private _bestsellers: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]);
 
   constructor(private http: HttpClient) {}
 
   get books() {
     return this._books.asObservable();
+  }
+  get booksInStock() {
+    return this._booksInStock.asObservable();
+  }
+  get bestsellers() {
+    return this._bestsellers.asObservable();
   }
 
   getBooks() {
@@ -31,8 +39,35 @@ export class BooksService {
     );
   }
 
+  getBooksInStock() {
+    return this.http.get<Book[]>(`${environment.apiUrl}/books/in-stock`).pipe(
+      map((res) => {
+        res.forEach((book) => {
+          this.mapGenresAndAuthorsNames(book);
+        });
+        return res;
+      }),
+      tap((books) => {
+        this._booksInStock.next(books);
+      })
+    );
+  }
+
   getBookById(bookId: string){
     return this.http.get<Book>(`${environment.apiUrl}/books/${bookId}`);
+  }
+
+  getBestsellers(){
+    return this.http.get<Book[]>(`${environment.apiUrl}/books/best-sellers?number=10`).pipe(
+      map((res) => {
+        res.forEach((book) => {
+          this.mapGenresAndAuthorsNames(book);
+        });
+        return res;
+      }),
+      tap((books) => {
+        this._bestsellers.next(books);
+      }));
   }
 
   saveBook(

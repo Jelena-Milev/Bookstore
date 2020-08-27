@@ -1,8 +1,22 @@
-ion-col {
-  border: 1px solid orangered;
+// ion-col {
+//   border: 1px solid orangered;
+// }
+
+.book-details {
+  margin-left: 100px;
+  margin-right: 100px;
 }
 
-.authors-names{
+.book-img,
+.book-info {
+  padding-top: 25px;
+  vertical-align: middle;
+}
+
+.book-info {
+  padding-left: 40px;
+}
+.authors-names {
   padding-top: 10px;
   padding-bottom: 10px;
 }
@@ -13,8 +27,8 @@ ion-col {
   flex-direction: column;
   justify-content: center;
 
-  ion-button{
-    width: 30%;
+  ion-button {
+    width: 50%;
   }
 }
 
@@ -24,34 +38,34 @@ ion-col {
   flex-direction: row;
   justify-content: flex-start;
 
-  ion-item{
-    font-size:14pt;
+  ion-item {
+    font-size: 14pt;
   }
 }
 
-.increment-btn{
-    margin-right: 12px;
-    width: 35px;
-    height: 35px;
+.increment-btn {
+  // margin-left: 4px;
+  width: 35px;
+  height: 35px;
 }
 
-.decrement-btn{
-    margin-left: 12px;
-    width: 35px;
-    height: 35px;
+.decrement-btn {
+  margin-right: 12px;
+  width: 35px;
+  height: 35px;
 }
 
-.segment-content{
+input {
+  border: none;
+  width: 60px;
+  text-align: center;
+}
+
+.segment-content {
   padding-top: 20px;
   padding-bottom: 20px;
 }
 
-ion-note{
-  white-space:pre-line;
+ion-note {
+  white-space: pre-line;
 }
-
-
-
-
-
-

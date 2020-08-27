@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { BookDetailPageRoutingModule } from './book-detail-routing.module';
 
 import { BookDetailPage } from './book-detail.page';
+import { AuthorItemComponent } from './author-item/author-item.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { BookDetailPage } from './book-detail.page';
     IonicModule,
     BookDetailPageRoutingModule
   ],
-  declarations: [BookDetailPage]
+  declarations: [BookDetailPage, AuthorItemComponent],
+  entryComponents:[AuthorItemComponent]
 })
 export class BookDetailPageModule {}

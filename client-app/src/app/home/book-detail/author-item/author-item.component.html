@@ -1,0 +1,13 @@
+<ion-grid>
+  <ion-row>
+    <ion-col size-lg="4">
+      <ion-img [src]="author.imageUrl" class="author-img ion-no-padding"></ion-img>
+    </ion-col>
+    <ion-col size-lg="7" class="ion-padding-start ion-text-justify">
+      <ion-title class="ion-no-padding ion-padding-bottom">{{ author.firstName + " " + author.lastName }}</ion-title>
+      <ion-note>
+        {{ author.biography }}
+      </ion-note>
+    </ion-col>
+  </ion-row>
+</ion-grid>

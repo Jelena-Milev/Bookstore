@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content >
-  <ion-grid>
+  <ion-grid style="margin-top:40px">
     <ion-row class="ion-justify-content-center">
       <!-- spinner -->
       <ion-col size-lg="4" style="text-align: center;">
@@ -14,13 +14,13 @@
       </ion-col>
     </ion-row>
     <!-- book details -->
-    <ion-row *ngIf="!isLoading" class="ion-justify-content-center">
+    <ion-row *ngIf="!isLoading" class="ion-justify-content-center book-details">
       <!-- book image -->
-      <ion-col size-lg="3" >
+      <ion-col size-lg="3" class="book-img">
         <ion-img [src]="bookToShow.imageUrl"></ion-img>
       </ion-col>
       <!-- book info -->
-      <ion-col size-lg="3" class="ion-padding-start">
+      <ion-col size-lg="3" class="book-info">
         <ion-label>
           <h2 class="authors-names">{{bookToShow.authorsNames}}</h2>
           <h1 class="ion-padding-bottom">{{bookToShow.title | uppercase}}</h1>
@@ -32,13 +32,13 @@
           <p>Godina izdanja: {{bookToShow.publicationYear}}</p>
           <p>Povez: {{bookToShow.binding}}</p>
         </ion-label>
-        <h2>{{bookToShow.price | currency:'EUR':'symbol-narrow'}}</h2>
+        <h3>Cena: {{bookToShow.price | currency:'EUR':'symbol-narrow'}}</h3>
         <div class="add-to-cart">
           <div class="cart-quantity-counter">
             <ion-item lines="none" class="ion-no-padding">
-              <ion-icon name="add-circle" class="ion-no-margin increment-btn" (click)="incrementQty()" slot="start" color="primary"></ion-icon>
-              {{quantityForCart}}
-              <ion-icon name="remove-circle" class="ion-no-margin decrement-btn" (click)="decrementQty()" slot="end" color="primary"></ion-icon>
+              <ion-icon name="remove-circle" class="ion-no-margin decrement-btn" (click)="decrementQty()" slot="start" color="primary"></ion-icon>
+              <input type="number" min="1" step="1" [value]="quantityForCart" [(ngModel)]="quantityForCart">
+              <ion-icon name="add-circle" class="ion-no-margin increment-btn" (click)="incrementQty()" slot="end" color="primary"></ion-icon>
             </ion-item>
           </div>
           <ion-button class="ion-no-padding">
@@ -47,9 +47,40 @@
           </ion-button>
         </div>
       </ion-col>
+      <ion-col size-lg="6">
+        <ion-segment [(ngModel)]="segment">
+          <ion-segment-button value="description">
+            Opis
+          </ion-segment-button>
+          <ion-segment-button value="authors">
+            Autori
+          </ion-segment-button>
+          <ion-segment-button value="publisher">
+            Izdavac
+          </ion-segment-button>
+        </ion-segment>
+        <div class="segment-content" [ngSwitch]="segment">
+          <ion-note *ngSwitchCase="'description'">
+            {{bookToShow.description}}
+          </ion-note>
+          <ion-text *ngSwitchCase="'authors'">
+            <app-author-item *ngFor="let author of bookToShow.authors" [author]="author"></app-author-item>
+          </ion-text>
+          <ion-text *ngSwitchCase="'publisher'">
+            <ion-label>
+              <ion-title class="ion-no-padding ion-padding-bottom">{{bookToShow.publisher.name}}</ion-title>
+              <ion-note>
+                {{bookToShow.publisher.address}} <br><br>
+                {{bookToShow.publisher.email}} <br><br>
+                <a href="{{bookToShow.publisher.siteUrl}}">{{bookToShow.publisher.siteUrl}}</a>
+            </ion-note>
+            </ion-label>
+          </ion-text>
+        </div>
+      </ion-col>
     </ion-row>
     <ion-row *ngIf="!isLoading" class="ion-justify-content-center">
-      <ion-col size-lg="6">
+      <!-- <ion-col size-lg="6">
         <ion-segment [(ngModel)]="segment">
           <ion-segment-button value="description">
             Opis
@@ -72,7 +103,7 @@
             {{bookToShow.publisher}}
           </ion-text>
         </div>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
   </ion-grid>
 </ion-content>

@@ -71,7 +71,6 @@ export class EditBookPage implements OnInit {
       const bookId = paramMap.get("bookId");
       this.bookService.getBookById(bookId).subscribe((book) => {
         this.bookToEdit = book;
-        console.log(this.bookToEdit)
         this.initializeForm();
         this.isLoading = false;
       });

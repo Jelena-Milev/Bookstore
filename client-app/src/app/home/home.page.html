@@ -19,13 +19,18 @@
 
     <!-- searchbar -->
     <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="6">
-        <ion-searchbar placeholder="Pretraga" inputmode="search"></ion-searchbar>
+      <ion-col size-lg="4">
+        <ion-searchbar placeholder="Pretraga" [(ngModel)]="searchText" inputmode="search" class="ion-no-padding"></ion-searchbar>
+      </ion-col>
+      <ion-col size-lg="1">
+        <ion-fab-button size="small" (click)="onSearch()" class="ion-no-padding ion-no-margin">
+          <ion-icon name="search-outline"></ion-icon>
+        </ion-fab-button>
       </ion-col>
     </ion-row>
     
     <!-- MAIN content -->
-    <ion-row class="ion-padding-top left-padding">
+    <ion-row class="ion-padding-top left-padding ion-justify-content-center">
       <!-- bestsellers -->
       <ion-col size-lg="2" >
         <ion-list-header>
@@ -36,7 +41,7 @@
         </ion-list>
       </ion-col>
       <!-- genres list -->
-      <ion-col size-lg="2" class="left-padding-100">
+      <ion-col size-lg="2" class="left-padding-genres">
         <ion-list style="padding-top:70px;">
           <ion-item button="true" detail="true" (click)="onAllBooksSelected()">
             <ion-label>Svi naslovi</ion-label>
@@ -47,11 +52,14 @@
         </ion-list>
       </ion-col>
       <!-- all books -->
-      <ion-col size-lg="8" >
+      <ion-col size-lg="8">
         <ion-list-header style="padding-left: 328px;">
           <ion-title>Svi naslovi</ion-title>
         </ion-list-header>
-        <div class="books-container">
+        <ion-label *ngIf="books.length === 0">
+          Nema naslova ovog zanra.
+        </ion-label>
+        <div *ngIf="books.length !== 0" class="books-container">
           <app-book-item *ngFor="let book of books | paginate: {itemsPerPage: booksPerPage, currentPage:cp}" [book]="book"></app-book-item>
         </div>
       </ion-col>

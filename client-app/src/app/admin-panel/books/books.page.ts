@@ -35,9 +35,7 @@ export class BooksPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.booksService.getBooks().subscribe((books) => {
-      console.log(this.books);
-    });
+    this.booksService.getBooks().subscribe();
   }
 
   onViewDescription(book: Book) {

@@ -55,7 +55,16 @@ export class HomePage implements OnInit {
   onGenreSelected(genre:Genre){
     this.loadingCtrl.create({message: "Ucitavanje knjiga..."}).then((loadingEl)=>{
       loadingEl.present();
-      this.booksService.getBooksByGenre(genre.id).subscribe((books)=>{
+      this.booksService.getBooksByGenre(genre.id).subscribe(()=>{
+        loadingEl.remove(); 
+      })
+    })
+  }
+
+  onSearch(){
+    this.loadingCtrl.create({message: "Ucitavanje knjiga..."}).then((loadingEl)=>{
+      loadingEl.present();
+      this.booksService.getBooksByTitle(this.searchText).subscribe(()=>{
         loadingEl.remove(); 
       })
     })

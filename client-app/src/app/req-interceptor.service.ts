@@ -19,7 +19,7 @@ export class ReqInterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const modifiedRequest = req.clone({
       headers: req.headers
-        .set("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNTk4NDU3Mzk0LCJleHAiOjE1OTg1NDM3OTR9.idwd1hrcFKOxTMlBfM02-TmMeF04QRqOG-Y4z1URYo_TL_Is2yS0JAcCv4VbqMQ98kgjOnCDduzYK--SEU0C-g")
+        .set("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNTk4NTIwMDYwLCJleHAiOjE1OTg2MDY0NjB9.F1Hl0rWnPDfXdxZWs_cxxGr67EKVnuSGzygrEngHkPHVBX4sfUxi8C3uYUATq2J_06HIBWqRWNkVZOnEg7Ucug")
     });
     return next.handle(modifiedRequest);
   }

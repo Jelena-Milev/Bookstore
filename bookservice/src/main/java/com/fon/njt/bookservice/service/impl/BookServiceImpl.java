@@ -68,7 +68,7 @@ public class BookServiceImpl implements BookService {
         List<BookEntity> filteredBooks = new LinkedList<>();
         if (title != null && author == null) {
             title = title.trim();
-            filteredBooks = bookRepository.findByTitleStartingWithAndInStockIsTrue(title);
+            filteredBooks = bookRepository.findByTitleContainsAndInStockIsTrue(title);
         } else {
             author = author.trim();
             String firstName = author;
@@ -87,7 +87,7 @@ public class BookServiceImpl implements BookService {
             } else {
                 String trimmedTitle = title.trim();
                 authors.forEach(a -> {
-                    books.addAll(bookRepository.findByAuthorsAndTitleStartingWithAndInStockIsTrue(a, trimmedTitle));
+                    books.addAll(bookRepository.findByAuthorsAndTitleContainsAndInStockIsTrue(a, trimmedTitle));
                 });
             }
             filteredBooks.addAll(books);

@@ -73,7 +73,19 @@ export class BooksService {
   getBooksByGenre(genreId:number){
     return this.http.get<Book[]>(`${environment.apiUrl}/books/filter?genreId=${genreId}`).pipe(
       map((res) => {
-        console.log(res);
+        res.forEach((book) => {
+          this.mapGenresAndAuthorsNames(book);
+        });
+        return res;
+      }),
+      tap((books) => {
+        this._booksInStock.next(books);
+      }));
+  }
+
+  getBooksByTitle(title:string){
+    return this.http.get<Book[]>(`${environment.apiUrl}/books/filter?title=${title}`).pipe(
+      map((res) => {
         res.forEach((book) => {
           this.mapGenresAndAuthorsNames(book);
         });

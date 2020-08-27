@@ -15,11 +15,11 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
     List<BookEntity> findAllByInStockTrueOrderByTitleAsc();
 
-    List<BookEntity> findByTitleStartingWithAndInStockIsTrue(String title);
+    List<BookEntity> findByTitleContainsAndInStockIsTrue(String title);
 
     List<BookEntity> findByAuthorsAndInStockIsTrue(AuthorEntity author);
 
-    List<BookEntity> findByAuthorsAndTitleStartingWithAndInStockIsTrue(AuthorEntity author, String title);
+    List<BookEntity> findByAuthorsAndTitleContainsAndInStockIsTrue(AuthorEntity author, String title);
 
     List<BookEntity> findByGenresAndInStockTrue(GenreEntity genre);
 

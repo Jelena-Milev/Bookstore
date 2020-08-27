@@ -106,7 +106,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="ion-justify-content-center ion-padding">
+      <ion-row class="ion-align-items-end ion-justify-content-center ion-padding">
         <ion-col size-lg="3">
           <ion-item>
             <ion-label position="floating">U prodaji</ion-label>
@@ -122,21 +122,7 @@
             <ion-input type="number" formControlName="piecesAvailable" min="0"></ion-input>
           </ion-item>
         </ion-col>
-      </ion-row>
-
-      <ion-row class="ion-align-items-end ion-justify-content-center ion-padding">
-        <ion-col size-lg="4">
-          <ion-item>
-            <ion-label position="floating">Opis*</ion-label>
-            <ion-textarea type="text" formControlName="description"></ion-textarea>
-          </ion-item>
-          <div class="ion-padding-start ion-padding-end">
-            <ion-label class="error-label" *ngIf="bookForm.get('description').invalid && bookForm.get('description').touched">
-              Morate uneti opis knjige.
-            </ion-label>
-          </div>
-        </ion-col>
-        <ion-col size-lg="4">
+        <ion-col size-lg="3">
           <ion-label position="fixed">Slika</ion-label>
           <ion-item>            
             <ion-input
@@ -146,6 +132,20 @@
             ></ion-input>
           </ion-item>
         </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center ion-padding">
+        <ion-col size-lg="6">
+          <ion-item>
+            <ion-label position="floating">Opis*</ion-label>
+            <ion-textarea type="text" formControlName="description" auto-grow="true"></ion-textarea>
+          </ion-item>
+          <div class="ion-padding-start ion-padding-end">
+            <ion-label class="error-label" *ngIf="bookForm.get('description').invalid && bookForm.get('description').touched">
+              Morate uneti opis knjige.
+            </ion-label>
+          </div>
+        </ion-col>        
       </ion-row>
 
       <ion-row>

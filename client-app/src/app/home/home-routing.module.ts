@@ -4,8 +4,12 @@ import { HomePage } from './home.page';
 
 const routes: Routes = [
   {
+    path: "books/:bookId",
+    loadChildren: () => import('./book-detail/book-detail.module').then( m => m.BookDetailPageModule)
+  },
+  {
     path: '',
-    component: HomePage,
+    component: HomePage
   }
 ];
 

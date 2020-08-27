@@ -57,7 +57,7 @@
           <ion-title>Svi naslovi</ion-title>
         </ion-list-header>
         <ion-label *ngIf="books.length === 0">
-          Nema naslova ovog zanra.
+          Nije pronadjen nijedan naslov.
         </ion-label>
         <div *ngIf="books.length !== 0" class="books-container">
           <app-book-item *ngFor="let book of books | paginate: {itemsPerPage: booksPerPage, currentPage:cp}" [book]="book"></app-book-item>

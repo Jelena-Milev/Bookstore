@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    
+    <ion-title *ngIf="!isLoading">{{bookToShow.title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="4" style="text-align: center;">
+        <ion-spinner color="primary" *ngIf="isLoading"></ion-spinner>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!isLoading" class="ion-justify-content-center">
+      <ion-col size-lg="2">
+        <ion-img [src]="bookToShow.imageUrl"></ion-img>
+      </ion-col>
+      <ion-col size-lg="4" class="ion-padding-start">
+        <ion-label>
+          <h2>{{bookToShow.authorsNames}}</h2>
+          <h1 class="ion-padding-bottom">{{bookToShow.title | uppercase}}</h1>
+        </ion-label>
+        <ion-label>
+          <p>Kategorije: {{bookToShow.genresNames}}</p>
+          <p>ISBN: {{bookToShow.isbn}}</p>
+          <p>Broj strana: {{bookToShow.numberOfPages}}</p>
+          <p>Godina izdanja: {{bookToShow.publicationYear}}</p>
+          <p>Povez: {{bookToShow.binding}}</p>
+        </ion-label>
+        <h2>{{bookToShow.price | currency:'EUR':'symbol-narrow'}}</h2>
+        <ion-button>
+          <ion-item>
+            <input slot="start"/>
+            Dodaj u korpu
+            <ion-icon slot="end" name="cart-outline" style="padding-right: 5px;"></ion-icon>
+          </ion-item>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

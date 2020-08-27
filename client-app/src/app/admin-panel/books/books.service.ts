@@ -70,6 +70,20 @@ export class BooksService {
       }));
   }
 
+  getBooksByGenre(genreId:number){
+    return this.http.get<Book[]>(`${environment.apiUrl}/books/filter?genreId=${genreId}`).pipe(
+      map((res) => {
+        console.log(res);
+        res.forEach((book) => {
+          this.mapGenresAndAuthorsNames(book);
+        });
+        return res;
+      }),
+      tap((books) => {
+        this._booksInStock.next(books);
+      }));
+  }
+
   saveBook(
     isbn: string,
     title: string,

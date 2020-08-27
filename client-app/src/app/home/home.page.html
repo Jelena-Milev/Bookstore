@@ -17,9 +17,10 @@
     </ion-row>
     <!-- HEADING end -->
 
+    <!-- searchbar -->
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="6">
-        <ion-searchbar placeholder="Pretraga"></ion-searchbar>
+        <ion-searchbar placeholder="Pretraga" inputmode="search"></ion-searchbar>
       </ion-col>
     </ion-row>
     
@@ -27,16 +28,27 @@
     <ion-row class="ion-padding-top left-padding">
       <!-- bestsellers -->
       <ion-col size-lg="2" >
-        <ion-list-header class="ion-no-padding">
+        <ion-list-header>
           <ion-title class="ion-no-padding">Najprodavaniji naslovi</ion-title>
         </ion-list-header>
         <ion-list class="ion-padding-top">
           <app-bestseller *ngFor="let bestseler of bestsellers" [bestseller]="bestseler"></app-bestseller>
         </ion-list>
-        <!-- all books -->
       </ion-col>
-      <ion-col size-lg="10" class="left-padding">
-        <ion-list-header>
+      <!-- genres list -->
+      <ion-col size-lg="2" class="left-padding-100">
+        <ion-list style="padding-top:70px;">
+          <ion-item button="true" detail="true" (click)="onAllBooksSelected()">
+            <ion-label>Svi naslovi</ion-label>
+          </ion-item>
+          <ion-item *ngFor="let genre of genres" button="true" detail="true" (click)="onGenreSelected(genre)">
+            <ion-label >{{genre.name}}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <!-- all books -->
+      <ion-col size-lg="8" >
+        <ion-list-header style="padding-left: 328px;">
           <ion-title>Svi naslovi</ion-title>
         </ion-list-header>
         <div class="books-container">
@@ -44,10 +56,11 @@
         </div>
       </ion-col>
     </ion-row>
+    <!-- pagination -->
     <ion-row class="left-padding">
       <ion-col size-lg="2" class="ion-padding">
       </ion-col>
-      <ion-col size-lg="10" class="left-padding paggination-row">
+      <ion-col size-lg="10" class="left-padding pagination-row">
         <pagination-controls
         previousLabel="Prethodna"
         nextLabel="Sledeca"

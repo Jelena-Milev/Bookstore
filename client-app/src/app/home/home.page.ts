@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Book } from "../admin-panel/books/book.model";
 import { BooksService } from "../admin-panel/books/books.service";
+import { GenresService } from "../admin-panel/genres/genres.service";
+import { Genre } from '../admin-panel/genres/genre.model';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: "app-home",
@@ -10,10 +13,16 @@ import { BooksService } from "../admin-panel/books/books.service";
 export class HomePage implements OnInit {
   bestsellers: Book[] = [];
   books: Book[] = [];
+  genres: Genre[] = [];
   cp: number = 1;
-  booksPerPage:number = 8;
+  booksPerPage: number = 8;
+  searchText: string = "";
 
-  constructor(private booksService: BooksService) {}
+  constructor(
+    private booksService: BooksService,
+    private genresService: GenresService,
+    private loadingCtrl: LoadingController
+  ) {}
 
   ngOnInit(): void {
     this.booksService.bestsellers.subscribe((books) => {
@@ -22,10 +31,33 @@ export class HomePage implements OnInit {
     this.booksService.booksInStock.subscribe((books) => {
       this.books = books;
     });
+    this.genresService.genres.subscribe((genres)=>{
+      this.genres = genres;
+    })
   }
 
   ionViewWillEnter() {
     this.booksService.getBestsellers().subscribe();
     this.booksService.getBooksInStock().subscribe();
+    this.genresService.getGenres().subscribe();
+  }
+
+  onAllBooksSelected(){
+    this.loadingCtrl.create({message: "Ucitavanje knjiga..."}).then((loadingEl)=>{
+      loadingEl.present();
+      this.booksService.getBooksInStock().subscribe(()=>{
+        loadingEl.remove(); 
+      })
+    })
+    
+  }
+
+  onGenreSelected(genre:Genre){
+    this.loadingCtrl.create({message: "Ucitavanje knjiga..."}).then((loadingEl)=>{
+      loadingEl.present();
+      this.booksService.getBooksByGenre(genre.id).subscribe((books)=>{
+        loadingEl.remove(); 
+      })
+    })
   }
 }

@@ -1,3 +1,57 @@
-ion-col{
-    border: 1px solid orangered;
+ion-col {
+  border: 1px solid orangered;
 }
+
+.authors-names{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.add-to-cart {
+  // border: 1px solid green;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  ion-button{
+    width: 30%;
+  }
+}
+
+.cart-quantity-counter {
+  // border: 1px solid blue;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+  ion-item{
+    font-size:14pt;
+  }
+}
+
+.increment-btn{
+    margin-right: 12px;
+    width: 35px;
+    height: 35px;
+}
+
+.decrement-btn{
+    margin-left: 12px;
+    width: 35px;
+    height: 35px;
+}
+
+.segment-content{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+ion-note{
+  white-space:pre-line;
+}
+
+
+
+
+
+

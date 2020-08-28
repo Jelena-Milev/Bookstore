@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -30,6 +32,7 @@ public class UserServiceImpl implements UserService {
         if(userRepository.existsByUsername(userDto.getUsername()))
             throw new UserAlreadyExistsException("User with username "+userDto.getUsername()+" already exists");
         final UserEntity newUser = userMapper.mapToEntity(userDto);
+        newUser.setIdentifier(UUID.randomUUID().toString());
         newUser.setRole("USER");
         newUser.setPassword(encoder.encode(newUser.getPassword()));
         userRepository.save(newUser);

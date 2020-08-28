@@ -1,5 +1,6 @@
 package com.fon.njt.auth.security;
 
+import com.fon.njt.auth.repository.UserRepository;
 import com.fon.njt.auth.security.filter.JwtUsernameAndPasswordAuthenticationFilter;
 import com.fon.njt.auth.security.filter.MyAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private JwtConfig jwtConfig;
 
     @Override
@@ -40,7 +44,7 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 // What's the authenticationManager()?
                 // An object provided by WebSecurityConfigurerAdapter, used to authenticate the user passing user's credentials
                 // The filter needs this auth manager to authenticate the user.
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, myAuthenticationFailureHandler()))
+                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, myAuthenticationFailureHandler(), userRepository))
                 .authorizeRequests()
                 // allow all POST requests
                 .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()

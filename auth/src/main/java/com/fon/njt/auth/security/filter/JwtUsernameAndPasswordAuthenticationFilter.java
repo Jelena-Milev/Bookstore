@@ -1,7 +1,9 @@
 package com.fon.njt.auth.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fon.njt.auth.repository.UserRepository;
 import com.fon.njt.auth.security.JwtConfig;
+import com.fon.njt.auth.security.UserDetailsImpl;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,12 +37,16 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     // We use auth manager to validate the user credentials
     private AuthenticationManager authManager;
 
+    private final UserRepository userRepository;
+
     private final JwtConfig jwtConfig;
 
-    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager, JwtConfig jwtConfig, AuthenticationFailureHandler authenticationFailureHandler) {
+
+    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authManager, JwtConfig jwtConfig, AuthenticationFailureHandler authenticationFailureHandler, UserRepository userRepository) {
         this.authManager = authManager;
         this.jwtConfig = jwtConfig;
         this.setAuthenticationFailureHandler(authenticationFailureHandler);
+        this.userRepository = userRepository;
 
         // By default, UsernamePasswordAuthenticationFilter listens to "/login" path.
         // In our case, we use "/auth". So, we need to override the defaults.
@@ -75,8 +81,11 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
                 .compact();
         Map<String, Object> responseBody = new HashMap<>();
+        final UserDetailsImpl userDetails = (UserDetailsImpl) authResult.getPrincipal();
+        responseBody.put("userId", userRepository.getId(userDetails.getUsername()));
+        responseBody.put("role", authResult.getAuthorities());
         responseBody.put("authToken", token);
-        responseBody.put("expiresIn", new Date(now+jwtConfig.getExpiration()*1000));
+        responseBody.put("expiresIn", jwtConfig.getExpiration()*1000);
         OutputStream out = response.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter().writeValue(out, responseBody);

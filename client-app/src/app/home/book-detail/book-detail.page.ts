@@ -58,10 +58,12 @@ export class BookDetailPage implements OnInit {
       .subscribe(() => {
         this.toastController
           .create({
-            message: "Knjiga je uspesno dodata u korpu",
+            message: "Knjiga je ubačena u korpu",
             buttons: [
               {
-                text: "Pregled korpe",
+                side: 'end',
+                icon: 'cart',
+                text: "Pregledaj korpu",
                 handler: () => {
                   this.router.navigate(['/', 'cart']);
                 },

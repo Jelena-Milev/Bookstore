@@ -20,8 +20,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import io.jsonwebtoken.Jwts;
@@ -71,7 +74,14 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 .setExpiration(new Date(now+jwtConfig.getExpiration()*1000))
                 .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
                 .compact();
-        response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix()+token);
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("authToken", token);
+        responseBody.put("expiresIn", new Date(now+jwtConfig.getExpiration()*1000));
+        OutputStream out = response.getOutputStream();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writerWithDefaultPrettyPrinter().writeValue(out, responseBody);
+        out.flush();
+//        response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix()+token);
     }
 
     @Override

@@ -61,7 +61,6 @@ export class BooksService {
     return this.http.get<Book>(`${environment.apiUrl}/books/${bookId}`).pipe(
       map((book) => {
         this.mapGenresAndAuthorsNames(book);
-        console.log(book.description);
         return book;
       })
     );

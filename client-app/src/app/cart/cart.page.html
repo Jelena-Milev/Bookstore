@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>cart</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-spinner *ngIf="isLoading" color='primary'></ion-spinner>
+    </ion-row>
+    <ion-row *ngFor="let item of cartItems">
+      <ion-col size-lg="3">{{item.book.id}}</ion-col>
+      <ion-col size-lg="3">{{item.book.title}}</ion-col>
+      <ion-col size-lg="3">{{item.quantity}}</ion-col>
+      <ion-col size-lg="3">
+        <ion-button (click)="onDeleteItem(item)">Obrisi</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

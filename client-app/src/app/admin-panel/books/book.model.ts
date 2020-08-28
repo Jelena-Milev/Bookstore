@@ -17,7 +17,7 @@ export class Book{
     public publisher: Publisher,
     public authors: Author[],
     public genres: Genre[],
-    public authorsNames: string[],
-    public genresNames: string[]
+    public authorsNames?: string[],
+    public genresNames?: string[],
   ){ }
 }

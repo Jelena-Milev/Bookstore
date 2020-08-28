@@ -4,6 +4,7 @@ import { BooksService } from "../admin-panel/books/books.service";
 import { GenresService } from "../admin-panel/genres/genres.service";
 import { Genre } from '../admin-panel/genres/genre.model';
 import { LoadingController } from '@ionic/angular';
+import { CartService } from '../cart/cart.service';
 
 @Component({
   selector: "app-home",
@@ -21,7 +22,8 @@ export class HomePage implements OnInit {
   constructor(
     private booksService: BooksService,
     private genresService: GenresService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -68,5 +70,9 @@ export class HomePage implements OnInit {
         loadingEl.remove(); 
       })
     })
+  }
+
+  onCartClicked(){
+    this.cartService.getItems();
   }
 }

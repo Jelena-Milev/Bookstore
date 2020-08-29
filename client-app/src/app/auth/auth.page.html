@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>auth</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="6">
+        <ion-segment [(ngModel)]="segment">
+          <ion-segment-button value="login"> Prijava </ion-segment-button>
+          <ion-segment-button value="register">
+            Registracija
+          </ion-segment-button>
+        </ion-segment>
+        <div class="segment-content" [ngSwitch]="segment">
+          <app-login-form *ngSwitchCase="'login'"></app-login-form>
+          <app-register-form *ngSwitchCase="'register'"></app-register-form>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

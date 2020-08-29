@@ -33,7 +33,7 @@
           <p>Povez: {{bookToShow.binding}}</p>
         </ion-label>
         <h3>Cena: {{bookToShow.price | currency:'EUR':'symbol-narrow'}}</h3>
-        <div class="add-to-cart">
+        <div class="add-to-cart" *ngIf="userRole==='USER'">
           <div class="cart-quantity-counter">
             <ion-item lines="none" class="ion-no-padding">
               <ion-icon name="remove-circle" class="ion-no-margin decrement-btn" (click)="decrementQty()" slot="start" color="primary"></ion-icon>
@@ -47,6 +47,7 @@
           </ion-button>
         </div>
       </ion-col>
+      <!-- book description and authors -->
       <ion-col size-lg="6">
         <ion-segment [(ngModel)]="segment">
           <ion-segment-button value="description">
@@ -80,30 +81,6 @@
       </ion-col>
     </ion-row>
     <ion-row *ngIf="!isLoading" class="ion-justify-content-center">
-      <!-- <ion-col size-lg="6">
-        <ion-segment [(ngModel)]="segment">
-          <ion-segment-button value="description">
-            Opis
-          </ion-segment-button>
-          <ion-segment-button value="authors">
-            Autori
-          </ion-segment-button>
-          <ion-segment-button value="publisher">
-            Izdavac
-          </ion-segment-button>
-        </ion-segment>
-        <div class="segment-content" [ngSwitch]="segment">
-          <ion-note *ngSwitchCase="'description'">
-            {{bookToShow.description}}
-          </ion-note>
-          <ion-text *ngSwitchCase="'authors'">
-            {{bookToShow.authorsNames}}
-          </ion-text>
-          <ion-text *ngSwitchCase="'publisher'">
-            {{bookToShow.publisher}}
-          </ion-text>
-        </div>
-      </ion-col> -->
     </ion-row>
   </ion-grid>
 </ion-content>

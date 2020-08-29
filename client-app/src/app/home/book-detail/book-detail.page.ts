@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { BooksService } from "src/app/admin-panel/books/books.service";
 import { Book } from "src/app/admin-panel/books/book.model";
 import { CartService } from "src/app/cart/cart.service";
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: "app-book-detail",
@@ -15,12 +16,13 @@ export class BookDetailPage implements OnInit {
   bookToShow: Book;
   quantityForCart: number;
   segment: string;
-
+  userRole: string;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private bookService: BooksService,
     private cartService: CartService,
+    private authService: AuthService,
     public toastController: ToastController,
   ) {}
 
@@ -37,6 +39,9 @@ export class BookDetailPage implements OnInit {
         this.bookToShow = book;
         this.segment = "description";
         this.isLoading = false;
+        this.authService.role.subscribe(role=>{
+          this.userRole = role;
+        })
       });
     });
   }

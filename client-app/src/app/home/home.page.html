@@ -16,12 +16,12 @@
       </ion-col>
       <ion-col size-lg="8"></ion-col>
       <ion-col size-lg="1" class="ion-no-padding">
-        <ion-chip color="primary">
+        <ion-chip color="primary" [routerLink]="['/', 'auth']">
           <ion-icon name="person"></ion-icon>
           <ion-label>PRIJAVA</ion-label>
         </ion-chip>
       </ion-col>
-      <ion-col size-lg="1" class="ion-no-padding">
+      <ion-col size-lg="1" *ngIf="userRole === 'USER'" class="ion-no-padding">
         <ion-chip color="primary" [routerLink]="['/', 'cart']">
           <ion-icon name="cart"></ion-icon>
           <ion-label>KORPA</ion-label>
@@ -73,7 +73,7 @@
           Nije pronadjen nijedan naslov.
         </ion-label>
         <div *ngIf="books.length !== 0" class="books-container">
-          <app-book-item *ngFor="let book of books | paginate: {itemsPerPage: booksPerPage, currentPage:cp}" [book]="book"></app-book-item>
+          <app-book-item *ngFor="let book of books | paginate: {itemsPerPage: booksPerPage, currentPage:cp}" [book]="book" [userRole]="userRole"></app-book-item>
         </div>
       </ion-col>
     </ion-row>

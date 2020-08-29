@@ -6,7 +6,7 @@
     <p>{{book.authorsNames}}</p>
   </ion-label>
   <ion-title class="flex-item" >{{book.price | currency:'EUR':'symbol-narrow'}}</ion-title>
-  <ion-chip class="flex-item" color="primary" (click)="addToCart($event)">
+  <ion-chip *ngIf="userRole==='USER'" class="flex-item" color="primary" (click)="addToCart($event)">
     <ion-icon name="cart" style="padding-right: 5px;"></ion-icon>
     <ion-label>Dodaj u korpu</ion-label>
   </ion-chip>

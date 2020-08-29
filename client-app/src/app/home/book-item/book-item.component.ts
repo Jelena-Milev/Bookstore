@@ -11,7 +11,7 @@ import { ToastController } from "@ionic/angular";
 })
 export class BookItemComponent implements OnInit {
   @Input() book: Book;
-
+  @Input() userRole: string;
   constructor(
     private router: Router,
     public toastController: ToastController,

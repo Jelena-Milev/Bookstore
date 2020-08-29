@@ -25,27 +25,27 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="11">
+      <ion-col size-lg="12" class="ion-padding">
         <table
           *ngIf="!isLoading"
-          class="table table-hover table-responsive"
+          class="table table-hover"
         >
           <colgroup>
             <col span="1" style="width: 3%;" />
             <col span="1" style="width: 7%;" />
-            <col span="1" style="width: 10%;" />
-            <col span="1" style="width: 10%;" />
-            <col span="1" style="width: 5%;" />
-            <col span="1" style="width: 10%;" />
-            <col span="1" style="width: 9%;" />
-            <col span="1" style="width: 9%;" />
-            <col span="1" style="width: 9%;" />
-            <col span="1" style="width: 9%;" />
-            <col span="1" style="width: 10%;" />
+            <col span="1" style="width: 12%;" />
             <col span="1" style="width: 10%;" />
             <col span="1" style="width: 5%;" />
-            <col span="1" style="width: 5%;" />
-            <col span="1" style="width: 5%;" />
+            <col span="1" style="width: 9%;" />
+            <col span="1" style="width: 6%;" />
+            <col span="1" style="width: 6%;" />
+            <col span="1" style="width: 6%;" />
+            <col span="1" style="width: 6%;" />
+            <col span="1" style="width: 6%;" />
+            <col span="1" style="width: 6%;" />
+            <col span="1" style="width: 6%;" />
+            <col span="1" style="width: 6%;" />
+            <col span="1" style="width: 6%;" />
           </colgroup>
 
           <thead>
@@ -62,9 +62,9 @@
               <th scope="col">U prodaji</th>
               <th scope="col">Izdavac</th>
               <th scope="col">Zanrovi</th>
-              <th scope="col">Opis</th>
-              <th scope="col">Izmena</th>
-              <th scope="col">Brisanje</th>
+              <th scope="col" class="th-fab-button">Opis</th>
+              <th scope="col" class="th-fab-button">Izmena</th>
+              <th scope="col" class="th-fab-button">Brisanje</th>
             </tr>
           </thead>
           <tbody>
@@ -87,24 +87,24 @@
               <td>{{book.title | uppercase}}</td>
               <td>{{book.isbn}}</td>
               <td>{{book.price}}</td>
-              <td>{{book.authorsNames}}</td>
+              <td style="white-space: pre-line;">{{book.authorsNames}}</td>
               <td>{{book.numberOfPages}}</td>
               <td>{{book.publicationYear}}</td>
               <td>{{book.binding}}</td>
               <td>{{book.inStock ? 'Da' : 'Ne'}}</td>
               <td>{{book.publisher?.name}}</td>
               <td>{{book.genresNames}}</td>
-              <td>
+              <td class="td-fab-button">
                 <ion-fab-button size="small" (click)="onViewDescription(book)">
                   <ion-icon name="search-outline"></ion-icon>
                 </ion-fab-button>
               </td>
-              <td>
+              <td class="td-fab-button">
                 <ion-fab-button size="small" (click)="onEditBook(book.id)">
                   <ion-icon name="pencil"></ion-icon>
                 </ion-fab-button>
               </td>
-              <td>
+              <td class="td-fab-button">
                 <ion-fab-button size="small" (click)="onDeleteBook(book)">
                   <ion-icon name="trash"></ion-icon>
                 </ion-fab-button>

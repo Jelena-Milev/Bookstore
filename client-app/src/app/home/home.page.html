@@ -14,8 +14,14 @@
       <ion-col size-lg="2">
         <ion-title>Bookstore</ion-title>
       </ion-col>
-      <ion-col size-lg="8"></ion-col>
-      <ion-col size-lg="1" class="ion-no-padding">
+      <ion-col size-lg="7"></ion-col>
+      <ion-col size-lg="1" *ngIf="userRole === 'USER'" class="ion-no-padding">
+        <ion-chip color="primary" [routerLink]="['/', 'cart']">
+          <ion-icon name="cart"></ion-icon>
+          <ion-label>KORPA</ion-label>
+        </ion-chip>
+      </ion-col>
+      <ion-col size-lg="2" class="ion-no-padding">
         <ion-chip *ngIf="!isAuthenticated" color="primary" [routerLink]="['/', 'auth']">
           <ion-icon name="person"></ion-icon>
           <ion-label>PRIJAVA</ion-label>
@@ -24,13 +30,7 @@
           <ion-icon name="person"></ion-icon>
           <ion-label>ODJAVI SE</ion-label>
         </ion-chip>
-      </ion-col>
-      <ion-col size-lg="1" *ngIf="userRole === 'USER'" class="ion-no-padding">
-        <ion-chip color="primary" [routerLink]="['/', 'cart']">
-          <ion-icon name="cart"></ion-icon>
-          <ion-label>KORPA</ion-label>
-        </ion-chip>
-      </ion-col>
+      </ion-col>      
     </ion-row>
     <!-- HEADING end -->
 
@@ -50,7 +50,7 @@
     <ion-row class="ion-padding-top left-padding ion-justify-content-center">
       <!-- bestsellers -->
       <ion-col size-lg="2" class="ion-justify-content-center">
-        <ion-list-header>
+        <ion-list-header class="ion-no-padding">
           <ion-title class="ion-no-padding">Najprodavaniji naslovi</ion-title>
         </ion-list-header>
         <ion-list class="ion-padding-top">

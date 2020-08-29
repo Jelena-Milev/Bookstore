@@ -16,16 +16,16 @@
       </ion-col>
       <ion-col size-lg="8"></ion-col>
       <ion-col size-lg="1" class="ion-no-padding">
-        <ion-button>
-          PRIJAVA
-          <ion-icon name="person" style="padding-left: 5px;"></ion-icon>
-        </ion-button>
+        <ion-chip color="primary">
+          <ion-icon name="person"></ion-icon>
+          <ion-label>PRIJAVA</ion-label>
+        </ion-chip>
       </ion-col>
       <ion-col size-lg="1" class="ion-no-padding">
-        <ion-button [routerLink]="['/', 'cart']">
-          KORPA
-          <ion-icon name="cart" style="padding-left: 5px;"></ion-icon>
-        </ion-button>
+        <ion-chip color="primary" [routerLink]="['/', 'cart']">
+          <ion-icon name="cart"></ion-icon>
+          <ion-label>KORPA</ion-label>
+        </ion-chip>
       </ion-col>
     </ion-row>
     <!-- HEADING end -->
@@ -45,7 +45,7 @@
     <!-- MAIN content -->
     <ion-row class="ion-padding-top left-padding ion-justify-content-center">
       <!-- bestsellers -->
-      <ion-col size-lg="2" >
+      <ion-col size-lg="2" class="ion-justify-content-center">
         <ion-list-header>
           <ion-title class="ion-no-padding">Najprodavaniji naslovi</ion-title>
         </ion-list-header>

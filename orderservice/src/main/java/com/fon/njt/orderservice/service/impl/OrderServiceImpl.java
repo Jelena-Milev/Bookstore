@@ -7,6 +7,7 @@ import com.fon.njt.orderservice.dto.request.OrderRequestDto;
 import com.fon.njt.orderservice.dto.response.OrderResponseDto;
 import com.fon.njt.orderservice.dto.storage.SoldItemRequestDto;
 import com.fon.njt.orderservice.dto.storage.StorageItemResponseDto;
+import com.fon.njt.orderservice.dto.user.UserInfoDto;
 import com.fon.njt.orderservice.exception.BookIsNotForSaleException;
 import com.fon.njt.orderservice.exception.NotEnoughBooksInStockException;
 import com.fon.njt.orderservice.mapper.OrderMapper;
@@ -41,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderResponseDto save(OrderRequestDto dto) {
+    public OrderResponseDto save(OrderRequestDto dto, UserInfoDto userInfoDto) {
         //ima listu itema, svaki ima bookId i quantity
         OrderEntity order = mapper.mapToEntity(dto);
         //get user info for given userId
@@ -60,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
         final OrderEntity savedOrder = repository.save(order);
         final List<SoldItemRequestDto> soldItemRequestDtos = savedOrder.getItems().stream().map(item->new SoldItemRequestDto(item.getBookId(), item.getQuantity())).collect(Collectors.toList());
         storageAPI.updateBooksSold(soldItemRequestDtos);
-        return mapper.mapToDto(savedOrder);
+        return mapper.mapToDto(savedOrder, userInfoDto);
     }
 
     private void calculateItemsPrices(OrderEntity order, List<BookResponseDto> books, List<StorageItemResponseDto> storageItems) {

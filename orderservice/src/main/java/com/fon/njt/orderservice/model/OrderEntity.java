@@ -24,7 +24,7 @@ public class OrderEntity {
     private Long id;
     @EqualsAndHashCode.Include
     private String orderIdentifier;
-    private Long userId;
+    private String userId;
     @Column(columnDefinition = "DATE")
     private LocalDate date;
     private BigDecimal totalPrice;

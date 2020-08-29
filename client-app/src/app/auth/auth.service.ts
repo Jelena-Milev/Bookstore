@@ -169,6 +169,7 @@ export class AuthService {
   logout(){
     this._user.next(null);
     localStorage.removeItem('authData');
+    sessionStorage.clear();
     this.router.navigate(['/', 'home']);
   }
 

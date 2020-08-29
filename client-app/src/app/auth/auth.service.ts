@@ -4,6 +4,7 @@ import { environment } from "src/environments/environment";
 import { BehaviorSubject, from, of } from "rxjs";
 import { tap, switchMap, map } from "rxjs/operators";
 import { User } from "./user.model";
+import { Router } from '@angular/router';
 
 interface AuthResponseData {
   expiresIn: number;
@@ -22,7 +23,7 @@ interface Authority {
 export class AuthService {
   private _role: BehaviorSubject<string> = new BehaviorSubject("");
   private _user = new BehaviorSubject<User>(null);
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router:Router) {}
 
   get userIsAuthenticated() {
     return this._user.asObservable().pipe(
@@ -97,10 +98,6 @@ export class AuthService {
         }
       }), 
       map(user=>{
-        // if(user){
-        //   return user.role === role;
-        // }
-        // return false;
         return !!user;
       })
     );
@@ -136,7 +133,6 @@ export class AuthService {
           return user.role === role;
         }
         return false;
-        // return !!user;
       })
     );
   }
@@ -173,6 +169,7 @@ export class AuthService {
   logout(){
     this._user.next(null);
     localStorage.removeItem('authData');
+    this.router.navigate(['/', 'home']);
   }
 
   private storeUserData(

@@ -46,12 +46,12 @@
           class="ion-no-padding"
           [routerLink]="['/', 'home', 'books', item.book.id]"
           lines="none">
-          <ion-img
+          <img
             *ngIf="item.book.imageUrl !== null && item.book.imageUrl !== ''"
             [src]="item.book.imageUrl"
             style="width: 70px"
             slot="start"
-          ></ion-img>
+          >
           <ion-label class="ion-text-wrap">{{item.book.title}}</ion-label>
         </ion-item>
       </ion-col>

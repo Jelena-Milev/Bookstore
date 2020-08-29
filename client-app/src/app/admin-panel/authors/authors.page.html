@@ -62,11 +62,10 @@
                     *ngIf="author.imageUrl === null || author.imageUrl === ''"
                     >Uskoro!</ion-text
                   >
-                  <ion-img
+                  <img
                     *ngIf="author.imageUrl !== null && author.imageUrl !== ''"
                     [src]="author.imageUrl"
-                    style="width: 100px; height: 150px;"
-                  ></ion-img>
+                  >
                 </div>
               </td>
               <td>{{author.firstName}}</td>

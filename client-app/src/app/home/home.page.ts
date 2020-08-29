@@ -21,6 +21,7 @@ export class HomePage implements OnInit {
   searchText: string = "";
 
   userRole:string = '';
+  isAuthenticated: boolean = false;
   
   constructor(
     private authService:AuthService,
@@ -42,6 +43,9 @@ export class HomePage implements OnInit {
     })
     this.authService.role.subscribe(role=>{
       this.userRole = role;
+    })
+    this.authService.userIsAuthenticated.subscribe(isAuthenticated => {
+      this.isAuthenticated = isAuthenticated;
     })
   }
 
@@ -83,5 +87,9 @@ export class HomePage implements OnInit {
 
   onCartClicked(){
     this.cartService.getItems();
+  }
+
+  onLogout(){
+    this.authService.logout();
   }
 }

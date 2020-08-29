@@ -16,9 +16,13 @@
       </ion-col>
       <ion-col size-lg="8"></ion-col>
       <ion-col size-lg="1" class="ion-no-padding">
-        <ion-chip color="primary" [routerLink]="['/', 'auth']">
+        <ion-chip *ngIf="!isAuthenticated" color="primary" [routerLink]="['/', 'auth']">
           <ion-icon name="person"></ion-icon>
           <ion-label>PRIJAVA</ion-label>
+        </ion-chip>
+        <ion-chip *ngIf="isAuthenticated" color="primary" (click)="onLogout()">
+          <ion-icon name="person"></ion-icon>
+          <ion-label>ODJAVI SE</ion-label>
         </ion-chip>
       </ion-col>
       <ion-col size-lg="1" *ngIf="userRole === 'USER'" class="ion-no-padding">

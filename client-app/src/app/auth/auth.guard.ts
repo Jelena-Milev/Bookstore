@@ -1,29 +1,35 @@
-import { Injectable } from '@angular/core';
-import { CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { AuthService } from './auth.service';
-import { take, switchMap, tap } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import {
+  CanLoad,
+  Route,
+  UrlSegment,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  UrlTree,
+  Router,
+} from "@angular/router";
+import { Observable, of } from "rxjs";
+import { AuthService } from "./auth.service";
+import { take, switchMap, tap } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthGuard implements CanLoad {
-  constructor(private authService:AuthService, private router:Router){}
+  constructor(private authService: AuthService, private router: Router) {}
   canLoad(
     route: Route,
-    segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authService.userIsAuthenticated.pipe(
-      take(1),
-      switchMap(isAuthenticated => {
-        if(!isAuthenticated){
-          return this.authService.autoLogin();
-        }else{
-          return of(isAuthenticated);
-        }
-      }),
-      tap(isAuthenticated=>{
-        if(!isAuthenticated){
-          this.router.navigate(['/', 'home']);
+    segments: UrlSegment[]
+  ): Observable<boolean> | Promise<boolean> | boolean {
+
+    if(route.path === 'home'){
+      this.authService.autoLogin().subscribe();
+      return true;
+    }
+    return this.authService.roleMatch(route.data.role).pipe(
+      tap((canLoad) => {
+        if (!canLoad) {
+          this.router.navigate(["/", "home"]);
         }
       })
     );

@@ -39,6 +39,7 @@ export class BooksService {
       }),
       tap((books) => {
         this._books.next(books);
+        console.log(books)
       })
     );
   }

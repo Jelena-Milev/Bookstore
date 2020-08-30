@@ -35,8 +35,7 @@ export class AuthorFormComponent implements OnInit {
         firstName: this.authorForm.value['firstName'],
         lastName: this.authorForm.value['lastName'],
         biography: this.authorForm.value['bio'],
-        // image: this.imageSelected
-        image: ""
+        image: this.imageSelected
       }
     },'confirm');
   }

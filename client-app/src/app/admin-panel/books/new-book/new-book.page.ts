@@ -9,6 +9,8 @@ import { Publisher } from "../../publishers/publisher.model";
 import { BooksService } from "../books.service";
 import { LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ImageService } from '../../image.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: "app-new-book",
@@ -51,6 +53,7 @@ export class NewBookPage implements OnInit {
     private genresService: GenresService,
     private authorsService: AuthorsService,
     private publishersService: PublishersService,
+    private imageService: ImageService,
     private bookService: BooksService,
     private loadingCtrl: LoadingController,
     private router: Router
@@ -90,25 +93,29 @@ export class NewBookPage implements OnInit {
     const authorsIds = this.bookForm.get("authorsIds").value;
     const genresIds = this.bookForm.get("genresIds").value;
     const inStock = this.bookForm.get("inStock").value;
-    const imageUrl = "";
     const piecesAvailable = this.bookForm.get("piecesAvailable").value;
+    let imageUrl: string = '';
 
     this.loadingCtrl.create({message:'Cuvanje knjige'}).then((loadingElem)=>{
       loadingElem.present();
-      this.bookService.saveBook(
-        isbn,
-        title,
-        price,
-        numberOfPages,
-        binding,
-        publicationYear,
-        description,
-        publisherId,
-        authorsIds,
-        genresIds,
-        inStock,
-        imageUrl,
-        piecesAvailable,
+      this.imageService.uploadImage(this.imageSelected).pipe(
+        switchMap(uploadRes=>{
+          return this.bookService.saveBook(
+            isbn,
+            title,
+            price,
+            numberOfPages,
+            binding,
+            publicationYear,
+            description,
+            publisherId,
+            authorsIds,
+            genresIds,
+            inStock,
+            uploadRes.imageUrl,
+            piecesAvailable,
+          )
+        })
       ).subscribe(()=>{
         loadingElem.remove();
         this.router.navigate(['admin-panel', 'tabs', 'books']);

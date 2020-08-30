@@ -10,6 +10,8 @@ import { Author } from "../../authors/author.model";
 import { Genre } from "../../genres/genre.model";
 import { Publisher } from "../../publishers/publisher.model";
 import { Book } from "../book.model";
+import { ImageService } from '../../image.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: "app-edit-book",
@@ -57,6 +59,7 @@ export class EditBookPage implements OnInit {
     private authorsService: AuthorsService,
     private publishersService: PublishersService,
     private bookService: BooksService,
+    private imageService: ImageService,
     private loadingCtrl: LoadingController,
     private router: Router
   ) {}
@@ -109,31 +112,35 @@ export class EditBookPage implements OnInit {
     const authorsIds = this.bookForm.get("authorsIds").value;
     const genresIds = this.bookForm.get("genresIds").value;
     const inStock = this.bookForm.get("inStock").value;
-    const imageUrl = "";
     const piecesAvailable = this.bookForm.get("piecesAvailable").value;
 
     this.loadingCtrl
       .create({ message: "Cuvanje knjige" })
       .then((loadingElem) => {
         loadingElem.present();
-        this.bookService
-          .editBook(
-            this.bookToEdit.id,
-            isbn,
-            title,
-            price,
-            numberOfPages,
-            binding,
-            publicationYear,
-            description,
-            publisherId,
-            authorsIds,
-            genresIds,
-            inStock,
-            imageUrl,
-            piecesAvailable
-          )
-          .subscribe(
+        console.log(this.imageSelected);
+        this.imageService.uploadImage(this.imageSelected).pipe(
+          switchMap(uploadRes=>{
+            console.log(uploadRes);
+            return  this.bookService
+            .editBook(
+              this.bookToEdit.id,
+              isbn,
+              title,
+              price,
+              numberOfPages,
+              binding,
+              publicationYear,
+              description,
+              publisherId,
+              authorsIds,
+              genresIds,
+              inStock,
+              uploadRes.imageUrl,
+              piecesAvailable
+            )
+          })
+        ).subscribe(
             () => {
               loadingElem.remove();
               this.router.navigate(["admin-panel", "tabs", "books"]);

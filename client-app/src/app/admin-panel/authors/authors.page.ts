@@ -3,6 +3,8 @@ import { Author } from "./author.model";
 import { AuthorsService } from "./authors.service";
 import { ModalController, LoadingController } from "@ionic/angular";
 import { AuthorFormComponent } from "./author-form/author-form.component";
+import { ImageService } from '../image.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: "app-authors",
@@ -18,6 +20,7 @@ export class AuthorsPage implements OnInit {
   
   constructor(
     private authorsService: AuthorsService,
+    private imageService: ImageService,
     private modalCtrl: ModalController,
     private loadingCtrl: LoadingController
   ) {}
@@ -49,14 +52,17 @@ export class AuthorsPage implements OnInit {
             .create({ message: "Cuvanje autora..." })
             .then((loadingElem) => {
               loadingElem.present();
-              this.authorsService
-                .saveAuthor(
-                  resData.data.authorData.firstName,
-                  resData.data.authorData.lastName,
-                  resData.data.authorData.biography,
-                  resData.data.authorData.image
-                )
-                .subscribe(() => {
+              this.imageService.uploadImage(resData.data.authorData.image).pipe(
+                switchMap(uploadRes=>{
+                  return this.authorsService
+                  .saveAuthor(
+                    resData.data.authorData.firstName,
+                    resData.data.authorData.lastName,
+                    resData.data.authorData.biography,
+                    uploadRes.imageUrl
+                  )
+                })
+              ).subscribe(() => {
                   loadingElem.dismiss();
                 },
                 (error)=>{

@@ -161,7 +161,9 @@ public class BookServiceImpl implements BookService {
         bookEntity.setBinding(dto.getBinding());
         bookEntity.setPublicationYear(dto.getPublicationYear());
         bookEntity.setDescription(dto.getDescription());
-//        bookEntity.setInStock(dto.isInStock());
+        bookEntity.setImageUrl(dto.getImageUrl());
+        bookEntity.setInStock(dto.isInStock());
+//      pieces available changing
 
         final PublisherEntity publisher = this.publisherRepository.findById(dto.getPublisherId()).orElseThrow(() -> new EntityNotFoundException("Publisher", dto.getPublisherId()));
         bookEntity.setPublisher(publisher);

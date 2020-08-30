@@ -18,17 +18,15 @@ export class HomePage implements OnInit {
   genres: Genre[] = [];
   cp: number = 1;
   booksPerPage: number = 8;
-  searchText: string = "";
 
   userRole:string = '';
-  isAuthenticated: boolean = false;
+  
   
   constructor(
     private authService:AuthService,
     private booksService: BooksService,
     private genresService: GenresService,
     private loadingCtrl: LoadingController,
-    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -44,17 +42,12 @@ export class HomePage implements OnInit {
     this.authService.role.subscribe(role=>{
       this.userRole = role;
     })
-    this.authService.userIsAuthenticated.subscribe(isAuthenticated => {
-      this.isAuthenticated = isAuthenticated;
-    })
   }
 
   ionViewWillEnter() {
     this.booksService.getBestsellers().subscribe();
     this.booksService.getBooksInStock().subscribe();
     this.genresService.getGenres().subscribe();
-    // console.log(this.userRole);
-    console.log('home page view will enter')
   }
 
   onAllBooksSelected(){
@@ -74,22 +67,5 @@ export class HomePage implements OnInit {
         loadingEl.remove(); 
       })
     })
-  }
-
-  onSearch(){
-    this.loadingCtrl.create({message: "Ucitavanje knjiga..."}).then((loadingEl)=>{
-      loadingEl.present();
-      this.booksService.getBooksByTitle(this.searchText).subscribe(()=>{
-        loadingEl.remove(); 
-      })
-    })
-  }
-
-  onCartClicked(){
-    this.cartService.getItems();
-  }
-
-  onLogout(){
-    this.authService.logout();
   }
 }

@@ -8,6 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { BestsellerComponent } from './bestseller/bestseller.component';
 import { BookItemComponent } from './book-item/book-item.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HeaderComponent } from '../header/header.component';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HomePageRoutingModule,
     NgxPaginationModule
   ],
-  declarations: [HomePage, BestsellerComponent, BookItemComponent],
-  entryComponents: [BestsellerComponent, BookItemComponent]
+  declarations: [HomePage, BestsellerComponent, BookItemComponent, HeaderComponent],
+  entryComponents: [BestsellerComponent, BookItemComponent, HeaderComponent]
 })
 export class HomePageModule {}

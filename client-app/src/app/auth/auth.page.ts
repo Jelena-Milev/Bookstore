@@ -25,4 +25,8 @@ export class AuthPage implements OnInit {
   onLogout() {
     this.authService.logout();
   }
+
+  onSwitchToLogin(loginSegment: string){
+    this.segment = loginSegment;
+  }
 }

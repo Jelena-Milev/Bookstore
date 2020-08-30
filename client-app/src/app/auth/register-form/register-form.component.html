@@ -1,3 +1,90 @@
-<p>
-  register-form works!
-</p>
+<form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="login-form">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item class="register-form-item">
+          <ion-label position="floating">Email:</ion-label>
+          <ion-input type="text" formControlName="username"></ion-input>
+        </ion-item>
+        <ion-label class="register-form-item-label" *ngIf="registerForm.get('username').invalid && 
+        registerForm.get('username').touched">Morate uneti validan email.</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-item class="register-form-item">
+          <ion-label position="floating">Lozinka:</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <ion-label class="register-form-item-label" *ngIf="registerForm.get('password').invalid && 
+        registerForm.get('password').touched">Morate uneti lozinku dugu najmanje 8 karaktera.</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item class="register-form-item">
+          <ion-label position="floating">Ime:</ion-label>
+          <ion-input type="text" formControlName="firstName"></ion-input>
+        </ion-item>
+        <ion-label class="register-form-item-label" *ngIf="registerForm.get('firstName').invalid && 
+        registerForm.get('firstName').touched">Morate uneti ime.</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-item class="register-form-item">
+          <ion-label position="floating">Prezime:</ion-label>
+          <ion-input type="text" formControlName="lastName"></ion-input>
+        </ion-item>
+        <ion-label class="register-form-item-label" *ngIf="registerForm.get('lastName').invalid && 
+        registerForm.get('lastName').touched">Morate uneti prezime.</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item class="register-form-item">
+          <ion-label position="floating">Ulica i broj:</ion-label>
+          <ion-input type="text" formControlName="streetAndNo"></ion-input>
+        </ion-item>
+        <ion-label class="register-form-item-label" *ngIf="registerForm.get('streetAndNo').invalid && 
+        registerForm.get('streetAndNo').touched">Morate uneti ulicu i broj.</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-item class="register-form-item">
+          <ion-label position="floating">Grad:</ion-label>
+          <ion-input type="text" formControlName="city"></ion-input>
+        </ion-item>
+        <ion-label class="register-form-item-label" *ngIf="registerForm.get('city').invalid && 
+        registerForm.get('city').touched">Morate uneti naziv grada.</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item class="register-form-item">
+          <ion-label position="floating">Postanski broj:</ion-label>
+          <ion-input type="text" formControlName="zipCode"></ion-input>
+        </ion-item>
+        <ion-label class="register-form-item-label" *ngIf="registerForm.get('zipCode').invalid && 
+        registerForm.get('zipCode').touched">Morate uneti postanski broj grada.</ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-item class="register-form-item">
+          <ion-label position="floating">Telefon:</ion-label>
+          <ion-input type="text" formControlName="phone"></ion-input>
+        </ion-item>
+        <ion-label class="register-form-item-label" *ngIf="registerForm.get('phone').invalid && 
+        registerForm.get('phone').touched">Morate uneti broj telefona.</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div class="register-form-item" style="text-align: center;">
+          <ion-button type="submit" [disabled]="registerForm.invalid">
+            <ion-label>Prijava</ion-label>
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>
+

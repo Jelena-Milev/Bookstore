@@ -4,7 +4,7 @@ import { environment } from "src/environments/environment";
 import { BehaviorSubject, from, of } from "rxjs";
 import { tap, switchMap, map } from "rxjs/operators";
 import { User } from "./user.model";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
 
 interface AuthResponseData {
   expiresIn: number;
@@ -23,7 +23,7 @@ interface Authority {
 export class AuthService {
   private _role: BehaviorSubject<string> = new BehaviorSubject("");
   private _user = new BehaviorSubject<User>(null);
-  constructor(private http: HttpClient, private router:Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   get userIsAuthenticated() {
     return this._user.asObservable().pipe(
@@ -86,23 +86,27 @@ export class AuthService {
           tokenExpirationDate: string;
         };
         const expirationTime = new Date(parsedData.tokenExpirationDate);
-        if(expirationTime <= new Date()){
+        if (expirationTime <= new Date()) {
           return null;
         }
-        const user = new User(parsedData.userId, parsedData.role, parsedData.token, expirationTime);
+        const user = new User(
+          parsedData.userId,
+          parsedData.role,
+          parsedData.token,
+          expirationTime
+        );
         return user;
       }),
-      tap(user=>{
-        if(user){
+      tap((user) => {
+        if (user) {
           this._user.next(user);
         }
-      }), 
-      map(user=>{
+      }),
+      map((user) => {
         return !!user;
       })
     );
   }
-
 
   roleMatch(role: string) {
     return of(localStorage.getItem("authData")).pipe(
@@ -117,26 +121,30 @@ export class AuthService {
           tokenExpirationDate: string;
         };
         const expirationTime = new Date(parsedData.tokenExpirationDate);
-        if(expirationTime <= new Date()){
+        if (expirationTime <= new Date()) {
           return null;
         }
-        const user = new User(parsedData.userId, parsedData.role, parsedData.token, expirationTime);
+        const user = new User(
+          parsedData.userId,
+          parsedData.role,
+          parsedData.token,
+          expirationTime
+        );
         return user;
       }),
-      tap(user=>{
-        if(user){
+      tap((user) => {
+        if (user) {
           this._user.next(user);
         }
-      }), 
-      map(user=>{
-        if(user){
+      }),
+      map((user) => {
+        if (user) {
           return user.role === role;
         }
         return false;
       })
     );
   }
-
 
   login(username: string, password: string) {
     return this.http
@@ -166,11 +174,34 @@ export class AuthService {
       );
   }
 
-  logout(){
+  register(
+    username: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    streetNameAndNumber: string,
+    city: string,
+    zipCode: string,
+    phone: string
+  ) {
+    return this.http
+      .post(`${environment.apiUrl}/auth/register`, {
+        username,
+        password,
+        firstName,
+        lastName,
+        streetNameAndNumber,
+        city,
+        zipCode,
+        phone,
+      });
+  }
+
+  logout() {
     this._user.next(null);
-    localStorage.removeItem('authData');
+    localStorage.removeItem("authData");
     sessionStorage.clear();
-    this.router.navigate(['/', 'home']);
+    this.router.navigate(["/", "home"]);
   }
 
   private storeUserData(

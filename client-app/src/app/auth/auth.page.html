@@ -19,7 +19,7 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="6">
+      <ion-col size-lg="7">
         <ion-segment [(ngModel)]="segment">
           <ion-segment-button value="login"> Prijava </ion-segment-button>
           <ion-segment-button value="register">
@@ -28,7 +28,8 @@
         </ion-segment>
         <div class="segment-content" [ngSwitch]="segment">
           <app-login-form *ngSwitchCase="'login'"></app-login-form>
-          <app-register-form *ngSwitchCase="'register'"></app-register-form>
+          <app-register-form *ngSwitchCase="'register'"
+            (segment)="onSwitchToLogin($event)"></app-register-form>
         </div>
       </ion-col>
     </ion-row>

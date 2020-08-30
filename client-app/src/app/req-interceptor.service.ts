@@ -17,9 +17,20 @@ export class ReqInterceptorService implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    const storedData = localStorage.getItem('authData');
+    const parsedData = JSON.parse(storedData) as {
+      userId: string;
+      role: string;
+      token: string;
+      tokenExpirationDate: string;
+    };
+    let token = "";
+    if(parsedData){
+      token = parsedData.token;
+    }
     const modifiedRequest = req.clone({
       headers: req.headers
-        .set("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNTk4NzEzMDk5LCJleHAiOjE1OTg3OTk0OTl9.FoBmybkFlpLfpAhwqBB0PacDJNwPbeUblF3QQ0qtPSojyAeKRxowY5ze1wbtOwsuxlagMj77Ji4FT1PLpgLmsw")
+        .set("Authorization", `Bearer ${token}`)
     });
     return next.handle(modifiedRequest);
   }

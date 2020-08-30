@@ -30,10 +30,6 @@ export class BookDetailHeaderComponent implements OnInit {
     })
   }
 
-  ionViewWillEnter(){
-    this.authService.autoLogin().subscribe();
-  }
-
   onLogout(){
     this.authService.logout();
   }

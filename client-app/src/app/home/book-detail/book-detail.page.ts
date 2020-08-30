@@ -46,6 +46,10 @@ export class BookDetailPage implements OnInit {
     });
   }
 
+  ionViewWillEnter(){
+    this.authService.autoLogin().subscribe();
+  }
+
   incrementQty() {
     this.quantityForCart += 1;
   }

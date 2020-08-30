@@ -48,6 +48,7 @@ export class HomePage implements OnInit {
     this.booksService.getBestsellers().subscribe();
     this.booksService.getBooksInStock().subscribe();
     this.genresService.getGenres().subscribe();
+    this.authService.autoLogin().subscribe();
   }
 
   onAllBooksSelected(){

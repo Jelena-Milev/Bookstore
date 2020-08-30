@@ -30,10 +30,6 @@ export class HomeHeaderComponent implements OnInit {
     })
   }
 
-  ionViewWillEnter(){
-    this.authService.autoLogin().subscribe();
-  }
-
   onLogout(){
     this.authService.logout();
   }

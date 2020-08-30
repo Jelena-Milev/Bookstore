@@ -16,7 +16,7 @@ export class BooksService {
   private _bestsellers: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>(
     []
   );
-
+  private bestsellersToGet = 7;
   constructor(private http: HttpClient) {}
 
   get books() {
@@ -69,7 +69,7 @@ export class BooksService {
 
   getBestsellers() {
     return this.http
-      .get<Book[]>(`${environment.apiUrl}/books/best-sellers?number=10`)
+      .get<Book[]>(`${environment.apiUrl}/books/best-sellers?number=${this.bestsellersToGet}`)
       .pipe(
         map((res) => {
           res.forEach((book) => {

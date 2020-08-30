@@ -17,7 +17,7 @@ export class HomePage implements OnInit {
   books: Book[] = [];
   genres: Genre[] = [];
   cp: number = 1;
-  booksPerPage: number = 8;
+  booksPerPage: number = 9;
 
   userRole:string = '';
   

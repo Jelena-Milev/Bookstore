@@ -10,6 +10,10 @@
           <ion-icon name="home"></ion-icon>
           <ion-label>POCETNA</ion-label>
         </ion-chip>
+        <ion-chip *ngIf="userRole === 'ADMIN'" color="primary" [routerLink]="['/', 'admin-panel']">
+          <ion-icon name="create"></ion-icon>
+          <ion-label>PANEL</ion-label>
+        </ion-chip>
         <ion-chip *ngIf="userRole === 'USER'" color="primary" [routerLink]="['/', 'cart']">
           <ion-icon name="cart" class="cart"></ion-icon>
           <ion-badge color="primary">{{cartItemsCount}}</ion-badge>

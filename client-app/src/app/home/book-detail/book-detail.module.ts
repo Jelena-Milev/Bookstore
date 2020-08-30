@@ -8,6 +8,7 @@ import { BookDetailPageRoutingModule } from './book-detail-routing.module';
 
 import { BookDetailPage } from './book-detail.page';
 import { AuthorItemComponent } from './author-item/author-item.component';
+import { BookDetailHeaderComponent } from './book-detail-header/book-detail-header.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { AuthorItemComponent } from './author-item/author-item.component';
     IonicModule,
     BookDetailPageRoutingModule
   ],
-  declarations: [BookDetailPage, AuthorItemComponent],
-  entryComponents:[AuthorItemComponent]
+  declarations: [BookDetailPage, AuthorItemComponent, BookDetailHeaderComponent],
+  entryComponents:[AuthorItemComponent, BookDetailHeaderComponent]
 })
 export class BookDetailPageModule {}

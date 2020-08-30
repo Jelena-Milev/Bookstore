@@ -1,0 +1,24 @@
+<ion-toolbar>
+  <ion-row>
+    <ion-col size-lg="2">
+      <ion-title>Bookstore</ion-title>
+    </ion-col>
+    <ion-col size-lg="4"></ion-col>
+    <ion-col size-lg="6">
+      <div class="searchbar-col">
+        <ion-chip color="primary" [routerLink]="['/', 'home']">
+          <ion-icon name="home"></ion-icon>
+          <ion-label>POCETNA</ion-label>
+        </ion-chip>
+        <ion-chip color="primary" [routerLink]="['/', 'cart']">
+          <ion-icon name="library"></ion-icon>
+          <ion-label>PORUDZBINE</ion-label>
+        </ion-chip>
+        <ion-chip color="primary" (click)="onLogout()">
+          <ion-icon name="person"></ion-icon>
+          <ion-label>ODJAVI SE</ion-label>
+        </ion-chip>
+    </div>
+    </ion-col>
+  </ion-row>
+</ion-toolbar>

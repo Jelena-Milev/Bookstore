@@ -1,5 +1,5 @@
 ion-icon {
-  padding: 3px;;
+  padding: 3px;
 }
 
 ion-tab-button {
@@ -10,6 +10,13 @@ ion-tab-button {
   --color-selected: #3dc2ff;
 }
 
-ion-tab-bar{
+ion-tab-bar {
   height: 80px;
+}
+
+.header-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }

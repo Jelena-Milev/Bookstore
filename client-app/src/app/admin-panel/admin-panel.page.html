@@ -1,9 +1,25 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Admin panel
-    </ion-title>
+    <ion-row>
+      <ion-col size-lg="2">
+        <ion-title>Bookstore</ion-title>
+      </ion-col>
+      <ion-col size-lg="7"></ion-col>
+      <ion-col size-lg="3">
+        <div class="header-buttons">
+          <ion-chip color="primary" [routerLink]="['/', 'home']">
+            <ion-icon name="home"></ion-icon>
+            <ion-label>POCETNA</ion-label>
+          </ion-chip>
+          <ion-chip color="primary" (click)="onLogout()">
+            <ion-icon name="person"></ion-icon>
+            <ion-label>ODJAVI SE</ion-label>
+          </ion-chip>
+      </div>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
+  
 </ion-header>
 <ion-content>
   <ion-tabs>

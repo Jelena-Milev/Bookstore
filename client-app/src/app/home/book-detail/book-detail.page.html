@@ -1,12 +1,7 @@
-<ion-header>
-  <ion-toolbar>
-    
-    <ion-title *ngIf="!isLoading">{{bookToShow.title}}</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content >
-  <ion-grid style="margin-top:40px">
+  <ion-grid>
+    <!-- header -->
+    <app-book-detail-header></app-book-detail-header>
     <ion-row class="ion-justify-content-center">
       <!-- spinner -->
       <ion-col size-lg="4" style="text-align: center;">

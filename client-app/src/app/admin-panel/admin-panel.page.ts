@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -9,9 +10,12 @@ export class AdminPanelPage implements OnInit {
 
   selectedSegment:string = 'publishers';
   
-  constructor() { }
+  constructor(private authService:AuthService) { }
 
   ngOnInit() {
   }
 
+  onLogout(){
+    this.authService.logout();
+  }
 }

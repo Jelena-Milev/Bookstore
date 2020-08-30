@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { LoadingController } from '@ionic/angular';
-import { BooksService } from '../admin-panel/books/books.service';
+import { BooksService } from 'src/app/admin-panel/books/books.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  selector: 'app-home-header',
+  templateUrl: './home-header.component.html',
+  styleUrls: ['./home-header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HomeHeaderComponent implements OnInit {
 
   searchText: string = "";
 
@@ -17,8 +17,9 @@ export class HeaderComponent implements OnInit {
 
   userRole:string = '';
 
-  constructor(private authService:AuthService, private loadingCtrl: LoadingController,
-    private booksService: BooksService,) { }
+  constructor(private authService:AuthService, 
+              private loadingCtrl: LoadingController,
+              private booksService: BooksService,) { }
 
   ngOnInit() {
     this.authService.userIsAuthenticated.subscribe(isAuthenticated => {

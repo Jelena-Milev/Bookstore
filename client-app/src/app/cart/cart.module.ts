@@ -8,6 +8,7 @@ import { CartPageRoutingModule } from './cart-routing.module';
 
 import { CartPage } from './cart.page';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CartHeaderComponent } from './cart-header/cart-header.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxPaginationModule,
     CartPageRoutingModule
   ],
-  declarations: [CartPage]
+  declarations: [CartPage, CartHeaderComponent],
+  entryComponents: [CartHeaderComponent]
 })
 export class CartPageModule {}

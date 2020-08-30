@@ -21,6 +21,7 @@ export class LoginFormComponent implements OnInit {
     const username = this.loginForm.get('username').value;
     const password = this.loginForm.get('password').value;
     this.authService.login(username, password).subscribe(() => {
+      this.loginForm.reset();
       this.router.navigate(['/', 'home']);
     });
   }

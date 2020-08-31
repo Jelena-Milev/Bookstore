@@ -21,6 +21,7 @@ public class BookResponseDto {
     private String binding;
     private Integer publicationYear;
     private String description;
+    private String imageUrl;
     private boolean inStock;
     private PublisherResponseDto publisher;
     private List<AuthorResponseDto> authors;

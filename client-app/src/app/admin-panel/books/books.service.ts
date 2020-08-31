@@ -109,8 +109,7 @@ export class BooksService {
           return res;
         }),
         tap((books) => {
-          if(books.length!==0)
-            this._booksInStock.next(books);
+          this._booksInStock.next(books);
         })
       );
   }

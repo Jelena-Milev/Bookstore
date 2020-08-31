@@ -3,8 +3,15 @@
     <!-- header -->
     <app-home-header></app-home-header>
     
+    <ion-row class="ion-padding-top ion-justify-content-center">
+      <ion-col size-lg="7" class=""ion-text-center>
+        <div class="ion-text-center">
+          <ion-spinner *ngIf="isLoading" color="primary"></ion-spinner>
+        </div>
+      </ion-col>
+    </ion-row>
     <!-- MAIN content -->
-    <ion-row class="ion-padding-top left-padding ion-justify-content-center">
+    <ion-row *ngIf="!isLoading" class="ion-padding-top ion-justify-content-center">
       <!-- bestsellers -->
       <ion-col size-lg="2" class="ion-justify-content-center">
         <ion-list-header class="ion-no-padding">
@@ -27,19 +34,24 @@
       </ion-col>
       <!-- all books -->
       <ion-col size-lg="7" class="all-books-page-part">
+        <div>
         <ion-list-header class="ion-text-center ion-no-padding">
           <ion-title class="ion-no-padding">Svi naslovi</ion-title>
         </ion-list-header>
+        <div *ngIf="books.length === 0" class="no-books-message">
+          <ion-label>Nije pronadjena nijedna knjiga.</ion-label>
+        </div>
         <div *ngIf="books.length !== 0" class="books-container">
           <app-book-item *ngFor="let book of books | paginate: {itemsPerPage: booksPerPage, currentPage:cp}" [book]="book" [userRole]="userRole"></app-book-item>
         </div>
+      </div>
       </ion-col>
     </ion-row>
     <!-- pagination -->
-    <ion-row class="left-padding ion-justify-content-center">
+    <ion-row *ngIf="!isLoading" class="ion-justify-content-center">
       <ion-col size-lg="2" class="ion-padding"></ion-col>
       <ion-col size-lg="2" class="ion-padding"></ion-col>
-      <ion-col size-lg="7" class="left-padding pagination-row">
+      <ion-col size-lg="7" class="pagination-row">
         <pagination-controls
         previousLabel="Prethodna"
         nextLabel="Sledeca"

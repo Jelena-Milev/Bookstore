@@ -1,6 +1,6 @@
-// ion-col {
-//   border: 1px solid blue;
-// }
+ion-col {
+  border: 1px solid maroon;
+}
 
 .left-padding {
   padding-left: 50px;
@@ -11,13 +11,26 @@
 }
 
 .books-container {
-  display: inline-flex;
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: stretch;
+  justify-content: stretch;
+  flex-grow: 0;
+  flex-shrink: 0;
   // align-content: space-between;
 }
 
-.pagination-row{
+.pagination-row {
   text-align: center;
+}
+
+.all-books-page-part {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: flex-end;
+
+  ion-list-header{
+    margin-left: -25px;
+  }
 }

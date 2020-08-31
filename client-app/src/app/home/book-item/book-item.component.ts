@@ -24,7 +24,12 @@ export class BookItemComponent implements OnInit {
     event.stopPropagation();
     event.preventDefault();
     this.cartService.addItem(this.book, 1).subscribe(() => {
-      this.toastController
+      this.createToastMessage();
+    });
+  }
+
+  createToastMessage(){
+    this.toastController
         .create({
           message: "Knjiga je ubačena u korpu",
           buttons: [
@@ -42,11 +47,10 @@ export class BookItemComponent implements OnInit {
             },
           ],
           animated: true,
-          duration: 5000,
+          duration: 2000,
         })
         .then((toast) => {
           toast.present();
         });
-    });
   }
 }

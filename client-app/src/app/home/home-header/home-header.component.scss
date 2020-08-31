@@ -1,5 +1,5 @@
 // ion-col {
-//   border: 1px solid blue;
+//   border: 1px solid seagreen;
 // }
 
 // .header{
@@ -9,12 +9,17 @@
 .cart {
   font-size: 28px;
 }
+.header-buttons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
 
 .searchbar-col {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
 }
 
 .search-icon {
@@ -25,4 +30,10 @@
 ion-fab-button {
   width: 30px;
   height: 30px;
+  margin-left: 10px;
+  margin-right: 16px;
+}
+
+ion-chip{
+  margin-left: 10px;
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { BooksService } from 'src/app/admin-panel/books/books.service';
 
 @Component({
@@ -19,7 +19,8 @@ export class HomeHeaderComponent implements OnInit {
 
   constructor(private authService:AuthService, 
               private loadingCtrl: LoadingController,
-              private booksService: BooksService,) { }
+              private booksService: BooksService,
+              private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.authService.userIsAuthenticated.subscribe(isAuthenticated => {
@@ -37,9 +38,27 @@ export class HomeHeaderComponent implements OnInit {
   onSearch(){
     this.loadingCtrl.create({message: "Ucitavanje knjiga..."}).then((loadingEl)=>{
       loadingEl.present();
-      this.booksService.getBooksByTitle(this.searchText).subscribe(()=>{
+      this.booksService.getBooksByTitle(this.searchText).subscribe((books)=>{
         loadingEl.dismiss(); 
+        if(books.length === 0){
+          this.showNoBooksFoundAlert();
+        }
       })
+    })
+  }
+
+  showNoBooksFoundAlert(){
+    this.alertCtrl.create({
+      header: 'Pretraga',
+      message: 'Nije pronadjena nijedna knjiga',
+      buttons:[
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
+    }).then(alertEl=>{
+      alertEl.present();
     })
   }
 

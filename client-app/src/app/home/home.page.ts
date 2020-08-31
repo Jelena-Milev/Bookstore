@@ -3,8 +3,7 @@ import { Book } from "../admin-panel/books/book.model";
 import { BooksService } from "../admin-panel/books/books.service";
 import { GenresService } from "../admin-panel/genres/genres.service";
 import { Genre } from '../admin-panel/genres/genre.model';
-import { LoadingController } from '@ionic/angular';
-import { CartService } from '../cart/cart.service';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -20,8 +19,7 @@ export class HomePage implements OnInit {
   booksPerPage: number = 9;
 
   userRole:string = '';
-  
-  
+
   constructor(
     private authService:AuthService,
     private booksService: BooksService,

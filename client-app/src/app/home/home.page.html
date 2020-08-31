@@ -26,23 +26,20 @@
         </ion-list>
       </ion-col>
       <!-- all books -->
-      <ion-col size-lg="8">
-        <ion-list-header style="padding-left: 328px;">
-          <ion-title>Svi naslovi</ion-title>
+      <ion-col size-lg="7" class="all-books-page-part">
+        <ion-list-header class="ion-text-center ion-no-padding">
+          <ion-title class="ion-no-padding">Svi naslovi</ion-title>
         </ion-list-header>
-        <ion-label *ngIf="books.length === 0">
-          Nije pronadjen nijedan naslov.
-        </ion-label>
         <div *ngIf="books.length !== 0" class="books-container">
           <app-book-item *ngFor="let book of books | paginate: {itemsPerPage: booksPerPage, currentPage:cp}" [book]="book" [userRole]="userRole"></app-book-item>
         </div>
       </ion-col>
     </ion-row>
     <!-- pagination -->
-    <ion-row class="left-padding">
-      <ion-col size-lg="2" class="ion-padding">
-      </ion-col>
-      <ion-col size-lg="10" class="left-padding pagination-row">
+    <ion-row class="left-padding ion-justify-content-center">
+      <ion-col size-lg="2" class="ion-padding"></ion-col>
+      <ion-col size-lg="2" class="ion-padding"></ion-col>
+      <ion-col size-lg="7" class="left-padding pagination-row">
         <pagination-controls
         previousLabel="Prethodna"
         nextLabel="Sledeca"

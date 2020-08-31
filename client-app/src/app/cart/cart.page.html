@@ -8,6 +8,7 @@
         </div>
       </ion-col>
     </ion-row>
+    
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="1" class="cart-item-info header"
         ><ion-label>#</ion-label></ion-col
@@ -28,6 +29,17 @@
         ><ion-label>Brisanje</ion-label></ion-col
       >
     </ion-row>
+
+    <ion-row *ngIf="cartItems === null || cartItems.length === 0" 
+    class="ion-justify-content-center ion-padding">
+      <ion-col size-lg="8">
+        <div class="ion-text-center">
+          <ion-title>Vasa korpa je trenutno prazna.</ion-title>
+        </div>
+      </ion-col>
+    </ion-row>
+
+
     <ion-row
       *ngFor="let item of cartItems | paginate: {itemsPerPage: itemsPerPage, currentPage:cp}; index as i"
       class="ion-justify-content-center"
@@ -60,23 +72,25 @@
         </ion-fab-button>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-justify-content-center">
+    <ion-row *ngIf="cartItems !== null && cartItems.length !== 0" class="ion-justify-content-center">
       <ion-col size-lg="2" class="total-price-col"><ion-label>Ukupno total:</ion-label></ion-col>
-      <ion-col size-lg="4"></ion-col>
+      <ion-col size-lg="4" class="total-price-row-empty-col"></ion-col>
       <ion-col size-lg="1" class="total-price-col">{{totalPrice | number}}</ion-col>
-      <ion-col size-lg="1"> </ion-col>
+      <ion-col size-lg="1" class="total-price-row-empty-col"> </ion-col>
     </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="2">
-        <ion-button size="block" (click)="onBuyItems()" [disabled]="cartItems === null || cartItems.length <= 0">Kupi</ion-button>
-      </ion-col>
-    </ion-row>
+    
   </ion-grid>
 </ion-content>
 
 <ion-footer class="ion-no-border">
   <ion-toolbar>
     <ion-grid>
+      <ion-row *ngIf="cartItems !== null && cartItems.length !== 0" class="ion-justify-content-center">
+        <ion-col size-lg="2">
+          <ion-button size="block" (click)="onBuyItems()" 
+          [disabled]="cartItems === null || cartItems.length <= 0">Kupovina</ion-button>
+        </ion-col>
+      </ion-row>
       <ion-row class="ion-justify-content-center" *ngIf="!isLoading">
         <ion-col style="text-align: center" size-lg="8">
           <pagination-controls

@@ -25,6 +25,16 @@
         ><ion-label>Detalji</ion-label></ion-col
       >
     </ion-row>
+
+    <ion-row *ngIf="orders === null || orders.length === 0" 
+    class="ion-justify-content-center ion-padding">
+      <ion-col size-lg="8">
+        <div class="ion-text-center">
+          <ion-title>Niste kreirali porudzbina.</ion-title>
+        </div>
+      </ion-col>
+    </ion-row>
+
     <ion-row
       *ngFor="let order of orders | paginate: {itemsPerPage: itemsPerPage, currentPage:cp}; index as i"
       class="ion-justify-content-center"

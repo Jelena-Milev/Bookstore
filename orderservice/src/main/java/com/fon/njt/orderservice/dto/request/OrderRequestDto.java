@@ -17,7 +17,6 @@ import java.util.List;
 @Builder
 public class OrderRequestDto {
     @NotNull(message = "User id must not be null")
-    @Positive(message = "User id must be valid id")
     private String userId;
     @NotNull(message = "Order items must not be null")
     @NotEmpty(message = "Order items must not be empty")

@@ -1,6 +1,6 @@
-ion-col {
-  border: 1px solid maroon;
-}
+// ion-col {
+//   border: 1px solid maroon;
+// }
 
 .left-padding-genres {
   padding-left: 30px;
@@ -13,7 +13,6 @@ ion-col {
   justify-content: stretch;
   flex-grow: 0;
   flex-shrink: 0;
-  // align-content: space-between;
 }
 
 .pagination-row {
@@ -22,10 +21,6 @@ ion-col {
 
 .all-books-page-part {
   text-align: center;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: flex-start;
-  // align-items: center;
 
   ion-list-header{
     margin-left: -35px;

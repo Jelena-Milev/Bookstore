@@ -7,12 +7,11 @@ import com.fon.njt.orderservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -27,6 +26,13 @@ public class OrderController {
     public OrderController(OrderService orderService, AuthServiceAPI authServiceAPI) {
         this.orderService = orderService;
         this.authServiceAPI = authServiceAPI;
+    }
+
+    @GetMapping(path = "", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<OrderResponseDto>> getOrdersByUserId(@RequestParam final String userId){
+        final UserInfoDto userInfoDto = authServiceAPI.getUserInfo(userId);
+        final List<OrderResponseDto> result = orderService.getOrdersByUserId(userId, userInfoDto);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @PostMapping(path = "", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)

@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -62,6 +63,14 @@ public class OrderServiceImpl implements OrderService {
         final List<SoldItemRequestDto> soldItemRequestDtos = savedOrder.getItems().stream().map(item->new SoldItemRequestDto(item.getBookId(), item.getQuantity())).collect(Collectors.toList());
         storageAPI.updateBooksSold(soldItemRequestDtos);
         return mapper.mapToDto(savedOrder, userInfoDto);
+    }
+
+    @Override
+    public List<OrderResponseDto> getOrdersByUserId(String userId, UserInfoDto userInfoDto) {
+        final List<OrderEntity> orders = repository.findByUserIdEquals(userId);
+        final List<OrderResponseDto> orderResponseDtos = new ArrayList<>(orders.size());
+        orders.forEach(order->orderResponseDtos.add(mapper.mapToDto(order, userInfoDto)));
+        return orderResponseDtos;
     }
 
     private void calculateItemsPrices(OrderEntity order, List<BookResponseDto> books, List<StorageItemResponseDto> storageItems) {

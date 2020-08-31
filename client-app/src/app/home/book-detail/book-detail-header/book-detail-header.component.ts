@@ -10,16 +10,12 @@ import { BooksService } from 'src/app/admin-panel/books/books.service';
 })
 export class BookDetailHeaderComponent implements OnInit {
 
-  searchText: string = "";
-
   isAuthenticated: boolean = false;
   cartItemsCount: number = 0;
 
   userRole:string = '';
 
-  constructor(private authService:AuthService, 
-              private loadingCtrl: LoadingController,
-              private booksService: BooksService,) { }
+  constructor(private authService:AuthService,) { }
 
   ngOnInit() {
     this.authService.userIsAuthenticated.subscribe(isAuthenticated => {

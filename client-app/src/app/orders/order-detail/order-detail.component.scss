@@ -10,7 +10,13 @@
   font-weight: 700;
 }
 
-.cart-item-info {
+.order-info-book-label {
+  text-align: start;
+  border-top: 1px solid #dee2e6;
+  padding-left: 25px;
+}
+
+.order-info {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,25 +24,21 @@
   border-top: 1px solid #dee2e6;
 }
 
-.cart-item-info-book {
+.order-info-book{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   border-top: 1px solid #dee2e6;
-  padding-bottom: 10px;
-  padding-top: 10px;
-}
 
-ion-item {
-  img {
-    width: 70px !important;
+  img{
+    height: 80px; 
+    margin-right: 10px;
+  }
+
+  ion-item{
+    padding-left: 20px;
+    width: 100%;
   }
 }
 
-.total-price-col {
-  text-align: center;
-  border-top: 1px solid #dee2e6;
-  padding-top: 15px;
-  font-size: 18px;
-}

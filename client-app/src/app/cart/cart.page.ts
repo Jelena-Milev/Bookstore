@@ -59,14 +59,12 @@ export class CartPage implements OnInit {
   }
 
   onBuyItems() {
-    console.log("buy items");
     this.loadingCtrl
       .create({ message: "Porucivanje u toku..." })
       .then((loadingEl) => {
         loadingEl.present();
         this.ordersService.createOrder(this.cartItems).subscribe(
           (res) => {
-            console.log(res);
             sessionStorage.clear();
             this.router.navigate(["/", "orders"]);
             loadingEl.dismiss();

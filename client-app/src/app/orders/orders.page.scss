@@ -1,6 +1,6 @@
-ion-col {
-  border: 1px solid purple;
-}
+// ion-col {
+//   border: 1px solid salmon;
+// }
 
 .header {
   padding-bottom: 20px;
@@ -10,22 +10,12 @@ ion-col {
   font-weight: 700;
 }
 
-.cart-item-info {
+.order-info {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   border-top: 1px solid #dee2e6;
-}
-
-.cart-item-info-book {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  border-top: 1px solid #dee2e6;
-  padding-bottom: 10px;
-  padding-top: 10px;
 }
 
 ion-item {
@@ -34,12 +24,3 @@ ion-item {
   }
 }
 
-.cart-footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-top: 1px solid #dee2e6;
-  padding-top: 15px;
-  font-size: 18px;
-}

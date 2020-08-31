@@ -8,6 +8,8 @@ import { OrdersPageRoutingModule } from './orders-routing.module';
 
 import { OrdersPage } from './orders.page';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { OrdersHeaderComponent } from './orders-header/orders-header.component';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 
 @NgModule({
   imports: [
@@ -17,6 +19,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     OrdersPageRoutingModule,
     NgxPaginationModule
   ],
-  declarations: [OrdersPage]
+  declarations: [OrdersPage, OrdersHeaderComponent, OrderDetailComponent],
+  entryComponents: [OrdersHeaderComponent, OrderDetailComponent]
 })
 export class OrdersPageModule {}

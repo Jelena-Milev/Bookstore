@@ -118,10 +118,8 @@ export class EditBookPage implements OnInit {
       .create({ message: "Cuvanje knjige" })
       .then((loadingElem) => {
         loadingElem.present();
-        console.log(this.imageSelected);
         this.imageService.uploadImage(this.imageSelected).pipe(
           switchMap(uploadRes=>{
-            console.log(uploadRes);
             return  this.bookService
             .editBook(
               this.bookToEdit.id,

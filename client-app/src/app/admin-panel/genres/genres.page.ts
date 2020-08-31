@@ -41,7 +41,7 @@ export class GenresPage implements OnInit {
     this.loagindCtrl.create({message: 'Cuvanje zanra...'}).then((loadingElem)=>{
       loadingElem.present();
       this.genresService.saveGenre(this.genreForm.get("name").value).subscribe(()=>{
-        loadingElem.remove();
+        loadingElem.dismiss();
       });
     })    
   }

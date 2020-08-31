@@ -73,10 +73,10 @@ export class RegisterFormComponent implements OnInit {
               })
               .then((alertEl) => {
                 alertEl.present();
-                loadingEl.remove();
+                loadingEl.dismiss();
               });
           }, (err)=>{
-            loadingEl.remove();
+            loadingEl.dismiss();
             console.log(err);
           });
       });

@@ -55,7 +55,7 @@ export class HomePage implements OnInit {
     this.loadingCtrl.create({message: "Ucitavanje knjiga..."}).then((loadingEl)=>{
       loadingEl.present();
       this.booksService.getBooksInStock().subscribe(()=>{
-        loadingEl.remove(); 
+        loadingEl.dismiss(); 
       })
     })
     
@@ -65,7 +65,7 @@ export class HomePage implements OnInit {
     this.loadingCtrl.create({message: "Ucitavanje knjiga..."}).then((loadingEl)=>{
       loadingEl.present();
       this.booksService.getBooksByGenre(genre.id).subscribe(()=>{
-        loadingEl.remove(); 
+        loadingEl.dismiss(); 
       })
     })
   }

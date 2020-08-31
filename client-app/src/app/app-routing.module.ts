@@ -33,6 +33,15 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule)
   },
+  {
+    path: 'orders',
+    loadChildren: () => import('./orders/orders.module').then( m => m.OrdersPageModule),
+    canLoad: [AuthGuard],
+    data: {
+      role: 'USER'
+    }
+  },
+
 
 
 

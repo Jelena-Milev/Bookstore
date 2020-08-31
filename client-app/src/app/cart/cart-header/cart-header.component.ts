@@ -44,7 +44,7 @@ export class CartHeaderComponent implements OnInit {
         loadingEl.present();
         this.booksService.getBooksByTitle(this.searchText).subscribe(() => {
           this.router.navigate(['/', 'home']);
-          loadingEl.remove();
+          loadingEl.dismiss();
         });
       });
   }

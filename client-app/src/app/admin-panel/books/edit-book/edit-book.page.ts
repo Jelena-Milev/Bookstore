@@ -142,11 +142,11 @@ export class EditBookPage implements OnInit {
           })
         ).subscribe(
             () => {
-              loadingElem.remove();
+              loadingElem.dismiss();
               this.router.navigate(["admin-panel", "tabs", "books"]);
             },
             (error) => {
-              loadingElem.remove();
+              loadingElem.dismiss();
               this.router.navigate(["admin-panel", "tabs", "books"]);
             }
           );

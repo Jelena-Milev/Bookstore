@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { CartItem } from "./cart-item.model";
 import { CartService } from "./cart.service";
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from "../auth/auth.service";
+import { OrdersService } from "../orders/orders.service";
+import { LoadingController } from "@ionic/angular";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-cart",
@@ -15,7 +18,13 @@ export class CartPage implements OnInit {
   cp: number = 1;
   totalPrice: number = 0;
 
-  constructor(private cartService: CartService, private authService: AuthService,) {}
+  constructor(
+    private cartService: CartService,
+    private authService: AuthService,
+    private ordersService: OrdersService,
+    private loadingCtrl: LoadingController,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -31,7 +40,7 @@ export class CartPage implements OnInit {
 
   ionViewWillEnter() {
     this.authService.autoLogin().subscribe();
-    this.cartService.getItems().subscribe(()=>{
+    this.cartService.getItems().subscribe(() => {
       this.totalPrice = 0;
       this.cartItems.forEach((ci) => {
         this.totalPrice += ci.book.price * ci.quantity;
@@ -47,5 +56,26 @@ export class CartPage implements OnInit {
         this.totalPrice += ci.book.price * ci.quantity;
       });
     });
+  }
+
+  onBuyItems() {
+    console.log("buy items");
+    this.loadingCtrl
+      .create({ message: "Porucivanje u toku..." })
+      .then((loadingEl) => {
+        loadingEl.present();
+        this.ordersService.createOrder(this.cartItems).subscribe(
+          (res) => {
+            console.log(res);
+            sessionStorage.clear();
+            this.router.navigate(["/", "orders"]);
+            loadingEl.dismiss();
+          },
+          (error) => {
+            loadingEl.dismiss();
+            console.log(error);
+          }
+        );
+      });
   }
 }

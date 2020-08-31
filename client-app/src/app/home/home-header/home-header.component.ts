@@ -38,7 +38,7 @@ export class HomeHeaderComponent implements OnInit {
     this.loadingCtrl.create({message: "Ucitavanje knjiga..."}).then((loadingEl)=>{
       loadingEl.present();
       this.booksService.getBooksByTitle(this.searchText).subscribe(()=>{
-        loadingEl.remove(); 
+        loadingEl.dismiss(); 
       })
     })
   }

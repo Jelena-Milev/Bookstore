@@ -90,7 +90,7 @@ export class BooksPage implements OnInit {
             }).then(loadingEl=>{
               loadingEl.present();
               this.booksService.deleteBook(book.id).subscribe(res=>{
-                loadingEl.remove();
+                loadingEl.dismiss();
                 this.router.navigate(['admin-panel', 'tabs', 'books']);
               })
             })            

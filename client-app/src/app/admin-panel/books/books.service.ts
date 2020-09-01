@@ -5,6 +5,12 @@ import { BehaviorSubject } from "rxjs";
 import { environment } from "src/environments/environment";
 import { tap, map, switchMap, take } from "rxjs/operators";
 
+interface StorageItem {
+  bookId: number;
+  piecesAvailable: number;
+  inStock: boolean;
+}
+
 @Injectable({
   providedIn: "root",
 })
@@ -58,17 +64,35 @@ export class BooksService {
   }
 
   getBookById(bookId: string) {
-    return this.http.get<Book>(`${environment.apiUrl}/books/${bookId}`).pipe(
-      map((book) => {
-        this.mapGenresAndAuthorsNames(book);
-        return book;
-      })
-    );
+    let piecesAvailable: number;
+    return this.http
+      .get<StorageItem>(
+        `${environment.apiUrl}/books/${bookId}/pieces-available`
+      )
+      .pipe(
+        switchMap((res) => {
+          piecesAvailable = res.piecesAvailable;
+          return this.http.get<Book>(`${environment.apiUrl}/books/${bookId}`);
+        }),
+        map((book) => {
+          this.mapGenresAndAuthorsNames(book);
+          book.piecesAvailable = piecesAvailable;
+          return book;
+        })
+      );
+    // return this.http.get<Book>(`${environment.apiUrl}/books/${bookId}`).pipe(
+    //   map((book) => {
+    //     this.mapGenresAndAuthorsNames(book);
+    //     return book;
+    //   })
+    // );
   }
 
   getBestsellers() {
     return this.http
-      .get<Book[]>(`${environment.apiUrl}/books/best-sellers?number=${this.bestsellersToGet}`)
+      .get<Book[]>(
+        `${environment.apiUrl}/books/best-sellers?number=${this.bestsellersToGet}`
+      )
       .pipe(
         map((res) => {
           res.forEach((book) => {

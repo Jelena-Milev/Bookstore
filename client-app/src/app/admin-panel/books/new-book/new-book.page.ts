@@ -92,9 +92,13 @@ export class NewBookPage implements OnInit {
     const publisherId = this.bookForm.get("publisherId").value;
     const authorsIds = this.bookForm.get("authorsIds").value;
     const genresIds = this.bookForm.get("genresIds").value;
-    const inStock = this.bookForm.get("inStock").value;
     const piecesAvailable = this.bookForm.get("piecesAvailable").value;
-    let imageUrl: string = '';
+    let inStock: boolean;
+    if(piecesAvailable <= 0){
+      inStock = false;
+    }else{
+      inStock = this.bookForm.get("inStock").value;
+    }
 
     this.loadingCtrl.create({message:'Cuvanje knjige'}).then((loadingElem)=>{
       loadingElem.present();

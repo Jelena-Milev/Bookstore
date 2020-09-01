@@ -19,5 +19,6 @@ export class Book{
     public genres: Genre[],
     public authorsNames?: string[],
     public genresNames?: string[],
+    public piecesAvailable?: number
   ){ }
 }

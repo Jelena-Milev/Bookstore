@@ -111,8 +111,13 @@ export class EditBookPage implements OnInit {
     const publisherId = this.bookForm.get("publisherId").value;
     const authorsIds = this.bookForm.get("authorsIds").value;
     const genresIds = this.bookForm.get("genresIds").value;
-    const inStock = this.bookForm.get("inStock").value;
     const piecesAvailable = this.bookForm.get("piecesAvailable").value;
+    let inStock: boolean;
+    if(piecesAvailable <= 0){
+      inStock = false;
+    }else{
+      inStock = this.bookForm.get("inStock").value;
+    }
 
     this.loadingCtrl
       .create({ message: "Cuvanje knjige" })
@@ -193,7 +198,7 @@ export class EditBookPage implements OnInit {
     this.bookForm.get("description").setValue(this.bookToEdit.description);
     this.bookForm.get("publisherId").setValue(this.bookToEdit.publisher.id);
     this.bookForm.get("inStock").setValue(this.bookToEdit.inStock);
-    this.bookForm.get('piecesAvailable').setValue(500);
+    this.bookForm.get('piecesAvailable').setValue(this.bookToEdit.piecesAvailable);
     const auhtorsIds = this.bookToEdit.authors.map((author) => author.id);
     const genresIds = this.bookToEdit.genres.map((genre) => genre.id);
     this.bookForm.get("authorsIds").setValue(auhtorsIds);

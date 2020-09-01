@@ -15,7 +15,6 @@ public class StorageItemRequestDto {
     @Positive(message = "Book id must be valid id")
     private Long bookId;
     @NotNull(message = "Number of book pieces available must not be null")
-    @Positive(message = "Number of book pieces available must be larger than zero")
     private Integer piecesAvailable;
     private boolean inStock;
 }

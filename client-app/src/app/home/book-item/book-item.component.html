@@ -1,9 +1,9 @@
 <ion-item [routerLink]="['books', book.id]" lines="none">
 <div class="container ion-padding">
   <img class="flex-item book-img" [src]="book.imageUrl" >
-  <ion-label class="flex-item" style="text-align: center;">
+  <ion-label class="flex-item ion-text-wrap" style="text-align: center;">
     <h2>{{ book.title }}</h2>
-    <p>{{book.authorsNames}}</p>
+    <p style="white-space: pre-line;">{{book.authorsNames}}</p>
   </ion-label>
   <ion-title class="flex-item" >{{book.price | currency:'EUR':'symbol-narrow'}}</ion-title>
   <ion-chip *ngIf="userRole==='USER'" class="flex-item" color="primary" (click)="addToCart($event)">

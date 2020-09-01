@@ -55,7 +55,6 @@ export class HomePage implements OnInit {
       .pipe(
         tap((res) => {
           this.isLoading = false;
-          console.log(res);
         })
       )
       .subscribe();

@@ -131,7 +131,7 @@ public class BookServiceImpl implements BookService {
             throw new EntityAlreadyExistsException("Book");
         updateBook(bookToUpdate, dto);
         final BookEntity updatedBook = bookRepository.save(bookToUpdate);
-        this.bookStorageAPI.updatePiecesAvailable(updatedBook.getId(), new StorageItemRequestDto(id, dto.getPiecesAvailable(), updatedBook.isInStock()));
+        this.bookStorageAPI.updatePiecesAvailable(updatedBook.getId(), new StorageItemRequestDto(id, dto.getPiecesAvailable(), dto.isInStock()));
         return mapper.mapToDto(updatedBook);
     }
 

@@ -65,6 +65,7 @@ public class StorageServiceImpl implements StorageService {
     public StorageItemResponseDto updatePiecesAvailable(Long id, StorageItemRequestDto dto) {
         final StorageItemEntity storageItemToUpdate = repository.findById(id).orElseThrow(()->new EntityNotFoundException("Storage item for book", id));
         storageItemToUpdate.setPiecesAvailable(dto.getPiecesAvailable());
+        storageItemToUpdate.setInStock(dto.isInStock());
         final StorageItemEntity updatedStorageItem = repository.save(storageItemToUpdate);
         return mapper.mapToDto(updatedStorageItem);
     }

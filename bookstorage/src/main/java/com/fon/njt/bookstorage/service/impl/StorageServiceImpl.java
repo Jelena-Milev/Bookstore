@@ -40,6 +40,12 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
+    public StorageItemResponseDto getPiecesAvailable(Long id) {
+        final StorageItemEntity storageItem = repository.findById(id).orElseThrow(()->new EntityNotFoundException("Storage item for book", id));
+        return mapper.mapToDto(storageItem);
+    }
+
+    @Override
     public List<Long> getBestsellersIds(Integer numberOfBestsellers) {
         final List<Long> bestSellersIds = repository.getBestSellerIds(numberOfBestsellers);
         return bestSellersIds;

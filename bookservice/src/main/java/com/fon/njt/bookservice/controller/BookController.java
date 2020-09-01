@@ -3,6 +3,7 @@ package com.fon.njt.bookservice.controller;
 import com.fon.njt.bookservice.controller.bookstorage.BookStorageAPI;
 import com.fon.njt.bookservice.dto.request.BookRequestDto;
 import com.fon.njt.bookservice.dto.response.BookResponseDto;
+import com.fon.njt.bookservice.dto.response.StorageItemResponseDto;
 import com.fon.njt.bookservice.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,12 @@ public class BookController {
     @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity getById(@PathVariable final Long id){
         BookResponseDto result = service.getById(id);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "{id}/pieces-available", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity getPiecesAvailableById(@PathVariable final Long id){
+        StorageItemResponseDto result = bookStorageAPI.getBookPiecesAvailable(id);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

@@ -21,4 +21,6 @@ public interface StorageService {
     StorageItemResponseDto getById(Long id);
 
     List<StorageItemResponseDto> getByIds(List<Long> bookIds);
+
+    StorageItemResponseDto getPiecesAvailable(Long id);
 }

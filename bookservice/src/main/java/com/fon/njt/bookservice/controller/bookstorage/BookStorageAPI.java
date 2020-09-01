@@ -3,6 +3,7 @@ package com.fon.njt.bookservice.controller.bookstorage;
 import com.fon.njt.bookservice.dto.request.StorageItemRequestDto;
 import com.fon.njt.bookservice.dto.response.StorageItemResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,9 @@ public interface BookStorageAPI {
 
     @GetMapping(path = "items/bestsellers", produces = APPLICATION_JSON_VALUE)
     List<Long> getBestsellersIds(@RequestParam(required = false) final Integer numberOfBestsellers);
+
+    @GetMapping(path = "items/{id}/pieces-available", produces = APPLICATION_JSON_VALUE)
+    StorageItemResponseDto getBookPiecesAvailable(@PathVariable final Long id);
 
     @PostMapping(path = "items", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     StorageItemResponseDto createBookStorageItem(@RequestBody final StorageItemRequestDto dto);

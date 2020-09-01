@@ -17,6 +17,11 @@ public class BookStorageAPIFallback implements BookStorageAPI {
     }
 
     @Override
+    public StorageItemResponseDto getBookPiecesAvailable(Long id) {
+        return null;
+    }
+
+    @Override
     public StorageItemResponseDto createBookStorageItem(StorageItemRequestDto dto) {
         return null;
     }

@@ -40,7 +40,7 @@ export class NewBookPage implements OnInit {
       Validators.minLength(1),
     ]),
     inStock: new FormControl(),
-    piecesAvailable: new FormControl(),
+    piecesAvailable: new FormControl(0, Validators.min(0)),
   });
 
   authors: Author[] = [];
@@ -98,32 +98,58 @@ export class NewBookPage implements OnInit {
 
     this.loadingCtrl.create({message:'Cuvanje knjige'}).then((loadingElem)=>{
       loadingElem.present();
-      this.imageService.uploadImage(this.imageSelected).pipe(
-        switchMap(uploadRes=>{
-          return this.bookService.saveBook(
-            isbn,
-            title,
-            price,
-            numberOfPages,
-            binding,
-            publicationYear,
-            description,
-            publisherId,
-            authorsIds,
-            genresIds,
-            inStock,
-            uploadRes.imageUrl,
-            piecesAvailable,
-          )
-        })
-      ).subscribe(()=>{
-        loadingElem.dismiss();
-        this.router.navigate(['admin-panel', 'tabs', 'books']);
-      },
-      (error)=>{
-        loadingElem.dismiss();
-        this.router.navigate(['admin-panel', 'tabs', 'books']);
-      });
+      if(this.imageSelected !== undefined){
+        this.imageService.uploadImage(this.imageSelected).pipe(
+          switchMap(uploadRes=>{
+            return this.bookService.saveBook(
+              isbn,
+              title,
+              price,
+              numberOfPages,
+              binding,
+              publicationYear,
+              description,
+              publisherId,
+              authorsIds,
+              genresIds,
+              inStock,
+              uploadRes.imageUrl,
+              piecesAvailable,
+            )
+          })
+        ).subscribe(()=>{
+          loadingElem.dismiss();
+          this.router.navigate(['admin-panel', 'tabs', 'books']);
+        },
+        (error)=>{
+          loadingElem.dismiss();
+          this.router.navigate(['admin-panel', 'tabs', 'books']);
+        });
+      }else{
+        return this.bookService.saveBook(
+          isbn,
+          title,
+          price,
+          numberOfPages,
+          binding,
+          publicationYear,
+          description,
+          publisherId,
+          authorsIds,
+          genresIds,
+          inStock,
+          "",
+          piecesAvailable,
+        ).subscribe(()=>{
+      loadingElem.dismiss();
+      this.router.navigate(['admin-panel', 'tabs', 'books']);
+    },
+    (error)=>{
+      loadingElem.dismiss();
+      this.router.navigate(['admin-panel', 'tabs', 'books']);
+    });
+      }
+      
     })
     
   }

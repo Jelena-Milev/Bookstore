@@ -118,36 +118,66 @@ export class EditBookPage implements OnInit {
       .create({ message: "Cuvanje knjige" })
       .then((loadingElem) => {
         loadingElem.present();
-        this.imageService.uploadImage(this.imageSelected).pipe(
-          switchMap(uploadRes=>{
-            return  this.bookService
-            .editBook(
-              this.bookToEdit.id,
-              isbn,
-              title,
-              price,
-              numberOfPages,
-              binding,
-              publicationYear,
-              description,
-              publisherId,
-              authorsIds,
-              genresIds,
-              inStock,
-              uploadRes.imageUrl,
-              piecesAvailable
-            )
-          })
-        ).subscribe(
-            () => {
-              loadingElem.dismiss();
-              this.router.navigate(["admin-panel", "tabs", "books"]);
-            },
-            (error) => {
-              loadingElem.dismiss();
-              this.router.navigate(["admin-panel", "tabs", "books"]);
-            }
-          );
+        if(this.imageSelected !== undefined){
+          this.imageService.uploadImage(this.imageSelected).pipe(
+            switchMap(uploadRes=>{
+              return  this.bookService
+              .editBook(
+                this.bookToEdit.id,
+                isbn,
+                title,
+                price,
+                numberOfPages,
+                binding,
+                publicationYear,
+                description,
+                publisherId,
+                authorsIds,
+                genresIds,
+                inStock,
+                uploadRes.imageUrl,
+                piecesAvailable
+              )
+            })
+          ).subscribe(
+              () => {
+                loadingElem.dismiss();
+                this.router.navigate(["admin-panel", "tabs", "books"]);
+              },
+              (error) => {
+                loadingElem.dismiss();
+                this.router.navigate(["admin-panel", "tabs", "books"]);
+              }
+            );
+        }else{
+          return this.bookService
+              .editBook(
+                this.bookToEdit.id,
+                isbn,
+                title,
+                price,
+                numberOfPages,
+                binding,
+                publicationYear,
+                description,
+                publisherId,
+                authorsIds,
+                genresIds,
+                inStock,
+                this.bookToEdit.imageUrl,
+                piecesAvailable
+              ).subscribe(
+              () => {
+                loadingElem.dismiss();
+                this.router.navigate(["admin-panel", "tabs", "books"]);
+              },
+              (error) => {
+                loadingElem.dismiss();
+                this.router.navigate(["admin-panel", "tabs", "books"]);
+              }
+            );
+        }
+        
       });
   }
 

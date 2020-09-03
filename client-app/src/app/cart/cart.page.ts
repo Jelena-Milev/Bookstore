@@ -14,7 +14,7 @@ import { Router } from "@angular/router";
 export class CartPage implements OnInit {
   cartItems: CartItem[];
   isLoading: boolean;
-  itemsPerPage: number = 7;
+  itemsPerPage: number = 3;
   cp: number = 1;
   totalPrice: number = 0;
 

@@ -92,6 +92,10 @@ export class BooksPage implements OnInit {
               this.booksService.deleteBook(book.id).subscribe(res=>{
                 loadingEl.dismiss();
                 this.router.navigate(['admin-panel', 'tabs', 'books']);
+              },
+              (errorRes)=>{
+                loadingEl.dismiss();
+                this.showErrorMessage('Greska pri brisanju knjige', errorRes.error.message);
               })
             })            
           }
@@ -99,6 +103,21 @@ export class BooksPage implements OnInit {
       ]
     }).then(alert=>{
       alert.present();
+    })
+  }
+
+  private showErrorMessage(headerMsg: string, errorMsg: string){
+    this.alertCtrl.create({
+      header: headerMsg,
+      message: errorMsg,
+      buttons:[
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
+    }).then(alertEl=>{
+      alertEl.present();
     })
   }
 }

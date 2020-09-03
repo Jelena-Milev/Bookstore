@@ -9,7 +9,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class AuthorFormComponent implements OnInit {
   
-  private imageSelected: File;
+  private imageSelected: File = null;
 
   authorForm: FormGroup = new FormGroup({
     firstName: new FormControl(null, Validators.required),

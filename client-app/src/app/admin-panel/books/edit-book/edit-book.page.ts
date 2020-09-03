@@ -3,7 +3,7 @@ import { GenresService } from "../../genres/genres.service";
 import { AuthorsService } from "../../authors/authors.service";
 import { PublishersService } from "../../publishers/publishers.service";
 import { BooksService } from "../books.service";
-import { LoadingController } from "@ionic/angular";
+import { LoadingController, AlertController } from "@ionic/angular";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Author } from "../../authors/author.model";
@@ -61,6 +61,7 @@ export class EditBookPage implements OnInit {
     private bookService: BooksService,
     private imageService: ImageService,
     private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController,
     private router: Router
   ) {}
 
@@ -149,9 +150,10 @@ export class EditBookPage implements OnInit {
                 loadingElem.dismiss();
                 this.router.navigate(["admin-panel", "tabs", "books"]);
               },
-              (error) => {
+              (errorRes)=>{
                 loadingElem.dismiss();
-                this.router.navigate(["admin-panel", "tabs", "books"]);
+                // this.router.navigate(["admin-panel", "tabs", "books"]);
+                this.showErrorMessage('Greska pri izmeni knjige', errorRes.error.message);
               }
             );
         }else{
@@ -176,9 +178,10 @@ export class EditBookPage implements OnInit {
                 loadingElem.dismiss();
                 this.router.navigate(["admin-panel", "tabs", "books"]);
               },
-              (error) => {
+              (errorRes)=>{
                 loadingElem.dismiss();
-                this.router.navigate(["admin-panel", "tabs", "books"]);
+                // this.router.navigate(["admin-panel", "tabs", "books"]);
+                this.showErrorMessage('Greska pri izmeni knjige', errorRes.error.message);
               }
             );
         }
@@ -203,5 +206,20 @@ export class EditBookPage implements OnInit {
     const genresIds = this.bookToEdit.genres.map((genre) => genre.id);
     this.bookForm.get("authorsIds").setValue(auhtorsIds);
     this.bookForm.get("genresIds").setValue(genresIds);
+  }
+
+  private showErrorMessage(headerMsg: string, errorMsg: string){
+    this.alertCtrl.create({
+      header: headerMsg,
+      message: errorMsg,
+      buttons:[
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
+    }).then(alertEl=>{
+      alertEl.present();
+    })
   }
 }

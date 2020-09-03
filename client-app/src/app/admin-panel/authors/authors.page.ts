@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Author } from "./author.model";
 import { AuthorsService } from "./authors.service";
-import { ModalController, LoadingController } from "@ionic/angular";
+import { ModalController, LoadingController, AlertController } from "@ionic/angular";
 import { AuthorFormComponent } from "./author-form/author-form.component";
 import { ImageService } from '../image.service';
 import { switchMap } from 'rxjs/operators';
@@ -22,7 +22,8 @@ export class AuthorsPage implements OnInit {
     private authorsService: AuthorsService,
     private imageService: ImageService,
     private modalCtrl: ModalController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -48,28 +49,61 @@ export class AuthorsPage implements OnInit {
       })
       .then((resData) => {
         if (resData.role === "confirm") {
+          const imageToUpload = resData.data.authorData.image; 
           this.loadingCtrl
             .create({ message: "Cuvanje autora..." })
             .then((loadingElem) => {
               loadingElem.present();
-              this.imageService.uploadImage(resData.data.authorData.image).pipe(
-                switchMap(uploadRes=>{
-                  return this.authorsService
-                  .saveAuthor(
-                    resData.data.authorData.firstName,
-                    resData.data.authorData.lastName,
-                    resData.data.authorData.biography,
-                    uploadRes.imageUrl
-                  )
-                })
-              ).subscribe(() => {
-                  loadingElem.dismiss();
-                },
-                (error)=>{
-                  loadingElem.dismiss();
-                });
+              if(imageToUpload !== null && imageToUpload !== undefined){
+                this.imageService.uploadImage(imageToUpload).pipe(
+                  switchMap(uploadRes=>{
+                    return this.authorsService
+                    .saveAuthor(
+                      resData.data.authorData.firstName,
+                      resData.data.authorData.lastName,
+                      resData.data.authorData.biography,
+                      uploadRes.imageUrl
+                    )
+                  })
+                ).subscribe(() => {
+                    loadingElem.dismiss();
+                  },
+                  (errorRes)=>{
+                    loadingElem.dismiss();
+                    this.showErrorMessage(errorRes.error.message);
+                  });
+              }else{
+                return this.authorsService
+                    .saveAuthor(
+                      resData.data.authorData.firstName,
+                      resData.data.authorData.lastName,
+                      resData.data.authorData.biography,
+                      ""
+                    ).subscribe(() => {
+                    loadingElem.dismiss();
+                  },
+                  (errorRes)=>{
+                    loadingElem.dismiss();
+                    this.showErrorMessage(errorRes.error.message);
+                  });
+              }
             });
         }
       });
+  }
+
+  private showErrorMessage(errorMsg: string){
+    this.alertCtrl.create({
+      header: 'Greska pri unosu autora',
+      message: errorMsg,
+      buttons:[
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
+    }).then(alertEl=>{
+      alertEl.present();
+    })
   }
 }

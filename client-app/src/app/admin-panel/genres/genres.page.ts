@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Genre } from "./genre.model";
 import { GenresService } from "./genres.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { IonInput, LoadingController } from "@ionic/angular";
+import { IonInput, LoadingController, AlertController } from "@ionic/angular";
 
 @Component({
   selector: "app-genres",
@@ -22,7 +22,8 @@ export class GenresPage implements OnInit {
 
   constructor(
     private genresService: GenresService,
-    private loagindCtrl: LoadingController
+    private loagindCtrl: LoadingController,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -42,7 +43,26 @@ export class GenresPage implements OnInit {
       loadingElem.present();
       this.genresService.saveGenre(this.genreForm.get("name").value).subscribe(()=>{
         loadingElem.dismiss();
+      },
+      (errorRes)=>{
+        loadingElem.dismiss();
+        this.showErrorMessage(errorRes.error.message);
       });
     })    
+  }
+
+  private showErrorMessage(errorMsg: string){
+    this.alertCtrl.create({
+      header: 'Greska pri unosu zanra',
+      message: errorMsg,
+      buttons:[
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
+    }).then(alertEl=>{
+      alertEl.present();
+    })
   }
 }

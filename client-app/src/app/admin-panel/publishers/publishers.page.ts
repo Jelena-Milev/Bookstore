@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Publisher } from "./publisher.model";
 import { PublishersService } from "./publishers.service";
-import { ModalController, LoadingController } from '@ionic/angular';
+import { ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { PublisherFormComponent } from './publisher-form/publisher-form.component';
 
 @Component({
@@ -19,7 +19,8 @@ export class PublishersPage implements OnInit {
   constructor(
     private publishersService: PublishersService,
     private modalCtrl: ModalController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -59,10 +60,27 @@ export class PublishersPage implements OnInit {
                 .subscribe(() => {
                   loadingElem.dismiss();
                 },
-                (error)=>{
+                (errorRes)=>{
+                  loadingElem.dismiss();
+                  this.showErrorMessage(errorRes.error.message);
                 });
             });
         }
       });
+  }
+
+  private showErrorMessage(errorMsg: string){
+    this.alertCtrl.create({
+      header: 'Greska pri unosu izdavaca',
+      message: errorMsg,
+      buttons:[
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
+    }).then(alertEl=>{
+      alertEl.present();
+    })
   }
 }

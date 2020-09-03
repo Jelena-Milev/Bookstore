@@ -7,7 +7,7 @@ import { Author } from "../../authors/author.model";
 import { Genre } from "../../genres/genre.model";
 import { Publisher } from "../../publishers/publisher.model";
 import { BooksService } from "../books.service";
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ImageService } from '../../image.service';
 import { switchMap } from 'rxjs/operators';
@@ -56,6 +56,7 @@ export class NewBookPage implements OnInit {
     private imageService: ImageService,
     private bookService: BooksService,
     private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController,
     private router: Router
   ) {}
 
@@ -125,9 +126,10 @@ export class NewBookPage implements OnInit {
           loadingElem.dismiss();
           this.router.navigate(['admin-panel', 'tabs', 'books']);
         },
-        (error)=>{
+        (errorRes)=>{
           loadingElem.dismiss();
-          this.router.navigate(['admin-panel', 'tabs', 'books']);
+          // this.router.navigate(["admin-panel", "tabs", "books"]);
+          this.showErrorMessage('Greska pri unosu knjige', errorRes.error.message);
         });
       }else{
         return this.bookService.saveBook(
@@ -148,13 +150,29 @@ export class NewBookPage implements OnInit {
       loadingElem.dismiss();
       this.router.navigate(['admin-panel', 'tabs', 'books']);
     },
-    (error)=>{
+    (errorRes)=>{
       loadingElem.dismiss();
-      this.router.navigate(['admin-panel', 'tabs', 'books']);
+      // this.router.navigate(["admin-panel", "tabs", "books"]);
+      this.showErrorMessage('Greska pri unosu knjige', errorRes.error.message);
     });
       }
       
     })
     
+  }
+
+  private showErrorMessage(headerMsg: string, errorMsg: string){
+    this.alertCtrl.create({
+      header: headerMsg,
+      message: errorMsg,
+      buttons:[
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
+    }).then(alertEl=>{
+      alertEl.present();
+    })
   }
 }

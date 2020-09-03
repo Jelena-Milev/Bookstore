@@ -16,9 +16,9 @@ import java.util.List;
 @Getter
 @Builder
 public class OrderRequestDto {
-    @NotNull(message = "User id must not be null")
+    @NotNull(message = "Narudzbenica mora ima imati identifikator korisnika.")
     private String userId;
-    @NotNull(message = "Order items must not be null")
-    @NotEmpty(message = "Order items must not be empty")
+    @NotNull(message = "Narudzbenica mora ima imati listu stavki.")
+    @NotEmpty(message = "Lista stavki ne sme biti prazna.")
     private List<@Valid OrderItemRequestDto> items;
 }

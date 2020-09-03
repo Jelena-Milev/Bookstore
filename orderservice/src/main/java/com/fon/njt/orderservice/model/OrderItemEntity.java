@@ -30,5 +30,8 @@ public class OrderItemEntity {
     private OrderEntity order;
 
     @Transient
+    private String bookTitle;
+
+    @Transient
     private BookResponseDto book;
 }

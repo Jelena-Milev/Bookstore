@@ -18,7 +18,7 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         Map<String,Object> response = new HashMap<>();
-        response.put("message","unauthorized access");
+        response.put("message", "Pogresno korisnicko ime ili lozinka.");
 
         httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         OutputStream out = httpServletResponse.getOutputStream();

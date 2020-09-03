@@ -9,7 +9,6 @@ import com.fon.njt.auth.mapper.UserMapper;
 import com.fon.njt.auth.repository.UserRepository;
 import com.fon.njt.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(UserRegisterDto userDto) {
         if(userRepository.existsByUsername(userDto.getUsername()))
-            throw new UserAlreadyExistsException("User with username "+userDto.getUsername()+" already exists");
+            throw new UserAlreadyExistsException("Nalog sa unetim mejlom vec postoji.");
         final UserEntity newUser = userMapper.mapToEntity(userDto);
         newUser.setIdentifier(UUID.randomUUID().toString());
         newUser.setRole("USER");
@@ -43,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfoDto getUserInfo(String id) {
-        UserEntity user = userRepository.findByIdentifier(id).orElseThrow(() -> new EntityNotFoundException("User", id));
+        UserEntity user = userRepository.findByIdentifier(id).orElseThrow(() -> new EntityNotFoundException("Korisnik ne postoji."));
         UserInfoDto.UserInfoDtoBuilder userInfoDtoBuilder= UserInfoDto.builder();
         userInfoDtoBuilder.firstName(user.getFirstName())
                 .lastName(user.getLastName())

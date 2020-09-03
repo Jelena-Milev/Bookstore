@@ -13,29 +13,29 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class UserRegisterDto {
 
-    @NotBlank(message = "Username must not be blank")
+    @NotBlank(message = "Korisnicki nalog mora imati email.")
     private String username;
 
-    @NotBlank(message = "Password must not be blank")
+    @NotBlank(message = "Korisnicki nalog mora imati lozinku.")
     private String password;
 
     //    private String email;
 
-    @NotBlank(message = "First name must not be blank")
+    @NotBlank(message = "Korisnicki nalog mora imati ime.")
     private String firstName;
 
-    @NotBlank(message = "Last name must not be blank")
+    @NotBlank(message = "Korisnicki nalog mora imati prezime.")
     private String lastName;
 
-    @NotBlank(message = "Street name and number must not be blank")
+    @NotBlank(message = "Korisnicki nalog mora imati ulicu i broj.")
     private String streetNameAndNumber;
 
-    @NotBlank(message = "Phone must not be blank")
+    @NotBlank(message = "Korisnicki nalog mora imati broj telefona.")
     private String phone;
 
-    @NotBlank(message = "Zip code must not be blank")
+    @NotBlank(message = "Korisnicki nalog mora imati postanski broj.")
     private String zipCode;
 
-    @NotBlank(message = "City must not be blank")
+    @NotBlank(message = "Korisnicki nalog mora imati opstinu.")
     private String city;
 }

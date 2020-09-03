@@ -75,14 +75,30 @@ export class RegisterFormComponent implements OnInit {
                 alertEl.present();
                 loadingEl.dismiss();
               });
-          }, (err)=>{
+          },
+          (errorRes)=>{
             loadingEl.dismiss();
-            console.log(err);
+            this.showErrorMessage(errorRes.error.message);
           });
       });
   }
 
   resetForm(){
     this.registerForm.reset();
+  }
+
+  private showErrorMessage(errorMsg: string){
+    this.alertCtrl.create({
+      header: 'Greska pri prijavljivanju',
+      message: errorMsg,
+      buttons:[
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
+    }).then(alertEl=>{
+      alertEl.present();
+    })
   }
 }

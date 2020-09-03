@@ -9,11 +9,15 @@ import { tap, switchMap, take } from "rxjs/operators";
 })
 export class CartService {
   private _cartItems: BehaviorSubject<CartItem[]> = new BehaviorSubject([]);
-
+  private _cartItemsCount = new BehaviorSubject<number>(0); 
   constructor() {}
 
   get cartItems() {
     return this._cartItems.asObservable();
+  }
+
+  get cartItemsCount(){
+    return this._cartItemsCount.asObservable();
   }
 
   getItems() {
@@ -25,6 +29,8 @@ export class CartService {
       cartItems.push(this.parseCartItem(cartItemObject));
     }
     this._cartItems.next(cartItems);
+    this._cartItemsCount.next(this.calculateCartItemsPieces(cartItems));
+
     return of(cartItems);
   }
 
@@ -42,6 +48,7 @@ export class CartService {
           const updatedCartItems = [...items];
           updatedCartItems[index].quantity = currentQuantity + quantity;
           this._cartItems.next(updatedCartItems);
+          this._cartItemsCount.next(this.calculateCartItemsPieces(updatedCartItems));
         })
       );
     } else {
@@ -51,6 +58,7 @@ export class CartService {
         take(1),
         tap((items) => {
           this._cartItems.next(items.concat(newCartItem));
+          this._cartItemsCount.next(this.calculateCartItemsPieces(items));
         })
       );
     }
@@ -69,6 +77,7 @@ export class CartService {
         const updatedCartItems = [...items];
         updatedCartItems[index].quantity = newQuantity;
         this._cartItems.next(updatedCartItems);
+        this._cartItemsCount.next(this.calculateCartItemsPieces(updatedCartItems));
       })
     );
   }
@@ -82,8 +91,15 @@ export class CartService {
           (ci) => ci.book.id != book.id
         );
         this._cartItems.next(updatedCartItems);
+        this._cartItemsCount.next(this.calculateCartItemsPieces(updatedCartItems));
       })
     );
+  }
+
+  private calculateCartItemsPieces(cartItems: CartItem[]){
+    let sum = 0;
+    cartItems.forEach(item => sum += item.quantity);
+    return sum;
   }
 
   parseCartItem(item) {

@@ -1,24 +1,23 @@
-<ion-toolbar>
-  <ion-row>
-    <ion-col size-lg="2">
-      <ion-title>Bookstore</ion-title>
-    </ion-col>
-    <ion-col size-lg="4"></ion-col>
-    <ion-col size-lg="6">
-      <div class="searchbar-col">
-        <ion-chip color="primary" [routerLink]="['/', 'home']">
-          <ion-icon name="home"></ion-icon>
-          <ion-label>POCETNA</ion-label>
-        </ion-chip>
-        <ion-chip color="primary" [routerLink]="['/', 'orders']">
-          <ion-icon name="library"></ion-icon>
-          <ion-label>PORUDZBINE</ion-label>
-        </ion-chip>
-        <ion-chip color="primary" (click)="onLogout()">
-          <ion-icon name="person"></ion-icon>
-          <ion-label>ODJAVI SE</ion-label>
-        </ion-chip>
-    </div>
-    </ion-col>
-  </ion-row>
-</ion-toolbar>
+<ion-row>
+  <ion-col size-lg="2" class="ion-text-end">
+    <ion-title>Bookstore</ion-title>
+  </ion-col>
+  <ion-col size-lg="6"></ion-col>
+  <ion-col size-lg="4">
+    <div class="searchbar-col">
+      <ion-button color="primary" fill="clear" class="button-clear" [routerLink]="['/', 'home']">
+        <ion-icon name="home" slot="start"></ion-icon>
+        <ion-label>POCETNA</ion-label>
+      </ion-button>
+      <ion-button color="primary" fill="clear" class="button-clear" [routerLink]="['/', 'orders']">
+        <ion-icon name="library" slot="start"></ion-icon>
+        <ion-label>PORUDZBINE</ion-label>
+      </ion-button>
+      <ion-button color="primary" fill="clear" class="button-clear" (click)="onLogout()">
+        <ion-icon name="person" slot="start"></ion-icon>
+        <ion-label>ODJAVI SE</ion-label>
+      </ion-button>
+  </div>
+  </ion-col>
+</ion-row>
+

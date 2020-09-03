@@ -1,5 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { AuthService } from "./auth.service";
+import { LoginFormComponent } from './login-form/login-form.component';
+import { RegisterFormComponent } from './register-form/register-form.component';
 
 @Component({
   selector: "app-auth",
@@ -9,6 +11,9 @@ import { AuthService } from "./auth.service";
 export class AuthPage implements OnInit {
   segment: string = "login";
   isAuthenticated: boolean = false;
+
+  @ViewChild(LoginFormComponent) loginForm: LoginFormComponent;
+  @ViewChild(RegisterFormComponent) registerForm: RegisterFormComponent;
 
   constructor(private authService: AuthService) {}
 
@@ -23,6 +28,8 @@ export class AuthPage implements OnInit {
   }
 
   onLogout() {
+    this.loginForm.resetForm();
+    this.registerForm.resetForm();
     this.authService.logout();
   }
 

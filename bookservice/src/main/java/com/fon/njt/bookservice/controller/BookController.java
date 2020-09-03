@@ -62,8 +62,10 @@ public class BookController {
     public ResponseEntity filter(@RequestParam(required = false) final String title,
                                  @RequestParam(required = false) final String author,
                                  @RequestParam(required = false) final Long genreId){
-        if (title == null && author == null & genreId == null) {
-            return getAll();
+        if ((title == null || title.isEmpty())
+                && (author == null || author.isEmpty())
+                && genreId == null) {
+            return getAllInStock();
         }
         if (genreId != null) {
             return filterByGenre(genreId);

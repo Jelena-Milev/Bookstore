@@ -2,13 +2,6 @@
   <ion-grid>
     <app-orders-header></app-orders-header>
     <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="8">
-        <div class="ion-text-center">
-          <ion-spinner *ngIf="isLoading" color="primary"></ion-spinner>
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
       <ion-col size-lg="1" class="order-info header"
         ><ion-label>#</ion-label></ion-col
       >
@@ -26,7 +19,15 @@
       >
     </ion-row>
 
-    <ion-row *ngIf="orders === null || orders.length === 0" 
+    <ion-row *ngIf="isLoading" class="ion-justify-content-center ion-padding">
+      <ion-col size-lg="8">
+        <div class="ion-text-center">
+          <ion-spinner color="primary"></ion-spinner>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!isLoading && (orders === null || orders.length === 0)" 
     class="ion-justify-content-center ion-padding">
       <ion-col size-lg="8">
         <div class="ion-text-center">

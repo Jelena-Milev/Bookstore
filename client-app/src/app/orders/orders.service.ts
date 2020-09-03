@@ -8,7 +8,7 @@ import { Order } from "./order.model";
 import { BehaviorSubject } from "rxjs";
 
 export class OrderItem {
-  constructor(public bookId: number, public quantity: number) {}
+  constructor(public bookId: number, public quantity: number, public bookTitle:string) {}
 }
 
 @Injectable({
@@ -37,7 +37,7 @@ export class OrdersService {
 
   createOrder(cartItems: CartItem[]) {
     const items = cartItems.map((item) => {
-      return new OrderItem(item.book.id, item.quantity);
+      return new OrderItem(item.book.id, item.quantity, item.book.title);
     });
     let newOrder: Order;
     return this.authService.userId.pipe(

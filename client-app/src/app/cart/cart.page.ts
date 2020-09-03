@@ -3,7 +3,7 @@ import { CartItem } from "./cart-item.model";
 import { CartService } from "./cart.service";
 import { AuthService } from "../auth/auth.service";
 import { OrdersService } from "../orders/orders.service";
-import { LoadingController } from "@ionic/angular";
+import { LoadingController, AlertController } from "@ionic/angular";
 import { Router } from "@angular/router";
 
 @Component({
@@ -23,6 +23,7 @@ export class CartPage implements OnInit {
     private authService: AuthService,
     private ordersService: OrdersService,
     private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController,
     private router: Router
   ) {}
 
@@ -69,11 +70,26 @@ export class CartPage implements OnInit {
             this.router.navigate(["/", "orders"]);
             loadingEl.dismiss();
           },
-          (error) => {
+          (errorRes)=>{
             loadingEl.dismiss();
-            console.log(error);
+            this.showErrorMessage(errorRes.error.message);
           }
         );
       });
+  }
+
+  private showErrorMessage(errorMsg: string){
+    this.alertCtrl.create({
+      header: 'Greska pri narucivanju knjiga',
+      message: errorMsg,
+      buttons:[
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
+    }).then(alertEl=>{
+      alertEl.present();
+    })
   }
 }

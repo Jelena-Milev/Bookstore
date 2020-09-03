@@ -10,20 +10,25 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
   styleUrls: ['./orders.page.scss'],
 })
 export class OrdersPage implements OnInit {
-  isLoading = false;
+  isLoading = true;
   orders: Order[] = [];
   itemsPerPage = 7;
   cp = 1;
   constructor(private ordersService:OrdersService, private modalCtrl:ModalController) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.ordersService.orders.subscribe(orders=>{
       this.orders = orders;
     })
   }
 
   ionViewWillEnter(){
-    this.ordersService.getOrdersByUserId().subscribe();
+    this.ordersService.getOrdersByUserId().subscribe(
+      ()=>{
+        this.isLoading = false;
+      }
+    );
   }
 
   onViewOrderDetails(order: Order){

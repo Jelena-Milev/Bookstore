@@ -33,14 +33,14 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     public PublisherResponseDto get(Long id) {
-        PublisherEntity publisher = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Publisher", id));
+        PublisherEntity publisher = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Izdavac", id));
         return mapper.mapToDto(publisher);
     }
 
     @Override
     public PublisherResponseDto save(PublisherRequestDto dto) {
         if(repository.existsByName(dto.getName()))
-            throw new EntityAlreadyExistsException("Publisher");
+            throw new EntityAlreadyExistsException("Izdavac sa unetim nazivom vec postoji.");
         final PublisherEntity publisherToSave = mapper.mapToEntity(dto);
         final PublisherEntity savedPublisher = repository.save(publisherToSave);
         return mapper.mapToDto(savedPublisher);

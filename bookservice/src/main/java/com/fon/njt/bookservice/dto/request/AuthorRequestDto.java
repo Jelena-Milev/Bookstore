@@ -11,9 +11,9 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class AuthorRequestDto {
 
-    @NotBlank(message = "First name must not be blank")
+    @NotBlank(message = "Autor mora imati ime.")
     private String firstName;
-    @NotBlank(message = "Last name must not be blank")
+    @NotBlank(message = "Autor mora imati prezime.")
     private String lastName;
     private String biography;
     private String imageUrl;

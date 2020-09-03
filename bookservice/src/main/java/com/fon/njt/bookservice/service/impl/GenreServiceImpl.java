@@ -33,14 +33,14 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreResponseDto get(Long id) {
-        GenreEntity genre = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Genre", id));
+        GenreEntity genre = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Zanr", id));
         return mapper.mapToDto(genre);
     }
 
     @Override
     public GenreResponseDto save(GenreRequestDto dto) {
         if(repository.existsByName(dto.getName()))
-            throw new EntityAlreadyExistsException("Genre");
+            throw new EntityAlreadyExistsException("Zanr sa unetim nazivom vec postoji.");
         final GenreEntity genreToSave = mapper.mapToEntity(dto);
         final GenreEntity savedGenre = repository.save(genreToSave);
         return mapper.mapToDto(savedGenre);

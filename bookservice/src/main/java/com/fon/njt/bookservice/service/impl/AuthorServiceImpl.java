@@ -33,14 +33,14 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public AuthorResponseDto get(Long id) {
-        AuthorEntity author = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Author", id));
+        AuthorEntity author = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Autor", id));
         return mapper.mapToDto(author);
     }
 
     @Override
     public AuthorResponseDto save(AuthorRequestDto dto) {
         if(repository.existsByFirstNameAndLastName(dto.getFirstName(), dto.getLastName()))
-            throw new EntityAlreadyExistsException("Author");
+            throw new EntityAlreadyExistsException("Autor sa unetim imenom i prezimenom vec postoji.");
         final AuthorEntity authorToSave = mapper.mapToEntity(dto);
         final AuthorEntity savedAuthor = repository.save(authorToSave);
         return mapper.mapToDto(savedAuthor);

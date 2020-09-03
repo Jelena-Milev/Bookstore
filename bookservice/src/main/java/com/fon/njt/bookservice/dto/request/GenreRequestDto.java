@@ -11,6 +11,6 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class GenreRequestDto {
 
-    @NotBlank(message = "Genre name must not be blank")
+    @NotBlank(message = "Zanr mora imati naziv.")
     private String name;
 }

@@ -10,9 +10,9 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Builder
 public class PublisherRequestDto {
-    @NotBlank(message = "Name must not be blank")
+    @NotBlank(message = "Izdavac mora imati naziv.")
     private String name;
-    @NotBlank(message = "Address must not be blank")
+    @NotBlank(message = "Izdavac mora imati adresu.")
     private String address;
     private String email;
     private String siteUrl;

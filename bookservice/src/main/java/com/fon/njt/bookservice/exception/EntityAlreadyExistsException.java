@@ -2,8 +2,8 @@ package com.fon.njt.bookservice.exception;
 
 public class EntityAlreadyExistsException extends RuntimeException {
 
-    public EntityAlreadyExistsException(String entityName) {
+    public EntityAlreadyExistsException(String message) {
 
-        super(entityName + " already exists");
+        super(message);
     }
 }

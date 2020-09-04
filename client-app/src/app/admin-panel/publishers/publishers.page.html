@@ -36,9 +36,10 @@
           <colgroup>
             <col span="1" style="width: 10%;" />
             <col span="1" style="width: 20%;" />
-            <col span="1" style="width: 30%;" />
-            <col span="1" style="width: 20%;" />
-            <col span="1" style="width: 20%;" />
+            <col span="1" style="width: 25%;" />
+            <col span="1" style="width: 25%;" />
+            <col span="1" style="width: 10%;" />
+            <col span="1" style="width: 10%;" />
           </colgroup>
 
           <thead>
@@ -48,6 +49,7 @@
               <th scope="col">Adresa</th>
               <th scope="col">Mejl</th>
               <th scope="col">Vebsajt</th>
+              <th scope="col">Izmena</th>
             </tr>
           </thead>
           <tbody>
@@ -60,10 +62,17 @@
               <td>{{publisher.email}}</td>
               <td>
                 <a href="{{publisher.siteUrl}}" target="_blank">
-                  <div style="height: 100%; width: 100%;">
-                    {{publisher.siteUrl}}
+                  <div *ngIf="publisher.siteUrl!=null && publisher.siteUrl!=''" style="height: 100%; width: 100%;">
+                    <ion-fab-button size="small">
+                      <ion-icon name="open-outline" size="small"></ion-icon>
+                    </ion-fab-button>
                   </div>
                 </a>
+              </td>
+              <td class="td-fab-button">
+                <ion-fab-button size="small" (click)="onEditPublisher(publisher)">
+                  <ion-icon name="pencil" size="small"></ion-icon>
+                </ion-fab-button>
               </td>
             </tr>
           </tbody>

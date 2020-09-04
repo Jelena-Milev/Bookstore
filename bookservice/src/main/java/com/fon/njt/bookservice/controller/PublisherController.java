@@ -42,4 +42,10 @@ public class PublisherController {
         final PublisherResponseDto result = this.service.save(dto);
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
+
+    @PutMapping(path = "{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity update(@PathVariable final Long id, @RequestBody @Valid final PublisherRequestDto dto){
+        PublisherResponseDto result = service.update(id, dto);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
 }

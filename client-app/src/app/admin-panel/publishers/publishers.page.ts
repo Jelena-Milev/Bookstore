@@ -13,7 +13,7 @@ export class PublishersPage implements OnInit {
   publishers: Publisher[];
   isLoading: boolean;
   currentPage: number = 1;
-  itemsPerPage: number = 7;
+  itemsPerPage: number = 4;
   seachText: string = "";
 
   constructor(
@@ -39,6 +39,9 @@ export class PublishersPage implements OnInit {
     this.modalCtrl
       .create({
         component: PublisherFormComponent,
+        componentProps:{
+          title: "Novi izdavac"
+        }
       })
       .then((modal) => {
         modal.present();
@@ -52,6 +55,45 @@ export class PublishersPage implements OnInit {
               loadingElem.present();
               this.publishersService
                 .savePublisher(
+                  resData.data.publisherData.name,
+                  resData.data.publisherData.address,
+                  resData.data.publisherData.mail,
+                  resData.data.publisherData.siteUrl
+                )
+                .subscribe(() => {
+                  loadingElem.dismiss();
+                },
+                (errorRes)=>{
+                  loadingElem.dismiss();
+                  this.showErrorMessage(errorRes.error.message);
+                });
+            });
+        }
+      });
+  }
+
+  onEditPublisher(publisher: Publisher) {
+    this.modalCtrl
+      .create({
+        component: PublisherFormComponent,
+        componentProps:{
+          title: "Izmena izdavaca",
+          publisher: publisher
+        }
+      })
+      .then((modal) => {
+        modal.present();
+        return modal.onDidDismiss();
+      })
+      .then((resData) => {
+        if (resData.role === "confirm") {
+          this.loadingCtrl
+            .create({ message: "Cuvanje izdavaca..." })
+            .then((loadingElem) => {
+              loadingElem.present();
+              this.publishersService
+                .updatePublisher(
+                  publisher.id,
                   resData.data.publisherData.name,
                   resData.data.publisherData.address,
                   resData.data.publisherData.mail,

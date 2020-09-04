@@ -11,4 +11,6 @@ public interface PublisherService {
     PublisherResponseDto get(Long id);
 
     PublisherResponseDto save(PublisherRequestDto dto);
+
+    PublisherResponseDto update(Long id, PublisherRequestDto dto);
 }

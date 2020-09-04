@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { Publisher } from '../publisher.model';
 
 @Component({
   selector: 'app-publisher-form',
@@ -8,6 +9,8 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./publisher-form.component.scss'],
 })
 export class PublisherFormComponent implements OnInit {
+  @Input() title: string;
+  @Input() publisher: Publisher;
 
   publisherForm: FormGroup = new FormGroup({
     name: new FormControl(null, Validators.required),
@@ -18,7 +21,9 @@ export class PublisherFormComponent implements OnInit {
 
   constructor(private modalCtrl:ModalController) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.initializeForm();
+  }
 
   onCancel(){
     this.modalCtrl.dismiss();
@@ -36,5 +41,12 @@ export class PublisherFormComponent implements OnInit {
         siteUrl: this.publisherForm.value['siteUrl']
       }
     },'confirm');
+  }
+
+  initializeForm(){
+    this.publisherForm.get('name').setValue(this.publisher?.name);
+    this.publisherForm.get('address').setValue(this.publisher?.address);
+    this.publisherForm.get('mail').setValue(this.publisher?.email);
+    this.publisherForm.get('siteUrl').setValue(this.publisher?.siteUrl);
   }
 }

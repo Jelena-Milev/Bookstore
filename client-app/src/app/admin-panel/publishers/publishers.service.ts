@@ -44,4 +44,23 @@ export class PublishersService {
       })
     )
   }
+
+  updatePublisher(id:number, name:string, address:string, email: string, siteUrl: string){
+    let newPublisher: Publisher;
+    return this.http.put<Publisher>(`${environment.apiUrl}/books/publishers/${id}`, {
+      name, address, email, siteUrl
+    }).pipe(
+      switchMap((publisher)=>{
+        newPublisher = publisher;
+        return this._publishers;
+      }),
+      take(1),
+      tap(publishers=>{
+        const indexOfChanged = publishers.findIndex(publisher => publisher.id === id);
+        const updatedPublishers = [...publishers];
+        updatedPublishers[indexOfChanged] = newPublisher;
+        this._publishers.next(updatedPublishers);
+      })
+    )
+  }
 }

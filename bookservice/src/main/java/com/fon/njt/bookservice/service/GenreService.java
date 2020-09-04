@@ -11,4 +11,6 @@ public interface GenreService {
     GenreResponseDto get(Long id);
 
     GenreResponseDto save(GenreRequestDto dto);
+
+    GenreResponseDto update(Long id, GenreRequestDto dto);
 }

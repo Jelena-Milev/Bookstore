@@ -9,6 +9,7 @@ import { GenresPageRoutingModule } from './genres-routing.module';
 import { GenresPage } from './genres.page';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchGenresPipe } from './search-genres.pipe';
+import { GenreFormComponent } from './genre-form/genre-form.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { SearchGenresPipe } from './search-genres.pipe';
     NgxPaginationModule,
     GenresPageRoutingModule
   ],
-  declarations: [GenresPage, SearchGenresPipe]
+  declarations: [GenresPage, SearchGenresPipe, GenreFormComponent],
+  entryComponents: [GenreFormComponent]
 })
 export class GenresPageModule {}

@@ -41,4 +41,10 @@ public class GenreController {
         final GenreResponseDto result = this.service.save(dto);
         return new ResponseEntity(result, HttpStatus.CREATED);
     }
+
+    @PutMapping(path = "{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity update(@PathVariable final Long id, @RequestBody @Valid final GenreRequestDto dto){
+        GenreResponseDto result = service.update(id, dto);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
 }

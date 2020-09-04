@@ -7,9 +7,15 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size-lg="4">
-        <ion-searchbar [(ngModel)]="searchText" placeholder="Pretraga"></ion-searchbar>
+    <ion-row>
+      <ion-col size-lg="4" offset-lg="4" class="td-fab-button">
+        <ion-searchbar
+          [(ngModel)]="searchText"
+          placeholder="Pretraga"
+        ></ion-searchbar>
+        <ion-fab-button (click)="onAddGenre()" class="ion-margin-start">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-fab-button>
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">
@@ -20,24 +26,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <form [formGroup]="genreForm" (ngSubmit)="onSaveGenre()" class="ion-padding-bottom">
-    <ion-grid class="ion-no-padding">
-      <ion-row *ngIf="!isLoading" class="ion-align-items-center ion-justify-content-center ion-no-padding">
-        <ion-col size-lg="3" class="ion-no-padding">
-          <ion-item>
-            <ion-label position="floating">Zanr*</ion-label>
-            <ion-input type="text" formControlName="name"></ion-input>
-          </ion-item>
-          <div class="ion-padding-start ion-padding-end">
-            <ion-label class="error-label" *ngIf="genreForm.get('name').invalid && genreForm.get('name').touched">Morate uneti zanr.</ion-label>
-          </div>        
-        </ion-col>
-        <ion-col size-lg="1" class="ion-no-padding">
-          <ion-button (click)="onSaveGenre()" [disabled]="genreForm.invalid">Sacuvaj</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
+  
     <ion-grid class="ion-padding-top">
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="4" class="ion-align-items-center">
@@ -45,13 +34,15 @@
 
           <colgroup>
             <col span="1" style="width: 20%;" />
-            <col span="1" style="width: 80%;" />
+            <col span="1" style="width: 50%;" />
+            <col span="1" style="width: 30%;" />
           </colgroup>
         
           <thead>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Zanr</th>
+              <th scope="col">Izmena</th>
             </tr>
           </thead>
           <tbody>
@@ -60,6 +51,11 @@
             >
               <td>{{itemsPerPage*(cp-1)+i+1}}</td>
               <td>{{genre.name}}</td>
+              <td class="td-fab-button">
+                <ion-fab-button size="small" (click)="onEditGenre(genre)">
+                  <ion-icon name="pencil" size="small"></ion-icon>
+                </ion-fab-button>
+              </td>
             </tr>
           </tbody>
         </table>

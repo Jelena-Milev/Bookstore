@@ -1,10 +1,12 @@
 package com.fon.njt.bookservice.service.impl;
 
 import com.fon.njt.bookservice.dto.request.GenreRequestDto;
+import com.fon.njt.bookservice.dto.request.StorageItemRequestDto;
 import com.fon.njt.bookservice.dto.response.GenreResponseDto;
 import com.fon.njt.bookservice.exception.EntityAlreadyExistsException;
 import com.fon.njt.bookservice.exception.EntityNotFoundException;
 import com.fon.njt.bookservice.mapper.GenreMapper;
+import com.fon.njt.bookservice.model.BookEntity;
 import com.fon.njt.bookservice.model.GenreEntity;
 import com.fon.njt.bookservice.repository.GenreRepository;
 import com.fon.njt.bookservice.service.GenreService;
@@ -44,5 +46,15 @@ public class GenreServiceImpl implements GenreService {
         final GenreEntity genreToSave = mapper.mapToEntity(dto);
         final GenreEntity savedGenre = repository.save(genreToSave);
         return mapper.mapToDto(savedGenre);
+    }
+
+    @Override
+    public GenreResponseDto update(Long id, GenreRequestDto dto) {
+        final GenreEntity genreToUpdate = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Zanr", id));
+        if (repository.existsByName(dto.getName()) && !dto.getName().equals(genreToUpdate.getName()))
+            throw new EntityAlreadyExistsException("Zanr sa unetim nazivom vec postoji.");
+        genreToUpdate.setName(dto.getName());
+        final GenreEntity updatedGenre = repository.save(genreToUpdate);
+        return mapper.mapToDto(updatedGenre);
     }
 }

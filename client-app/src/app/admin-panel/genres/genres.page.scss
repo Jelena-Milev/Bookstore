@@ -16,3 +16,19 @@ td {
 .error-label {
   font-size: 10pt;
 }
+
+ion-fab-button{
+  width: 35px;
+  height: 35px;
+}
+
+.td-fab-button{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+ion-margin-start{
+  padding-left: 8px;
+}

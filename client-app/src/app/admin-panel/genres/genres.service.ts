@@ -41,4 +41,26 @@ export class GenresService {
         })
       );
   }
+
+  updateGenre(id:number, name:string){
+    console.log(id)
+    console.log(name)
+
+    let newGenre;
+    return this.http
+      .put<Genre>(`${environment.apiUrl}/books/genres/${id}`, { name })
+      .pipe(
+        switchMap((genre) => {
+          newGenre = genre;
+          return this._genres;
+        }),
+        take(1),
+        tap((genres) => {
+          const indexOfChanged = genres.findIndex(genre => genre.id === id);
+          const updatedGenres = [... genres];
+          updatedGenres[indexOfChanged].name = name;
+          this._genres.next(updatedGenres);
+        })
+      );
+  }
 }

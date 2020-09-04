@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="genreForm" (ngSubmit)="onSaveGenre()" class="ion-padding-bottom">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center ion-margin-bottom">
+        <ion-col size-sm="4" class="ion-text-center">
+          <ion-item>
+            <ion-label position="floating">Zanr*</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+          <div class="ion-padding-start ion-padding-end">
+            <ion-label class="error-label" *ngIf="genreForm.get('name').invalid && genreForm.get('name').touched">Morate uneti zanr.</ion-label>
+          </div>  
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-center ion-margin-top">      
+        <ion-col size-sm="4" class="ion-text-center">
+          <ion-button (click)="onSaveGenre()" [disabled]="genreForm.invalid">Sacuvaj</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+

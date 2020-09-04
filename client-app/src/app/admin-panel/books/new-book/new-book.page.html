@@ -15,7 +15,7 @@
           </ion-item>
           <div class="ion-padding-start ion-padding-end">
             <ion-label class="error-label" *ngIf="bookForm.get('isbn').invalid && bookForm.get('isbn').touched">
-              Morate uneti ISBN knjige.
+              Morate uneti validan ISBN knjige.
             </ion-label>
           </div>
         </ion-col>
@@ -106,7 +106,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="ion-align-items-end ion-justify-content-center ion-padding">
+      <ion-row class="ion-align-items-end ion-justify-content-center ion-padding-top">
         <ion-col size-lg="3">
           <ion-item>
             <ion-label position="floating">U prodaji</ion-label>
@@ -121,11 +121,7 @@
             <ion-label position="floating">Broj primeraka na stanju</ion-label>
             <ion-input type="number" formControlName="piecesAvailable" min="0"></ion-input>
           </ion-item>
-          <div class="ion-padding-start ion-padding-end">
-            <ion-label class="error-label" *ngIf="bookForm.get('piecesAvailable').invalid && bookForm.get('piecesAvailable').touched">
-              Broj primeraka moze biti najmanje 0.
-            </ion-label>
-          </div>
+          
         </ion-col>
         <ion-col size-lg="3">
           <ion-label position="fixed">Slika</ion-label>
@@ -138,6 +134,18 @@
           </ion-item>
         </ion-col>
       </ion-row>
+      <ion-row class="ion-align-items-start ion-justify-content-center ion-no-padding ion-padding-bottom">
+        <ion-col size-lg="3"></ion-col>
+        <ion-col size-lg="3" class="ion-no-padding">
+          <div class="ion-padding-start ion-padding-end">
+            <ion-label class="error-label" *ngIf="bookForm.get('piecesAvailable').invalid && bookForm.get('piecesAvailable').touched">
+              Broj primeraka ne moze biti najmanje 0.
+            </ion-label>
+          </div>
+        </ion-col>
+        <ion-col size-lg="3"></ion-col>
+      </ion-row>
+
 
       <ion-row class="ion-justify-content-center ion-padding">
         <ion-col size-lg="6">

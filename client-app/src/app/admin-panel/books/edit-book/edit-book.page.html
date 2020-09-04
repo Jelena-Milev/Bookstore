@@ -22,7 +22,7 @@
           </ion-item>
           <div class="ion-padding-start ion-padding-end">
             <ion-label class="error-label" *ngIf="bookForm.get('isbn').invalid && bookForm.get('isbn').touched">
-              Morate uneti ISBN knjige.
+              Morate uneti validan ISBN knjige.
             </ion-label>
           </div>
         </ion-col>
@@ -113,7 +113,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="ion-align-items-end ion-justify-content-center ion-padding">
+      <ion-row class="ion-align-items-end ion-justify-content-center  ion-padding-top">
         <ion-col size-lg="3">
           <ion-item>
             <ion-label position="floating">U prodaji</ion-label>
@@ -139,6 +139,17 @@
             ></ion-input>
           </ion-item>
         </ion-col>
+      </ion-row>
+      <ion-row class="ion-align-items-start ion-justify-content-center ion-no-padding ion-padding-bottom">
+        <ion-col size-lg="3"></ion-col>
+        <ion-col size-lg="3" class="ion-no-padding">
+          <div class="ion-padding-start ion-padding-end">
+            <ion-label class="error-label" *ngIf="bookForm.get('piecesAvailable').invalid && bookForm.get('piecesAvailable').touched">
+              Broj primeraka ne moze biti najmanje 0.
+            </ion-label>
+          </div>
+        </ion-col>
+        <ion-col size-lg="3"></ion-col>
       </ion-row>
 
       <ion-row class="ion-justify-content-center ion-padding">

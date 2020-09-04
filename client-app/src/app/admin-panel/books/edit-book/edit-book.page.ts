@@ -10,8 +10,8 @@ import { Author } from "../../authors/author.model";
 import { Genre } from "../../genres/genre.model";
 import { Publisher } from "../../publishers/publisher.model";
 import { Book } from "../book.model";
-import { ImageService } from '../../image.service';
-import { switchMap } from 'rxjs/operators';
+import { ImageService } from "../../image.service";
+import { switchMap } from "rxjs/operators";
 
 @Component({
   selector: "app-edit-book",
@@ -22,7 +22,12 @@ export class EditBookPage implements OnInit {
   isLoading: boolean;
 
   bookForm: FormGroup = new FormGroup({
-    isbn: new FormControl("", Validators.required),
+    isbn: new FormControl("", [
+      Validators.required,
+      Validators.minLength(17),
+      Validators.maxLength(17),
+      Validators.pattern("[0-9]{3}-[0-9]{1,5}-[0-9]{1,7}-[0-9]{1,6}-[0-9]{1}"),
+    ]),
     title: new FormControl("", Validators.required),
     price: new FormControl(null, [
       Validators.required,
@@ -42,7 +47,7 @@ export class EditBookPage implements OnInit {
       Validators.minLength(1),
     ]),
     inStock: new FormControl(),
-    piecesAvailable: new FormControl(),
+    piecesAvailable: new FormControl(0, Validators.min(0)),
   });
 
   authors: Author[] = [];
@@ -114,9 +119,9 @@ export class EditBookPage implements OnInit {
     const genresIds = this.bookForm.get("genresIds").value;
     const piecesAvailable = this.bookForm.get("piecesAvailable").value;
     let inStock: boolean;
-    if(piecesAvailable <= 0){
+    if (piecesAvailable <= 0) {
       inStock = false;
-    }else{
+    } else {
       inStock = this.bookForm.get("inStock").value;
     }
 
@@ -124,68 +129,76 @@ export class EditBookPage implements OnInit {
       .create({ message: "Cuvanje knjige" })
       .then((loadingElem) => {
         loadingElem.present();
-        if(this.imageSelected !== undefined){
-          this.imageService.uploadImage(this.imageSelected).pipe(
-            switchMap(uploadRes=>{
-              return  this.bookService
-              .editBook(
-                this.bookToEdit.id,
-                isbn,
-                title,
-                price,
-                numberOfPages,
-                binding,
-                publicationYear,
-                description,
-                publisherId,
-                authorsIds,
-                genresIds,
-                inStock,
-                uploadRes.imageUrl,
-                piecesAvailable
-              )
-            })
-          ).subscribe(
+        if (this.imageSelected !== undefined) {
+          this.imageService
+            .uploadImage(this.imageSelected)
+            .pipe(
+              switchMap((uploadRes) => {
+                return this.bookService.editBook(
+                  this.bookToEdit.id,
+                  isbn,
+                  title,
+                  price,
+                  numberOfPages,
+                  binding,
+                  publicationYear,
+                  description,
+                  publisherId,
+                  authorsIds,
+                  genresIds,
+                  inStock,
+                  uploadRes.imageUrl,
+                  piecesAvailable
+                );
+              })
+            )
+            .subscribe(
               () => {
                 loadingElem.dismiss();
                 this.router.navigate(["admin-panel", "tabs", "books"]);
               },
-              (errorRes)=>{
+              (errorRes) => {
                 loadingElem.dismiss();
                 // this.router.navigate(["admin-panel", "tabs", "books"]);
-                this.showErrorMessage('Greska pri izmeni knjige', errorRes.error.message);
+                this.showErrorMessage(
+                  "Greska pri izmeni knjige",
+                  errorRes.error.message
+                );
               }
             );
-        }else{
+        } else {
           return this.bookService
-              .editBook(
-                this.bookToEdit.id,
-                isbn,
-                title,
-                price,
-                numberOfPages,
-                binding,
-                publicationYear,
-                description,
-                publisherId,
-                authorsIds,
-                genresIds,
-                inStock,
-                this.bookToEdit.imageUrl,
-                piecesAvailable
-              ).subscribe(
+            .editBook(
+              this.bookToEdit.id,
+              isbn,
+              title,
+              price,
+              numberOfPages,
+              binding,
+              publicationYear,
+              description,
+              publisherId,
+              authorsIds,
+              genresIds,
+              inStock,
+              this.bookToEdit.imageUrl,
+              piecesAvailable
+            )
+            .subscribe(
               () => {
                 loadingElem.dismiss();
                 this.router.navigate(["admin-panel", "tabs", "books"]);
               },
-              (errorRes)=>{
+              (errorRes) => {
                 loadingElem.dismiss();
                 // this.router.navigate(["admin-panel", "tabs", "books"]);
-                this.showErrorMessage('Greska pri izmeni knjige', errorRes.error.message);
+                this.showErrorMessage(
+                  "Greska pri izmeni knjige",
+                  errorRes.error.message
+                );
               }
             );
         }
-        
       });
   }
 
@@ -201,25 +214,29 @@ export class EditBookPage implements OnInit {
     this.bookForm.get("description").setValue(this.bookToEdit.description);
     this.bookForm.get("publisherId").setValue(this.bookToEdit.publisher.id);
     this.bookForm.get("inStock").setValue(this.bookToEdit.inStock);
-    this.bookForm.get('piecesAvailable').setValue(this.bookToEdit.piecesAvailable);
+    this.bookForm
+      .get("piecesAvailable")
+      .setValue(this.bookToEdit.piecesAvailable);
     const auhtorsIds = this.bookToEdit.authors.map((author) => author.id);
     const genresIds = this.bookToEdit.genres.map((genre) => genre.id);
     this.bookForm.get("authorsIds").setValue(auhtorsIds);
     this.bookForm.get("genresIds").setValue(genresIds);
   }
 
-  private showErrorMessage(headerMsg: string, errorMsg: string){
-    this.alertCtrl.create({
-      header: headerMsg,
-      message: errorMsg,
-      buttons:[
-        {
-          text: 'OK',
-          role: 'cancel'
-        }
-      ]
-    }).then(alertEl=>{
-      alertEl.present();
-    })
+  private showErrorMessage(headerMsg: string, errorMsg: string) {
+    this.alertCtrl
+      .create({
+        header: headerMsg,
+        message: errorMsg,
+        buttons: [
+          {
+            text: "OK",
+            role: "cancel",
+          },
+        ],
+      })
+      .then((alertEl) => {
+        alertEl.present();
+      });
   }
 }

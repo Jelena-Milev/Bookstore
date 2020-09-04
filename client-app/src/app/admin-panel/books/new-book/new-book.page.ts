@@ -7,10 +7,10 @@ import { Author } from "../../authors/author.model";
 import { Genre } from "../../genres/genre.model";
 import { Publisher } from "../../publishers/publisher.model";
 import { BooksService } from "../books.service";
-import { LoadingController, AlertController } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { ImageService } from '../../image.service';
-import { switchMap } from 'rxjs/operators';
+import { LoadingController, AlertController } from "@ionic/angular";
+import { Router } from "@angular/router";
+import { ImageService } from "../../image.service";
+import { switchMap } from "rxjs/operators";
 
 @Component({
   selector: "app-new-book",
@@ -20,7 +20,12 @@ import { switchMap } from 'rxjs/operators';
 export class NewBookPage implements OnInit {
   @Input() title: string;
   bookForm: FormGroup = new FormGroup({
-    isbn: new FormControl("", Validators.required),
+    isbn: new FormControl("", [
+      Validators.required,
+      Validators.minLength(17),
+      Validators.maxLength(17),
+      Validators.pattern("[0-9]{3}-[0-9]{1,5}-[0-9]{1,7}-[0-9]{1,6}-[0-9]{1}"),
+    ]),
     title: new FormControl("", Validators.required),
     price: new FormControl(null, [
       Validators.required,
@@ -95,18 +100,55 @@ export class NewBookPage implements OnInit {
     const genresIds = this.bookForm.get("genresIds").value;
     const piecesAvailable = this.bookForm.get("piecesAvailable").value;
     let inStock: boolean;
-    if(piecesAvailable <= 0){
+    if (piecesAvailable <= 0) {
       inStock = false;
-    }else{
+    } else {
       inStock = this.bookForm.get("inStock").value;
     }
 
-    this.loadingCtrl.create({message:'Cuvanje knjige'}).then((loadingElem)=>{
-      loadingElem.present();
-      if(this.imageSelected !== undefined){
-        this.imageService.uploadImage(this.imageSelected).pipe(
-          switchMap(uploadRes=>{
-            return this.bookService.saveBook(
+    this.loadingCtrl
+      .create({ message: "Cuvanje knjige" })
+      .then((loadingElem) => {
+        loadingElem.present();
+        if (this.imageSelected !== undefined) {
+          this.imageService
+            .uploadImage(this.imageSelected)
+            .pipe(
+              switchMap((uploadRes) => {
+                return this.bookService.saveBook(
+                  isbn,
+                  title,
+                  price,
+                  numberOfPages,
+                  binding,
+                  publicationYear,
+                  description,
+                  publisherId,
+                  authorsIds,
+                  genresIds,
+                  inStock,
+                  uploadRes.imageUrl,
+                  piecesAvailable
+                );
+              })
+            )
+            .subscribe(
+              () => {
+                loadingElem.dismiss();
+                this.router.navigate(["admin-panel", "tabs", "books"]);
+              },
+              (errorRes) => {
+                loadingElem.dismiss();
+                // this.router.navigate(["admin-panel", "tabs", "books"]);
+                this.showErrorMessage(
+                  "Greska pri unosu knjige",
+                  errorRes.error.message
+                );
+              }
+            );
+        } else {
+          return this.bookService
+            .saveBook(
               isbn,
               title,
               price,
@@ -118,61 +160,41 @@ export class NewBookPage implements OnInit {
               authorsIds,
               genresIds,
               inStock,
-              uploadRes.imageUrl,
-              piecesAvailable,
+              "",
+              piecesAvailable
             )
-          })
-        ).subscribe(()=>{
-          loadingElem.dismiss();
-          this.router.navigate(['admin-panel', 'tabs', 'books']);
-        },
-        (errorRes)=>{
-          loadingElem.dismiss();
-          // this.router.navigate(["admin-panel", "tabs", "books"]);
-          this.showErrorMessage('Greska pri unosu knjige', errorRes.error.message);
-        });
-      }else{
-        return this.bookService.saveBook(
-          isbn,
-          title,
-          price,
-          numberOfPages,
-          binding,
-          publicationYear,
-          description,
-          publisherId,
-          authorsIds,
-          genresIds,
-          inStock,
-          "",
-          piecesAvailable,
-        ).subscribe(()=>{
-      loadingElem.dismiss();
-      this.router.navigate(['admin-panel', 'tabs', 'books']);
-    },
-    (errorRes)=>{
-      loadingElem.dismiss();
-      // this.router.navigate(["admin-panel", "tabs", "books"]);
-      this.showErrorMessage('Greska pri unosu knjige', errorRes.error.message);
-    });
-      }
-      
-    })
-    
+            .subscribe(
+              () => {
+                loadingElem.dismiss();
+                this.router.navigate(["admin-panel", "tabs", "books"]);
+              },
+              (errorRes) => {
+                loadingElem.dismiss();
+                // this.router.navigate(["admin-panel", "tabs", "books"]);
+                this.showErrorMessage(
+                  "Greska pri unosu knjige",
+                  errorRes.error.message
+                );
+              }
+            );
+        }
+      });
   }
 
-  private showErrorMessage(headerMsg: string, errorMsg: string){
-    this.alertCtrl.create({
-      header: headerMsg,
-      message: errorMsg,
-      buttons:[
-        {
-          text: 'OK',
-          role: 'cancel'
-        }
-      ]
-    }).then(alertEl=>{
-      alertEl.present();
-    })
+  private showErrorMessage(headerMsg: string, errorMsg: string) {
+    this.alertCtrl
+      .create({
+        header: headerMsg,
+        message: errorMsg,
+        buttons: [
+          {
+            text: "OK",
+            role: "cancel",
+          },
+        ],
+      })
+      .then((alertEl) => {
+        alertEl.present();
+      });
   }
 }

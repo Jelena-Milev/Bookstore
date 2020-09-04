@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: "app-login-form",
@@ -14,21 +14,29 @@ export class LoginFormComponent implements OnInit {
     username: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [Validators.required]),
   });
-  constructor(private authService: AuthService, private router:Router,
-    private alertCtrl: AlertController) {}
+  constructor(private authService: AuthService, 
+    private router:Router,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController) {}
 
   ngOnInit() {}
 
   onLogin(){
     const username = this.loginForm.get('username').value;
     const password = this.loginForm.get('password').value;
-    this.authService.login(username, password).subscribe(() => {
-      this.loginForm.reset();
-      this.router.navigate(['/', 'home']);
-    },
-    (errorRes)=>{
-      this.showErrorMessage(errorRes.error.message);
-    });
+    this.loadingCtrl.create({message: "Prijavljivanje..."})
+    .then(loadingEl=>{
+      loadingEl.present();
+      this.authService.login(username, password).subscribe(() => {
+        this.loginForm.reset();
+        this.router.navigate(['/', 'home']);
+        this.loadingCtrl.dismiss();
+      },
+      (errorRes)=>{
+        loadingEl.dismiss();
+        this.showErrorMessage(errorRes.error.message);
+      });
+    })    
   }
 
   resetForm(){

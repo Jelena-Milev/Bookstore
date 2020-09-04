@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/auth/auth.service";
 import { CartService } from "src/app/cart/cart.service";
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: "app-orders-header",
@@ -12,7 +13,9 @@ export class OrdersHeaderComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private cartService: CartService
+    private cartService: CartService,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
   ) {}
 
   ngOnInit() {
@@ -22,6 +25,29 @@ export class OrdersHeaderComponent implements OnInit {
   }
 
   onLogout() {
-    this.authService.logout();
+    this.alertCtrl.create({
+      header:'Odjava',
+      message: 'Da li zaista zelite da se odjavite?',
+      buttons:[
+        {
+          text: 'NE',
+          role: 'cancel'
+        },
+        {
+          text: 'DA',
+          handler: () => {
+            this.loadingCtrl.create({
+              message: 'Odjavljivanje...',
+              duration: 500
+            }).then(loadEl=>{
+              loadEl.present();
+              this.authService.logout();
+            })
+          }
+        },
+      ]
+    }).then(alertEl => {
+      alertEl.present();
+    })
   }
 }

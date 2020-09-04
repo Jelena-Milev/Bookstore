@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { AuthService } from "./auth.service";
-import { LoginFormComponent } from './login-form/login-form.component';
-import { RegisterFormComponent } from './register-form/register-form.component';
+import { LoginFormComponent } from "./login-form/login-form.component";
+import { RegisterFormComponent } from "./register-form/register-form.component";
+import { AlertController, LoadingController } from "@ionic/angular";
 
 @Component({
   selector: "app-auth",
@@ -15,7 +16,11 @@ export class AuthPage implements OnInit {
   @ViewChild(LoginFormComponent) loginForm: LoginFormComponent;
   @ViewChild(RegisterFormComponent) registerForm: RegisterFormComponent;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
+  ) {}
 
   ngOnInit() {
     this.authService.userIsAuthenticated.subscribe((isAuthenticated) => {
@@ -27,13 +32,46 @@ export class AuthPage implements OnInit {
     this.authService.autoLogin().subscribe();
   }
 
+  // onLogout() {
+  //   this.loginForm?.resetForm();
+  //   this.registerForm?.resetForm();
+  //   this.authService.logout();
+  // }
+
   onLogout() {
-    this.loginForm.resetForm();
-    this.registerForm.resetForm();
-    this.authService.logout();
+    this.alertCtrl
+      .create({
+        header: "Odjava",
+        message: "Da li zaista zelite da se odjavite?",
+        buttons: [
+          {
+            text: "NE",
+            role: "cancel",
+          },
+          {
+            text: "DA",
+            handler: () => {
+              this.loadingCtrl
+                .create({
+                  message: "Odjavljivanje...",
+                  duration: 500,
+                })
+                .then((loadEl) => {
+                  loadEl.present();
+                  this.loginForm?.resetForm();
+                  this.registerForm?.resetForm();
+                  this.authService.logout();
+                });
+            },
+          },
+        ],
+      })
+      .then((alertEl) => {
+        alertEl.present();
+      });
   }
 
-  onSwitchToLogin(loginSegment: string){
+  onSwitchToLogin(loginSegment: string) {
     this.segment = loginSegment;
   }
 }

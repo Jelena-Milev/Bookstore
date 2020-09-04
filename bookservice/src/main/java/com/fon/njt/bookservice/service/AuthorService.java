@@ -11,4 +11,6 @@ public interface AuthorService {
     AuthorResponseDto get(Long id);
 
     AuthorResponseDto save(AuthorRequestDto dto);
+
+    AuthorResponseDto update(Long id, AuthorRequestDto dto);
 }

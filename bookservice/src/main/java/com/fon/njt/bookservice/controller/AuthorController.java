@@ -14,7 +14,6 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-//@CrossOrigin()
 @RequestMapping(path = "authors")
 public class AuthorController {
 
@@ -24,22 +23,28 @@ public class AuthorController {
     public AuthorController(AuthorService service) {
         this.service = service;
     }
-//    @CrossOrigin()
+
     @GetMapping(path="", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity getAll(){
         final List<AuthorResponseDto> result = this.service.getAll();
         return new ResponseEntity(result, HttpStatus.OK);
     }
-//    @CrossOrigin()
+
     @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity get(@PathVariable final Long id){
         final AuthorResponseDto result = this.service.get(id);
         return new ResponseEntity(result, HttpStatus.OK);
     }
-//    @CrossOrigin()
+
     @PostMapping(path="", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity add(@RequestBody @Valid final AuthorRequestDto dto){
         final AuthorResponseDto result = this.service.save(dto);
         return new ResponseEntity(result, HttpStatus.CREATED);
+    }
+
+    @PutMapping(path = "{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity update(@PathVariable final Long id, @RequestBody @Valid final AuthorRequestDto dto){
+        AuthorResponseDto result = service.update(id, dto);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 }

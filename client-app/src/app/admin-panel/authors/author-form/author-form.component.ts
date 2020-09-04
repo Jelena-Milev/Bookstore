@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { Author } from '../author.model';
 
 @Component({
   selector: 'app-author-form',
@@ -9,18 +10,23 @@ import { ModalController } from '@ionic/angular';
 })
 export class AuthorFormComponent implements OnInit {
   
+  @Input() title: string;
+  @Input() author: Author;
+
   private imageSelected: File = null;
 
   authorForm: FormGroup = new FormGroup({
-    firstName: new FormControl(null, Validators.required),
-    lastName: new FormControl(null, Validators.required),
-    bio: new FormControl(null),
+    firstName: new FormControl("", Validators.required),
+    lastName: new FormControl("", Validators.required),
+    bio: new FormControl(""),
     photo: new FormControl(null)
   });
 
   constructor(private modalCtrl:ModalController) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.initializeForm();
+  }
 
   onCancel(){
     this.modalCtrl.dismiss();
@@ -44,4 +50,9 @@ export class AuthorFormComponent implements OnInit {
     this.imageSelected = <File>event.target.files[0];
   }
 
+  initializeForm(){
+    this.authorForm.get('firstName').setValue(this.author.firstName);
+    this.authorForm.get('lastName').setValue(this.author.lastName);
+    this.authorForm.get('bio').setValue(this.author.biography);
+  }
 }

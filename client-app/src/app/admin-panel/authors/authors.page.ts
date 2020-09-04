@@ -42,6 +42,9 @@ export class AuthorsPage implements OnInit {
     this.modalCtrl
       .create({
         component: AuthorFormComponent,
+        componentProps:{
+          title: "Novi autor"
+         }
       })
       .then((modal) => {
         modal.present();
@@ -79,6 +82,66 @@ export class AuthorsPage implements OnInit {
                       resData.data.authorData.lastName,
                       resData.data.authorData.biography,
                       ""
+                    ).subscribe(() => {
+                    loadingElem.dismiss();
+                  },
+                  (errorRes)=>{
+                    loadingElem.dismiss();
+                    this.showErrorMessage(errorRes.error.message);
+                  });
+              }
+            });
+        }
+      });
+  }
+
+  onEditAuthor(author: Author) {
+    this.modalCtrl
+      .create({
+        component: AuthorFormComponent,
+        componentProps:{
+          title: 'Izmena autora',
+          author: author
+        }
+      })
+      .then((modal) => {
+        modal.present();
+        return modal.onDidDismiss();
+      })
+      .then((resData) => {
+        if (resData.role === "confirm") {
+          const imageToUpload = resData.data.authorData.image; 
+          this.loadingCtrl
+            .create({ message: "Cuvanje autora..." })
+            .then((loadingElem) => {
+              loadingElem.present();
+              if(imageToUpload !== null && imageToUpload !== undefined){
+                this.imageService.uploadImage(imageToUpload).pipe(
+                  switchMap(uploadRes=>{
+                    return this.authorsService
+                    .updateAuthor(
+                      author.id,
+                      resData.data.authorData.firstName,
+                      resData.data.authorData.lastName,
+                      resData.data.authorData.biography,
+                      uploadRes.imageUrl
+                    )
+                  })
+                ).subscribe(() => {
+                    loadingElem.dismiss();
+                  },
+                  (errorRes)=>{
+                    loadingElem.dismiss();
+                    this.showErrorMessage(errorRes.error.message);
+                  });
+              }else{
+                return this.authorsService
+                    .updateAuthor(
+                      author.id,
+                      resData.data.authorData.firstName,
+                      resData.data.authorData.lastName,
+                      resData.data.authorData.biography,
+                      author.imageUrl
                     ).subscribe(() => {
                     loadingElem.dismiss();
                   },

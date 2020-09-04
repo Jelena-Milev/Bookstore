@@ -42,4 +42,23 @@ export class AuthorsService {
       })
     )
   }
+
+  updateAuthor(id:number, firstName:string, lastName:string, biography: string, imageUrl: string){
+    let newAuthor: Author;
+    return this.http.put<Author>(`${environment.apiUrl}/books/authors/${id}`, {
+      firstName, lastName, biography, imageUrl
+    }).pipe(
+      switchMap((author)=>{
+        newAuthor = author;
+        return this._authors;
+      }),
+      take(1),
+      tap(authors=>{
+        const indexOfChanged = authors.findIndex(author => author.id === id);
+        const updatedAuthors = [...authors];
+        updatedAuthors[indexOfChanged] = newAuthor;
+        this._authors.next(updatedAuthors);
+      })
+    )
+  }
 }

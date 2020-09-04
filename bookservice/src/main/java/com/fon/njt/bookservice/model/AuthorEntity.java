@@ -28,8 +28,5 @@ public class AuthorEntity {
     private String imageUrl;
 
     @ManyToMany(mappedBy = "authors")
-//    @JoinTable(name="books_authors",
-//            joinColumns = @JoinColumn(name="author_id"),
-//            inverseJoinColumns = @JoinColumn(name="book_id"))
     private Set<BookEntity> books;
 }

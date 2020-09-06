@@ -43,6 +43,10 @@ export class GenresPage implements OnInit {
     this.genresService.getGenres().subscribe();
   }
 
+  onSearchTextTyped(){
+    this.cp = 1;
+  }
+
   onAddGenre() {
     this.modalCtrl
       .create({

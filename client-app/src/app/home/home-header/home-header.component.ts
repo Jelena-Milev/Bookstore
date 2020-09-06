@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { AuthService } from "src/app/auth/auth.service";
 import { LoadingController, AlertController } from "@ionic/angular";
 import { BooksService } from "src/app/admin-panel/books/books.service";
@@ -16,6 +16,10 @@ export class HomeHeaderComponent implements OnInit {
   cartItemsCount: number = 0;
 
   userRole: string = "";
+
+  @Output() searchClicked = new EventEmitter<boolean>();
+
+
 
   constructor(
     private authService: AuthService,
@@ -75,6 +79,7 @@ export class HomeHeaderComponent implements OnInit {
           .getBooksByTitle(this.searchText)
           .subscribe((books) => {
             loadingEl.dismiss();
+            this.searchClicked.emit(true);
           });
       });
   }

@@ -12,6 +12,7 @@
         <ion-searchbar
           [(ngModel)]="searchText"
           placeholder="Pretraga"
+          (ionInput)="onSearchTextTyped()"
         ></ion-searchbar>
         <ion-fab-button (click)="onAddGenre()" class="ion-margin-start">
           <ion-icon name="add-outline"></ion-icon>

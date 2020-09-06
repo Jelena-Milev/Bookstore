@@ -36,6 +36,10 @@ export class PublishersPage implements OnInit {
     this.publishersService.getPublishers().subscribe();
   }
 
+  onSearchTextTyped(){
+    this.currentPage = 1;
+  }
+
   onAddPublisher() {
     this.modalCtrl
       .create({

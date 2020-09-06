@@ -92,4 +92,8 @@ export class HomePage implements OnInit {
     this.cp = event;
     this.content.scrollToTop(1000);
   }
+
+  onSearchByTitle(){
+    this.cp = 1;
+  }
 }

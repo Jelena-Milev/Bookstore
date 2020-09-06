@@ -39,6 +39,10 @@ export class AuthorsPage implements OnInit {
     this.authorsService.getAuthors().subscribe();
   }
 
+  onSearchTextTyped(){
+    this.cp = 1;
+  }
+
   onAddAuthor() {
     this.modalCtrl
       .create({

@@ -52,6 +52,10 @@ export class BooksPage implements OnInit {
     })    
   }
 
+  onSearchTextTyped(){
+    this.cp = 1;
+  }
+
   onAddBook() {
     this.router.navigate(['admin-panel','tabs', 'books','new']);
   }

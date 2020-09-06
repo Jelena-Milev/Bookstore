@@ -19,6 +19,7 @@ export class OrdersHeaderComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.cartService.getItems().subscribe();
     this.cartService.cartItemsCount.subscribe((count) => {
       this.cartItemsCount = count;
     });

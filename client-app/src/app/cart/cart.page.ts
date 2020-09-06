@@ -52,6 +52,10 @@ export class CartPage implements OnInit {
     });
   }
 
+  ionViewWillLeave(){
+    this.cartService.updateSessionStorageItems();
+  }
+
   onDeleteItem(item: CartItem) {
     this.cartService.deleteItem(item.book).subscribe((items) => {
       this.cartItems = items;
@@ -91,6 +95,25 @@ export class CartPage implements OnInit {
     // })
     this.router.navigate(['/', 'cart', 'payment']);
   }*/
+
+  incrementQty(item: CartItem) {
+    item.quantity += 1;
+    this.cartService.incrementCartItemsCount();
+  }
+
+  decrementQty(item: CartItem) {
+    if (item.quantity === 1) {
+      return;
+    }
+    item.quantity -= 1;
+    this.cartService.decrementCartItemsCount();
+  }
+
+  onItemQuantityChanged(item: CartItem){
+    if(item.quantity <= 0){
+      item.quantity = 1;
+    }
+  }
 
   private showErrorMessage(errorMsg: string){
     this.alertCtrl.create({

@@ -9,18 +9,18 @@ import { tap, switchMap, take } from "rxjs/operators";
 })
 export class CartService {
   private _cartItems: BehaviorSubject<CartItem[]> = new BehaviorSubject([]);
-  private _cartItemsCount = new BehaviorSubject<number>(0); 
+  private _cartItemsCount = new BehaviorSubject<number>(0);
   constructor() {}
 
   get cartItems() {
     return this._cartItems.asObservable();
   }
 
-  get cartItemsCount(){
+  get cartItemsCount() {
     return this._cartItemsCount.asObservable();
   }
 
-  resetCartItemsCount(){
+  resetCartItemsCount() {
     this._cartItemsCount.next(0);
   }
 
@@ -52,7 +52,9 @@ export class CartService {
           const updatedCartItems = [...items];
           updatedCartItems[index].quantity = currentQuantity + quantity;
           this._cartItems.next(updatedCartItems);
-          this._cartItemsCount.next(this.calculateCartItemsPieces(updatedCartItems));
+          this._cartItemsCount.next(
+            this.calculateCartItemsPieces(updatedCartItems)
+          );
         })
       );
     } else {
@@ -68,22 +70,15 @@ export class CartService {
     }
   }
 
-  updateItem(book: Book, newQuantity: number) {
-    const newCartItem = new CartItem(book, newQuantity);
-    sessionStorage.setItem(
-      JSON.stringify(book.id),
-      JSON.stringify(newCartItem)
-    );
-    return this.getItems().pipe(
-      take(1),
-      tap((items) => {
-        const index = items.findIndex((ci) => ci.book.id === book.id);
-        const updatedCartItems = [...items];
-        updatedCartItems[index].quantity = newQuantity;
-        this._cartItems.next(updatedCartItems);
-        this._cartItemsCount.next(this.calculateCartItemsPieces(updatedCartItems));
-      })
-    );
+  updateSessionStorageItems() {
+    this._cartItems.asObservable().subscribe((items) => {
+      items.forEach((item) => {
+        sessionStorage.setItem(
+          JSON.stringify(item.book.id),
+          JSON.stringify(item)
+        );
+      });
+    });
   }
 
   deleteItem(book: Book) {
@@ -95,14 +90,36 @@ export class CartService {
           (ci) => ci.book.id != book.id
         );
         this._cartItems.next(updatedCartItems);
-        this._cartItemsCount.next(this.calculateCartItemsPieces(updatedCartItems));
+        this._cartItemsCount.next(
+          this.calculateCartItemsPieces(updatedCartItems)
+        );
       })
     );
   }
 
-  private calculateCartItemsPieces(cartItems: CartItem[]){
+  incrementCartItemsCount(){
+    this._cartItemsCount.asObservable().pipe(
+      take(1)
+    ).subscribe(count=>{
+      this._cartItemsCount.next(count+1);
+    })
+  }
+
+  decrementCartItemsCount(){
+    this._cartItemsCount.asObservable().pipe(
+      take(1)
+    ).subscribe(count=>{
+      if(count === 1 ){
+        this._cartItemsCount.next(1);
+      }else{
+        this._cartItemsCount.next(count-1);
+      }
+    })
+  }
+
+  private calculateCartItemsPieces(cartItems: CartItem[]) {
     let sum = 0;
-    cartItems.forEach(item => sum += item.quantity);
+    cartItems.forEach((item) => (sum += item.quantity));
     return sum;
   }
 

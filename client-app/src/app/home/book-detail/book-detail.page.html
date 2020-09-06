@@ -32,7 +32,7 @@
           <div class="cart-quantity-counter">
             <ion-item lines="none" class="ion-no-padding">
               <ion-icon name="remove-circle" class="ion-no-margin decrement-btn" (click)="decrementQty()" slot="start" color="primary"></ion-icon>
-              <input type="number" min="1" step="1" [value]="quantityForCart" [(ngModel)]="quantityForCart">
+              <input type="number" min="1" step="1" [value]="quantityForCart" [(ngModel)]="quantityForCart" (change)="onItemQuantityChanged()">
               <ion-icon name="add-circle" class="ion-no-margin increment-btn" (click)="incrementQty()" slot="end" color="primary"></ion-icon>
             </ion-item>
           </div>

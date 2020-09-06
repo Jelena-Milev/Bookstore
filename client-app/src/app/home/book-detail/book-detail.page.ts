@@ -61,6 +61,12 @@ export class BookDetailPage implements OnInit {
     this.quantityForCart -= 1;
   }
 
+  onItemQuantityChanged(){
+    if(this.quantityForCart <= 0){
+      this.quantityForCart = 1;
+    }
+  }
+
   onAddToCart() {
     this.cartService
       .addItem(this.bookToShow, this.quantityForCart)

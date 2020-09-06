@@ -32,6 +32,7 @@ export class HomeHeaderComponent implements OnInit {
     this.authService.role.subscribe((role) => {
       this.userRole = role;
     });
+    this.cartService.getItems().subscribe();
     this.cartService.cartItemsCount.subscribe((count) => {
       this.cartItemsCount = count;
     });

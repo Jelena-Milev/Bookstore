@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
-    List<OrderEntity> findByUserIdEquals(String userId);
+    List<OrderEntity> findByUserIdEqualsOrderByDateDesc(String userId);
 }

@@ -55,6 +55,7 @@ export class HomeHeaderComponent implements OnInit {
             }).then(loadEl=>{
               loadEl.present();
               this.authService.logout();
+              this.cartService.resetCartItemsCount();
             })
           }
         },

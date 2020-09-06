@@ -20,6 +20,10 @@ export class CartService {
     return this._cartItemsCount.asObservable();
   }
 
+  resetCartItemsCount(){
+    this._cartItemsCount.next(0);
+  }
+
   getItems() {
     const cartItems: CartItem[] = [];
     for (let i = 0; i < sessionStorage.length; i++) {

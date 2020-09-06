@@ -28,7 +28,7 @@
           <p>Povez: {{bookToShow.binding}}</p>
         </ion-label>
         <h3>Cena: {{bookToShow.price | currency:'EUR':'symbol-narrow'}}</h3>
-        <div class="add-to-cart" *ngIf="userRole==='USER'">
+        <div class="add-to-cart">
           <div class="cart-quantity-counter">
             <ion-item lines="none" class="ion-no-padding">
               <ion-icon name="remove-circle" class="ion-no-margin decrement-btn" (click)="decrementQty()" slot="start" color="primary"></ion-icon>

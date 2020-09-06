@@ -23,9 +23,13 @@ export class BookItemComponent implements OnInit {
   addToCart(event) {
     event.stopPropagation();
     event.preventDefault();
-    this.cartService.addItem(this.book, 1).subscribe(() => {
-      this.createToastMessage();
-    });
+    if(this.userRole === 'USER'){
+      this.cartService.addItem(this.book, 1).subscribe(() => {
+        this.createToastMessage();
+      });
+    }else{
+      this.router.navigate(['.', 'auth']);
+    }    
   }
 
   createToastMessage(){

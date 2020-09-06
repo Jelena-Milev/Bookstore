@@ -68,11 +68,15 @@ export class BookDetailPage implements OnInit {
   }
 
   onAddToCart() {
-    this.cartService
+    if(this.userRole === 'USER'){
+      this.cartService
       .addItem(this.bookToShow, this.quantityForCart)
       .subscribe(() => {
         this.createToastMessage();
       });
+    }else{
+      this.router.navigate(['.', 'auth']);
+    }    
   }
 
   createToastMessage() {

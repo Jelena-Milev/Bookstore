@@ -3,7 +3,7 @@ import { GenresService } from "../../genres/genres.service";
 import { AuthorsService } from "../../authors/authors.service";
 import { PublishersService } from "../../publishers/publishers.service";
 import { BooksService } from "../books.service";
-import { LoadingController, AlertController } from "@ionic/angular";
+import { LoadingController, AlertController, ToastController } from "@ionic/angular";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Author } from "../../authors/author.model";
@@ -67,6 +67,7 @@ export class EditBookPage implements OnInit {
     private imageService: ImageService,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
     private router: Router
   ) {}
 
@@ -156,6 +157,7 @@ export class EditBookPage implements OnInit {
               () => {
                 loadingElem.dismiss();
                 this.router.navigate(["admin-panel", "tabs", "books"]);
+                this.showToastMessage("Uspesno izmenjena knjiga");
               },
               (errorRes) => {
                 loadingElem.dismiss();
@@ -188,6 +190,7 @@ export class EditBookPage implements OnInit {
               () => {
                 loadingElem.dismiss();
                 this.router.navigate(["admin-panel", "tabs", "books"]);
+                this.showToastMessage("Uspesno izmenjena knjiga");
               },
               (errorRes) => {
                 loadingElem.dismiss();
@@ -238,5 +241,23 @@ export class EditBookPage implements OnInit {
       .then((alertEl) => {
         alertEl.present();
       });
+  }
+
+  private showToastMessage(message: string){
+    this.toastCtrl
+        .create({
+          message: message,
+          buttons: [
+            {
+              text: "OK",
+              role: "cancel",
+            },
+          ],
+          animated: true,
+          duration: 2000,
+        })
+        .then((toast) => {
+          toast.present();
+        });
   }
 }

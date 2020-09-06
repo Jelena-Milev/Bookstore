@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Author } from "./author.model";
 import { AuthorsService } from "./authors.service";
-import { ModalController, LoadingController, AlertController } from "@ionic/angular";
+import { ModalController, LoadingController, AlertController, ToastController } from "@ionic/angular";
 import { AuthorFormComponent } from "./author-form/author-form.component";
 import { ImageService } from '../image.service';
 import { switchMap } from 'rxjs/operators';
@@ -23,7 +23,8 @@ export class AuthorsPage implements OnInit {
     private imageService: ImageService,
     private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController
   ) {}
 
   ngOnInit() {
@@ -70,10 +71,11 @@ export class AuthorsPage implements OnInit {
                   })
                 ).subscribe(() => {
                     loadingElem.dismiss();
+                    this.showToastMessage('Uspesno sacuvan novi autor');
                   },
                   (errorRes)=>{
                     loadingElem.dismiss();
-                    this.showErrorMessage(errorRes.error.message);
+                    this.showErrorMessage('Greska pri dodavanju novog autora', errorRes.error.message);
                   });
               }else{
                 return this.authorsService
@@ -84,10 +86,11 @@ export class AuthorsPage implements OnInit {
                       ""
                     ).subscribe(() => {
                     loadingElem.dismiss();
+                    this.showToastMessage('Uspesno sacuvan novi autor');
                   },
                   (errorRes)=>{
                     loadingElem.dismiss();
-                    this.showErrorMessage(errorRes.error.message);
+                    this.showErrorMessage('Greska pri dodavanju novog autora', errorRes.error.message);
                   });
               }
             });
@@ -129,10 +132,11 @@ export class AuthorsPage implements OnInit {
                   })
                 ).subscribe(() => {
                     loadingElem.dismiss();
+                    this.showToastMessage('Autor je uspesno izmenjen');
                   },
                   (errorRes)=>{
                     loadingElem.dismiss();
-                    this.showErrorMessage(errorRes.error.message);
+                    this.showErrorMessage('Greska pri izmeni autora', errorRes.error.message);
                   });
               }else{
                 return this.authorsService
@@ -144,10 +148,11 @@ export class AuthorsPage implements OnInit {
                       author.imageUrl
                     ).subscribe(() => {
                     loadingElem.dismiss();
+                    this.showToastMessage('Autor je uspesno izmenjen');
                   },
                   (errorRes)=>{
                     loadingElem.dismiss();
-                    this.showErrorMessage(errorRes.error.message);
+                    this.showErrorMessage('Greska pri izmeni autora', errorRes.error.message);
                   });
               }
             });
@@ -155,9 +160,9 @@ export class AuthorsPage implements OnInit {
       });
   }
 
-  private showErrorMessage(errorMsg: string){
+  private showErrorMessage(headerMsg:string, errorMsg: string){
     this.alertCtrl.create({
-      header: 'Greska pri unosu autora',
+      header: headerMsg,
       message: errorMsg,
       buttons:[
         {
@@ -168,5 +173,23 @@ export class AuthorsPage implements OnInit {
     }).then(alertEl=>{
       alertEl.present();
     })
+  }
+
+  private showToastMessage(message: string){
+    this.toastCtrl
+        .create({
+          message: message,
+          buttons: [
+            {
+              text: "OK",
+              role: "cancel",
+            },
+          ],
+          animated: true,
+          duration: 2000,
+        })
+        .then((toast) => {
+          toast.present();
+        });
   }
 }

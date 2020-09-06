@@ -3,8 +3,9 @@ import { CartItem } from "./cart-item.model";
 import { CartService } from "./cart.service";
 import { AuthService } from "../auth/auth.service";
 import { OrdersService } from "../orders/orders.service";
-import { LoadingController, AlertController } from "@ionic/angular";
+import { LoadingController, AlertController, ToastController } from "@ionic/angular";
 import { Router } from "@angular/router";
+import { Order } from '../orders/order.model';
 
 @Component({
   selector: "app-cart",
@@ -24,6 +25,7 @@ export class CartPage implements OnInit {
     private ordersService: OrdersService,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
+    private toastController: ToastController,
     private router: Router
   ) {}
 
@@ -69,6 +71,7 @@ export class CartPage implements OnInit {
             sessionStorage.clear();
             this.router.navigate(["/", "orders"]);
             loadingEl.dismiss();
+            this.showToastMessage(`Narudzbenica je uspesno kreirana`)
           },
           (errorRes)=>{
             loadingEl.dismiss();
@@ -91,5 +94,23 @@ export class CartPage implements OnInit {
     }).then(alertEl=>{
       alertEl.present();
     })
+  }
+
+  private showToastMessage(message: string){
+    this.toastController
+        .create({
+          message: message,
+          buttons: [
+            {
+              text: "OK",
+              role: "cancel",
+            },
+          ],
+          animated: true,
+          duration: 2000,
+        })
+        .then((toast) => {
+          toast.present();
+        });
   }
 }

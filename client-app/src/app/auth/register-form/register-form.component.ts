@@ -89,7 +89,7 @@ export class RegisterFormComponent implements OnInit {
 
   private showErrorMessage(errorMsg: string){
     this.alertCtrl.create({
-      header: 'Greska pri prijavljivanju',
+      header: 'Greska pri registraciji',
       message: errorMsg,
       buttons:[
         {

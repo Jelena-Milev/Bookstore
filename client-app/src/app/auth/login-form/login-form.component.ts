@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: "app-login-form",
@@ -17,7 +17,8 @@ export class LoginFormComponent implements OnInit {
   constructor(private authService: AuthService, 
     private router:Router,
     private alertCtrl: AlertController,
-    private loadingCtrl: LoadingController) {}
+    private loadingCtrl: LoadingController,
+    private toastController: ToastController) {}
 
   ngOnInit() {}
 
@@ -31,6 +32,7 @@ export class LoginFormComponent implements OnInit {
         this.loginForm.reset();
         this.router.navigate(['/', 'home']);
         this.loadingCtrl.dismiss();
+        this.createToastMessage();
       },
       (errorRes)=>{
         loadingEl.dismiss();
@@ -56,5 +58,23 @@ export class LoginFormComponent implements OnInit {
     }).then(alertEl=>{
       alertEl.present();
     })
+  }
+
+  createToastMessage(){
+    this.toastController
+        .create({
+          message: "Uspesno ste se prijavili",
+          buttons: [
+            {
+              text: "OK",
+              role: "cancel",
+            },
+          ],
+          animated: true,
+          duration: 2000,
+        })
+        .then((toast) => {
+          toast.present();
+        });
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Publisher } from "./publisher.model";
 import { PublishersService } from "./publishers.service";
-import { ModalController, LoadingController, AlertController } from '@ionic/angular';
+import { ModalController, LoadingController, AlertController, ToastController } from '@ionic/angular';
 import { PublisherFormComponent } from './publisher-form/publisher-form.component';
 
 @Component({
@@ -20,7 +20,8 @@ export class PublishersPage implements OnInit {
     private publishersService: PublishersService,
     private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController, 
+    private toastCtrl: ToastController
   ) {}
 
   ngOnInit() {
@@ -62,10 +63,11 @@ export class PublishersPage implements OnInit {
                 )
                 .subscribe(() => {
                   loadingElem.dismiss();
+                  this.showToastMessage('Uspesno sacuvan novi izdavac');
                 },
                 (errorRes)=>{
                   loadingElem.dismiss();
-                  this.showErrorMessage(errorRes.error.message);
+                  this.showErrorMessage('Greska pri dodavanju izdavaca', errorRes.error.message);
                 });
             });
         }
@@ -101,19 +103,20 @@ export class PublishersPage implements OnInit {
                 )
                 .subscribe(() => {
                   loadingElem.dismiss();
+                  this.showToastMessage('Izdavac je uspesno izmenjen.');
                 },
                 (errorRes)=>{
                   loadingElem.dismiss();
-                  this.showErrorMessage(errorRes.error.message);
+                  this.showErrorMessage('Greska pri izmeni izdavaca', errorRes.error.message);
                 });
             });
         }
       });
   }
 
-  private showErrorMessage(errorMsg: string){
+  private showErrorMessage(headerMsg:string, errorMsg: string){
     this.alertCtrl.create({
-      header: 'Greska pri unosu izdavaca',
+      header: headerMsg,
       message: errorMsg,
       buttons:[
         {
@@ -124,5 +127,23 @@ export class PublishersPage implements OnInit {
     }).then(alertEl=>{
       alertEl.present();
     })
+  }
+
+  private showToastMessage(message: string){
+    this.toastCtrl
+        .create({
+          message: message,
+          buttons: [
+            {
+              text: "OK",
+              role: "cancel",
+            },
+          ],
+          animated: true,
+          duration: 2000,
+        })
+        .then((toast) => {
+          toast.present();
+        });
   }
 }

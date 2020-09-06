@@ -7,6 +7,7 @@ import {
   LoadingController,
   AlertController,
   ModalController,
+  ToastController,
 } from "@ionic/angular";
 import { GenreFormComponent } from "./genre-form/genre-form.component";
 
@@ -26,7 +27,8 @@ export class GenresPage implements OnInit {
     private genresService: GenresService,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private toastCtrl: ToastController
   ) {}
 
   ngOnInit() {
@@ -62,10 +64,11 @@ export class GenresPage implements OnInit {
               this.genresService.saveGenre(resData.data.genre.name).subscribe(
                 () => {
                   this.loadingCtrl.dismiss();
+                  this.showToastMessage('Uspesno sacuvan novi zanr');
                 },
                 (errorRes) => {
                   loadingElem.dismiss();
-                  this.showErrorMessage(errorRes.error.message);
+                  this.showErrorMessage('Greska pri dodavanju novog zanra',errorRes.error.message);
                 }
               );
             });
@@ -95,10 +98,11 @@ export class GenresPage implements OnInit {
               this.genresService.updateGenre(genre.id, resData.data.genre.name).subscribe(
                 () => {
                   this.loadingCtrl.dismiss();
+                  this.showToastMessage('Zanr je uspesno izmenjen');
                 },
                 (errorRes) => {
                   loadingElem.dismiss();
-                  this.showErrorMessage(errorRes.error.message);
+                  this.showErrorMessage('Greska pri izmeni zanra', errorRes.error.message);
                 }
               );
             });
@@ -106,10 +110,10 @@ export class GenresPage implements OnInit {
       });
   }
 
-  private showErrorMessage(errorMsg: string) {
+  private showErrorMessage(headerMsg:string, errorMsg: string) {
     this.alertCtrl
       .create({
-        header: "Greska pri unosu zanra",
+        header: headerMsg,
         message: errorMsg,
         buttons: [
           {
@@ -121,5 +125,23 @@ export class GenresPage implements OnInit {
       .then((alertEl) => {
         alertEl.present();
       });
+  }
+
+  private showToastMessage(message: string){
+    this.toastCtrl
+        .create({
+          message: message,
+          buttons: [
+            {
+              text: "OK",
+              role: "cancel",
+            },
+          ],
+          animated: true,
+          duration: 2000,
+        })
+        .then((toast) => {
+          toast.present();
+        });
   }
 }

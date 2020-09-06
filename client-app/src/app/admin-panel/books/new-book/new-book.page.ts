@@ -7,7 +7,7 @@ import { Author } from "../../authors/author.model";
 import { Genre } from "../../genres/genre.model";
 import { Publisher } from "../../publishers/publisher.model";
 import { BooksService } from "../books.service";
-import { LoadingController, AlertController } from "@ionic/angular";
+import { LoadingController, AlertController, ToastController } from "@ionic/angular";
 import { Router } from "@angular/router";
 import { ImageService } from "../../image.service";
 import { switchMap } from "rxjs/operators";
@@ -62,6 +62,7 @@ export class NewBookPage implements OnInit {
     private bookService: BooksService,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
+    private toastCtrl: ToastController,
     private router: Router
   ) {}
 
@@ -136,12 +137,13 @@ export class NewBookPage implements OnInit {
               () => {
                 loadingElem.dismiss();
                 this.router.navigate(["admin-panel", "tabs", "books"]);
+                this.showToastMessage("Uspesno sacuvana nova knjiga");
               },
               (errorRes) => {
                 loadingElem.dismiss();
                 // this.router.navigate(["admin-panel", "tabs", "books"]);
                 this.showErrorMessage(
-                  "Greska pri unosu knjige",
+                  "Greska pri dodavanju nove knjige",
                   errorRes.error.message
                 );
               }
@@ -167,6 +169,7 @@ export class NewBookPage implements OnInit {
               () => {
                 loadingElem.dismiss();
                 this.router.navigate(["admin-panel", "tabs", "books"]);
+                this.showToastMessage("Uspesno sacuvana nova knjiga");
               },
               (errorRes) => {
                 loadingElem.dismiss();
@@ -196,5 +199,23 @@ export class NewBookPage implements OnInit {
       .then((alertEl) => {
         alertEl.present();
       });
+  }
+
+  private showToastMessage(message: string){
+    this.toastCtrl
+        .create({
+          message: message,
+          buttons: [
+            {
+              text: "OK",
+              role: "cancel",
+            },
+          ],
+          animated: true,
+          duration: 2000,
+        })
+        .then((toast) => {
+          toast.present();
+        });
   }
 }

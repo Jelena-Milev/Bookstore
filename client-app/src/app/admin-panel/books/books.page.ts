@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Book } from "./book.model";
 import { BooksService } from "./books.service";
-import { ModalController, AlertController, LoadingController } from "@ionic/angular";
+import { ModalController, AlertController, LoadingController, ToastController } from "@ionic/angular";
 import { BookDescComponent } from "./book-desc/book-desc.component";
 import { Router } from '@angular/router';
 import { BooksPageRoutingModule } from './books-routing.module';
@@ -23,6 +23,7 @@ export class BooksPage implements OnInit {
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,
     private router: Router
   ) {}
 
@@ -76,26 +77,27 @@ export class BooksPage implements OnInit {
     }
     this.alertCtrl.create({
       header: "Brisanje knjige",
-      message: "Da li zaista zelite da obrisete knjigu "+book.title,
+      message: "Da li zaista zelite da povucete iz prodaje knjigu "+book.title,
       buttons: [
         {
           text: 'Nazad',
           role: 'cancel'
         },
         {
-          text: 'Obrisi',
+          text: 'Da',
           handler: () => {
             this.loadingCtrl.create({
-              message: 'Brisanje knjige...'
+              message: 'Povlacenje knjige...'
             }).then(loadingEl=>{
               loadingEl.present();
               this.booksService.deleteBook(book.id).subscribe(res=>{
                 loadingEl.dismiss();
                 this.router.navigate(['admin-panel', 'tabs', 'books']);
+                this.showToastMessage('Knjiga je uspesno povucena iz prodaje.')
               },
               (errorRes)=>{
                 loadingEl.dismiss();
-                this.showErrorMessage('Greska pri brisanju knjige', errorRes.error.message);
+                this.showErrorMessage('Greska pri povlacenju knjige iz prodaje', errorRes.error.message);
               })
             })            
           }
@@ -119,5 +121,23 @@ export class BooksPage implements OnInit {
     }).then(alertEl=>{
       alertEl.present();
     })
+  }
+
+  private showToastMessage(message: string){
+    this.toastCtrl
+        .create({
+          message: message,
+          buttons: [
+            {
+              text: "OK",
+              role: "cancel",
+            },
+          ],
+          animated: true,
+          duration: 2000,
+        })
+        .then((toast) => {
+          toast.present();
+        });
   }
 }

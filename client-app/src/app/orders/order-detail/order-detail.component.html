@@ -50,9 +50,9 @@
 
       </ion-col>
 
-      <ion-col size-md="2" class="order-info"><ion-label>{{item.book.price}}</ion-label></ion-col>
+      <ion-col size-md="2" class="order-info"><ion-label>{{item.book.price | currency: 'EUR'}}</ion-label></ion-col>
       <ion-col size-md="2" class="order-info"><ion-label>{{item.quantity}}</ion-label></ion-col>
-      <ion-col size-md="2" class="order-info"><ion-label>{{item.itemPrice}}</ion-label></ion-col>
+      <ion-col size-md="2" class="order-info"><ion-label>{{item.itemPrice | currency: 'EUR'}}</ion-label></ion-col>
     </ion-row>
 </ion-content>
 <ion-footer class="ion-no-border">

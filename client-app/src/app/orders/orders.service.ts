@@ -35,6 +35,19 @@ export class OrdersService {
     )
   }
 
+  checkAvailability(cartItems: CartItem[]){
+    const items = cartItems.map((item) => {
+      return new OrderItem(item.book.id, item.quantity, item.book.title);
+    });
+    return this.authService.userId.pipe(
+      take(1),
+      switchMap((userId) => {
+        // if (!userId) return;
+        return this.http.post<Order>(`${environment.apiUrl}/book-orders/items/availability`, items);
+      })
+    );
+  }
+
   createOrder(cartItems: CartItem[]) {
     const items = cartItems.map((item) => {
       return new OrderItem(item.book.id, item.quantity, item.book.title);

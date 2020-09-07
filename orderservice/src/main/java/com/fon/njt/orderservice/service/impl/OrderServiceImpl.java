@@ -3,6 +3,7 @@ package com.fon.njt.orderservice.service.impl;
 import com.fon.njt.orderservice.controller.BookServiceAPI;
 import com.fon.njt.orderservice.controller.BookStorageAPI;
 import com.fon.njt.orderservice.dto.book.BookResponseDto;
+import com.fon.njt.orderservice.dto.request.OrderItemRequestDto;
 import com.fon.njt.orderservice.dto.request.OrderRequestDto;
 import com.fon.njt.orderservice.dto.response.OrderResponseDto;
 import com.fon.njt.orderservice.dto.storage.SoldItemRequestDto;
@@ -42,17 +43,41 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderResponseDto> getOrdersByUserId(String userId, UserInfoDto userInfoDto) {
+        final List<OrderEntity> orders = repository.findByUserIdEqualsOrderByDateDesc(userId);
+        orders.forEach(order -> setBooks(order));
+        final List<OrderResponseDto> orderResponseDtos = new ArrayList<>(orders.size());
+        orders.forEach(order -> orderResponseDtos.add(mapper.mapToDto(order, userInfoDto)));
+        return orderResponseDtos;
+    }
+
+    @Override
+    public void checkAvailability(List<OrderItemRequestDto> items) {
+        final List<Long> bookIds = items.stream().map(item -> item.getBookId()).collect(Collectors.toList());
+        final List<StorageItemResponseDto> storageItems = storageAPI.getStorageItemsInBulk(bookIds);
+        for (OrderItemRequestDto itemDto : items) {
+            //ako get baci exception znaci da knjige iz stavke nema u listi sa bookstorage - baci exception
+            StorageItemResponseDto storageItem = storageItems.stream().filter(si -> si.getBookId() == itemDto.getBookId()).findFirst().orElseThrow(() -> new BookIsNotForSaleException(itemDto.getBookTitle()));
+            if (!storageItem.isInStock())
+                throw new BookIsNotForSaleException(itemDto.getBookTitle());
+            if (storageItem.getPiecesAvailable() < itemDto.getQuantity())
+                throw new NotEnoughBooksInStockException(itemDto.getBookTitle());
+            //ako get baci exception znaci da knjige iz stavke nema u listi sa bookservisa - baci exception
+        }
+    }
+
+    @Override
     @Transactional
-    public OrderResponseDto save(OrderRequestDto dto, UserInfoDto userInfoDto) {
+    public OrderResponseDto create(OrderRequestDto dto, UserInfoDto userInfoDto) {
         //ima listu itema, svaki ima bookId i quantity
         OrderEntity order = mapper.mapToEntity(dto);
 
         final List<Long> bookIds = dto.getItems().stream().map(item -> item.getBookId()).collect(Collectors.toList());
         final List<BookResponseDto> books = bookServiceAPI.getBooksInBulk(bookIds);
 
-        final List<StorageItemResponseDto> storageItems = storageAPI.getStorageItemsInBulk(bookIds);
+//        final List<StorageItemResponseDto> storageItems = storageAPI.getStorageItemsInBulk(bookIds);
 
-        calculateItemsPrices(order, books, storageItems);
+        calculateItemsPrices(order, books);
 
         order.setDate(LocalDate.now());
         order.setOrderIdentifier(UUID.randomUUID().toString());
@@ -63,24 +88,8 @@ public class OrderServiceImpl implements OrderService {
         return mapper.mapToDto(savedOrder, userInfoDto);
     }
 
-    @Override
-    public List<OrderResponseDto> getOrdersByUserId(String userId, UserInfoDto userInfoDto) {
-        final List<OrderEntity> orders = repository.findByUserIdEqualsOrderByDateDesc(userId);
-        orders.forEach(order -> setBooks(order));
-        final List<OrderResponseDto> orderResponseDtos = new ArrayList<>(orders.size());
-        orders.forEach(order -> orderResponseDtos.add(mapper.mapToDto(order, userInfoDto)));
-        return orderResponseDtos;
-    }
-
-    private void calculateItemsPrices(OrderEntity order, List<BookResponseDto> books, List<StorageItemResponseDto> storageItems) {
+    private void calculateItemsPrices(OrderEntity order, List<BookResponseDto> books) {
         for (OrderItemEntity item : order.getItems()) {
-            //ako get baci exception znaci da knjige iz stavke nema u listi sa bookstorage - baci exception
-            StorageItemResponseDto storageItem = storageItems.stream().filter(si -> si.getBookId() == item.getBookId()).findFirst().orElseThrow(() -> new BookIsNotForSaleException(item.getBookTitle()));
-            if (!storageItem.isInStock())
-                throw new BookIsNotForSaleException(item.getBookTitle());
-            if (storageItem.getPiecesAvailable() < item.getQuantity())
-                throw new NotEnoughBooksInStockException(item.getBookTitle());
-            //ako get baci exception znaci da knjige iz stavke nema u listi sa bookservisa - baci exception
             BookResponseDto bookDto = books.stream().filter(book -> book.getId() == item.getBookId()).findFirst().orElseThrow(() -> new BookIsNotForSaleException(item.getBookTitle()));
             item.setBook(bookDto);
             final BigDecimal itemPrice = bookDto.getPrice().multiply(new BigDecimal(item.getQuantity().intValue()));

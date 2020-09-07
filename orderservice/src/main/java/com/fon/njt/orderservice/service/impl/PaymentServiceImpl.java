@@ -38,6 +38,7 @@ public class PaymentServiceImpl implements PaymentService {
         Map<String, Object> params = new HashMap<>();
         params.put("payment_method", "pm_card_visa");
         PaymentIntent updatedPaymentIntent = paymentIntent.confirm(params);
+//        updatedPaymentIntent
         return updatedPaymentIntent;
     }
 

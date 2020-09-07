@@ -1,5 +1,6 @@
 package com.fon.njt.orderservice.controller;
 
+import com.fon.njt.orderservice.dto.request.OrderItemRequestDto;
 import com.fon.njt.orderservice.dto.request.OrderRequestDto;
 import com.fon.njt.orderservice.dto.response.OrderResponseDto;
 import com.fon.njt.orderservice.dto.user.UserInfoDto;
@@ -35,13 +36,16 @@ public class OrderController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    @PostMapping(path = "items/availability", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderResponseDto> checkAvailability(@RequestBody final List<@Valid OrderItemRequestDto> dto) {
+        orderService.checkAvailability(dto);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @PostMapping(path = "", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<OrderResponseDto> save(@RequestBody @Valid final OrderRequestDto dto) {
-//        if(cartItemsIds == null || cartItemsIds.isEmpty())
-//            throw new ObjectNotFoundException("There must be at list one order item");
-//        final Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         final UserInfoDto userInfoDto = authServiceAPI.getUserInfo(dto.getUserId());
-        final OrderResponseDto orderDto = orderService.save(dto, userInfoDto);
+        final OrderResponseDto orderDto = orderService.create(dto, userInfoDto);
         return new ResponseEntity(orderDto, HttpStatus.OK);
     }
 }

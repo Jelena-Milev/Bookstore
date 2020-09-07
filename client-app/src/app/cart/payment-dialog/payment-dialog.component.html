@@ -24,7 +24,7 @@
       <ion-card-title>Stripe Sample</ion-card-title>
       <ion-row>
         <ion-col>Total Payment</ion-col>
-        <!-- <ion-col> {{currencyIcon}}{{paymentAmount}} </ion-col> -->
+        <ion-col> {{paymentAmount | currency: 'EUR'}} </ion-col>
       </ion-row>
     </ion-card-header>
     <ion-card-content>

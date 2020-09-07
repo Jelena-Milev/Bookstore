@@ -67,7 +67,7 @@
         </ion-item>
       </ion-col>
 
-      <ion-col size-lg="1" class="cart-item-info"><ion-label>{{item.book.price | number}}</ion-label></ion-col>
+      <ion-col size-lg="1" class="cart-item-info"><ion-label>{{item.book.price | currency: 'EUR'}}</ion-label></ion-col>
       <!-- <ion-col size-lg="1" class="cart-item-info"><ion-label>{{item.quantity | number}}</ion-label></ion-col> -->
       <ion-col size-lg="1" class="cart-item-info">
         <div class="cart-quantity-counter">
@@ -81,7 +81,7 @@
       </ion-col>
       
       
-      <ion-col size-lg="1" class="cart-item-info"><ion-label>{{(item.book.price*item.quantity) | number}}</ion-label></ion-col>
+      <ion-col size-lg="1" class="cart-item-info"><ion-label>{{(item.book.price*item.quantity) | currency: 'EUR'}}</ion-label></ion-col>
       <ion-col size-lg="1" class="cart-item-info">
         <ion-fab-button size="small" (click)="onDeleteItem(item)">
           <ion-icon name="close-outline"></ion-icon>
@@ -99,7 +99,7 @@
       <ion-row *ngIf="cartItems !== null && cartItems.length !== 0" class="ion-justify-content-center">
         <ion-col size-lg="2" class="total-price-col"><ion-label>Ukupno total:</ion-label></ion-col>
         <ion-col size-lg="4" class="total-price-row-empty-col"></ion-col>
-        <ion-col size-lg="1" class="total-price-col">{{totalPrice | number}}</ion-col>
+        <ion-col size-lg="1" class="total-price-col">{{totalPrice | currency: 'EUR'}}</ion-col>
         <ion-col size-lg="1" class="total-price-row-empty-col"> </ion-col>
       </ion-row>
       <ion-row *ngIf="cartItems !== null && cartItems.length !== 0" class="ion-justify-content-center">

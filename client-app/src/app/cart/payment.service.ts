@@ -15,8 +15,8 @@ export class PaymentService {
     return this.http.post<string>(`${environment.apiUrl}/book-orders/stripe/payment-intent`, paymentIntentDto)
   }
 
-  public confirm(id: string):Observable<string>{
-    return this.http.post<string>(`${environment.apiUrl}/book-orders/stripe/confirm/${id}`, {});
+  public confirm(id: string):Observable<any>{
+    return this.http.post<any>(`${environment.apiUrl}/book-orders/stripe/confirm/${id}`, {});
   }
 
   public cancel(id: string):Observable<string>{

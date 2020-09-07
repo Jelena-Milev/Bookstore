@@ -66,7 +66,40 @@ export class CartPage implements OnInit {
     });
   }
 
-  onBuyItems() {
+
+  onBuyItems(){
+    this.loadingCtrl
+      .create({ message: "Provera dostupnosti knjiga..." })
+      .then((loadingEl) => {
+        loadingEl.present();
+        this.ordersService.checkAvailability(this.cartItems).subscribe(
+          () => {
+            loadingEl.dismiss();
+            this.showToastMessage(`Ima dovoljno knjiga`)
+            this.showPaymentDialog(this.totalPrice, this.cartItems);
+          },
+          (errorRes)=>{
+            loadingEl.dismiss();
+            this.showErrorMessage(errorRes.error.message);
+          }
+        );
+      });
+  }
+
+  private showPaymentDialog(paymentAmount: number, cartItems: CartItem[]){
+    this.modalCtrl.create({
+      component: PaymentDialogComponent,
+      componentProps: {
+        paymentAmount: paymentAmount, 
+        cartItems: cartItems
+      }
+    }).then(modalEl=>{
+      modalEl.present();
+      return modalEl.onDidDismiss();
+    })
+  }
+
+  /*onBuyItems() {
     this.loadingCtrl
       .create({ message: "Porucivanje u toku..." })
       .then((loadingEl) => {
@@ -85,7 +118,7 @@ export class CartPage implements OnInit {
           }
         );
       });
-  }
+  }*/
 
   /*onBuyItems(){
     // this.modalCtrl.create({
@@ -98,6 +131,7 @@ export class CartPage implements OnInit {
 
   incrementQty(item: CartItem) {
     item.quantity += 1;
+    this.totalPrice += item.book.price;
     this.cartService.incrementCartItemsCount();
   }
 
@@ -106,6 +140,7 @@ export class CartPage implements OnInit {
       return;
     }
     item.quantity -= 1;
+    this.totalPrice -= item.book.price;
     this.cartService.decrementCartItemsCount();
   }
 
@@ -113,6 +148,10 @@ export class CartPage implements OnInit {
     if(item.quantity <= 0){
       item.quantity = 1;
     }
+    this.totalPrice = 0;
+      this.cartItems.forEach((ci) => {
+        this.totalPrice += ci.book.price * ci.quantity;
+    });
   }
 
   private showErrorMessage(errorMsg: string){

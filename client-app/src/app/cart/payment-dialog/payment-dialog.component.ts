@@ -5,6 +5,9 @@ import { PaymentIntent } from '../payment-intent.model';
 import { PaymentService } from '../payment.service';
 import { ToastController, AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { CartItem } from '../cart-item.model';
+import { OrdersService } from 'src/app/orders/orders.service';
+import { CartService } from '../cart.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment-dialog',
@@ -19,12 +22,14 @@ export class PaymentDialogComponent implements OnInit {
   card: any;
 
   constructor(
-    private http: HttpClient,
+    private ordersService: OrdersService,
     private paymentService: PaymentService,
+    private cartService: CartService,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
-    private modalCtrl: ModalController) { }
+    private modalCtrl: ModalController,
+    private router: Router) { }
 
   ngOnInit() {
     this.setupStripe();
@@ -127,12 +132,22 @@ export class PaymentDialogComponent implements OnInit {
         this.paymentService.confirm(paymentTransactionId).subscribe(
           (data) => {
             console.log('confirm payment result data')
-            console.log(data.charges.data[0].id)
-            console.log(data.charges.data[0].receipt_url)
-            loadingEl.dismiss();
-            this.showToastMessage(
-              `Uspesno potvrdjena transakcija ${data[`id`]}`
-            );
+            const orderId = data.charges.data[0].id;
+            const receipt_url = data.charges.data[0].receipt_url;
+            this.ordersService.createOrder(this.cartItems, orderId, receipt_url).subscribe(
+              (order)=>{
+                // console.log(order);
+                this.cartService.resetCartItemsCount();
+                this.modalCtrl.dismiss();
+                this.router.navigate(["/", "orders"]);
+                loadingEl.dismiss();
+                this.showToastMessage(`Narudzbenica je uspesno kreirana`)
+              },
+              (errorRes)=>{
+                loadingEl.dismiss();
+                this.showErrorMessage(errorRes.error.message);
+              }
+            )
           },
           (err) => {
             loadingEl.dismiss();
@@ -178,5 +193,20 @@ export class PaymentDialogComponent implements OnInit {
       .then((toastEl) => {
         toastEl.present();
       });
+  }
+
+  private showErrorMessage(errorMsg: string){
+    this.alertCtrl.create({
+      header: 'Greska pri narucivanju knjiga',
+      message: errorMsg,
+      buttons:[
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
+    }).then(alertEl=>{
+      alertEl.present();
+    })
   }
 }

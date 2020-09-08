@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { CartItem } from "../cart/cart-item.model";
 import { AuthService } from "../auth/auth.service";
 import { environment } from "src/environments/environment";
-import { switchMap, tap, take } from "rxjs/operators";
+import { switchMap, tap, take, map } from "rxjs/operators";
 import { Order } from "./order.model";
 import { BehaviorSubject } from "rxjs";
 
@@ -31,6 +31,7 @@ export class OrdersService {
       }),
       tap(orders=>{
         this._orders.next(orders);
+        console.log(orders);
       })
     )
   }
@@ -48,7 +49,7 @@ export class OrdersService {
     );
   }
 
-  createOrder(cartItems: CartItem[]) {
+  createOrder(cartItems: CartItem[], orderIdentifier:string, paymentReceiptUrl:string) {
     const items = cartItems.map((item) => {
       return new OrderItem(item.book.id, item.quantity, item.book.title);
     });
@@ -59,6 +60,8 @@ export class OrdersService {
         // if (!userId) return;
         return this.http.post<Order>(`${environment.apiUrl}/book-orders`, {
           userId,
+          orderIdentifier,
+          paymentReceiptUrl,
           items,
         });
       }),

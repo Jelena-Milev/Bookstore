@@ -75,7 +75,6 @@ export class CartPage implements OnInit {
         this.ordersService.checkAvailability(this.cartItems).subscribe(
           () => {
             loadingEl.dismiss();
-            this.showToastMessage(`Ima dovoljno knjiga`)
             this.showPaymentDialog(this.totalPrice, this.cartItems);
           },
           (errorRes)=>{

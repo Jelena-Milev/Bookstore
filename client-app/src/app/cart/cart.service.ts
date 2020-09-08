@@ -21,6 +21,7 @@ export class CartService {
   }
 
   resetCartItemsCount() {
+    sessionStorage.clear();
     this._cartItemsCount.next(0);
   }
 

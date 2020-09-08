@@ -1,14 +1,16 @@
 import { Book } from '../admin-panel/books/book.model';
+import { IonDatetime } from '@ionic/angular';
 
 export class Order{
   constructor(
     public id: number,
     public orderIdentifier: string,
+    public paymentReceiptUrl: string,
     public date: Date,
     public totalPrice: number,
     public userId: string,
     public userInfo: UserInfo,
-    public items: OrderItem[]
+    public items: OrderItem[],
   ){}
 }
 

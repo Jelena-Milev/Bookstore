@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +25,10 @@ public class OrderEntity {
     private Long id;
     @EqualsAndHashCode.Include
     private String orderIdentifier;
+    private String paymentReceiptUrl;
     private String userId;
-    @Column(columnDefinition = "DATE")
-    private LocalDate date;
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime date;
     private BigDecimal totalPrice;
 
     @OneToMany(mappedBy = "order", cascade = {CascadeType.MERGE, CascadeType.PERSIST})

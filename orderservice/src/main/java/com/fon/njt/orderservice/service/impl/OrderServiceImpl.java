@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -79,8 +80,7 @@ public class OrderServiceImpl implements OrderService {
 
         calculateItemsPrices(order, books);
 
-        order.setDate(LocalDate.now());
-        order.setOrderIdentifier(UUID.randomUUID().toString());
+        order.setDate(LocalDateTime.now());
         order.calculateTotalPrice();
         final OrderEntity savedOrder = repository.save(order);
         final List<SoldItemRequestDto> soldItemRequestDtos = savedOrder.getItems().stream().map(item -> new SoldItemRequestDto(item.getBookId(), item.getQuantity())).collect(Collectors.toList());

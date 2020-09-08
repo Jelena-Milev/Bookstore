@@ -14,5 +14,6 @@ public interface OrderMapper {
     OrderEntity mapToEntity(OrderRequestDto dto);
 
     @Mapping(source = "userInfoDto", target = "userInfo")
+    @Mapping(target = "date", expression = "java(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(order.getDate()))")
     OrderResponseDto mapToDto(OrderEntity order, UserInfoDto userInfoDto);
 }

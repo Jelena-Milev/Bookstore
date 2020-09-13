@@ -11,6 +11,7 @@ import { AuthService } from '../auth.service';
 })
 export class VerifyUserPage implements OnInit {
 
+  isLoading: boolean;
   userDataForm = new FormGroup({
     firstName: new FormControl("", [Validators.required]),
     lastName: new FormControl("", [Validators.required]),
@@ -29,6 +30,7 @@ export class VerifyUserPage implements OnInit {
     private loadingCtrl: LoadingController) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       if (!paramMap.has("userId")) {
         this.router.navigate([".", "home"]);
@@ -36,7 +38,7 @@ export class VerifyUserPage implements OnInit {
       }
       this.userId = paramMap.get('userId');
       this.authService.loadVerifyPage(this.userId).subscribe(() => {
-        
+        this.isLoading = false;
       }, (err)=>{
         this.router.navigate(['.', 'home']);
         this.alertCtrl.create({header:'Greska pri verifikaciji korisnickog naloga',

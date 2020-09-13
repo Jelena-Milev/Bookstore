@@ -14,8 +14,13 @@
       </div>
       </ion-col>
     </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="2" class="ion-text-center">
+        <ion-spinner *ngIf="isLoading" color="primary"></ion-spinner>
+      </ion-col>
+    </ion-row>
   </ion-grid>
-  <form [formGroup]="userDataForm" (ngSubmit)="onSubmit()" class="login-form">
+  <form *ngIf="!isLoading" [formGroup]="userDataForm" (ngSubmit)="onSubmit()" class="login-form">
     <ion-grid>  
       <ion-row class="ion-justify-content-center">
         <ion-col size-lg="3">

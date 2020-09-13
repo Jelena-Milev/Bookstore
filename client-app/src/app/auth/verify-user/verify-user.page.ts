@@ -97,7 +97,7 @@ export class VerifyUserPage implements OnInit {
 
   private showErrorMessage(errorMsg: string){
     this.alertCtrl.create({
-      header: 'Greska pri registraciji',
+      header: 'Greska pri verifikaciji naloga',
       message: errorMsg,
       buttons:[
         {

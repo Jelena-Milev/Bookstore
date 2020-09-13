@@ -7,7 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: AuthPage
+  },
+  {
+    path: 'verify-user/:userId',
+    loadChildren: () => import('./verify-user/verify-user.module').then( m => m.VerifyUserPageModule)
   }
+
 ];
 
 @NgModule({

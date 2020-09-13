@@ -50,8 +50,8 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public AuthorResponseDto update(Long id, AuthorRequestDto dto) {
         final AuthorEntity authorToUpdate = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Autor", id));
-        if (repository.existsByFirstNameAndLastName(dto.getFirstName(), dto.getLastName()) && !dto.getFirstName().equals(authorToUpdate.getFirstName())
-                && !dto.getLastName().equals(authorToUpdate.getLastName()))
+        if (repository.existsByFirstNameAndLastName(dto.getFirstName(), dto.getLastName()) && !dto.getFirstName().toLowerCase().equals(authorToUpdate.getFirstName().toLowerCase())
+                && !dto.getLastName().toLowerCase().equals(authorToUpdate.getLastName().toLowerCase()))
             throw new EntityAlreadyExistsException("Autor sa unetim imenom i prezimenom vec postoji.");
         updateAuthor(authorToUpdate, dto);
         final AuthorEntity updatedAuthor = repository.save(authorToUpdate);

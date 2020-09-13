@@ -41,10 +41,6 @@ const routes: Routes = [
       role: 'USER'
     }
   },
-
-
-
-
 ];
 
 @NgModule({

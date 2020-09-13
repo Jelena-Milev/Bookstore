@@ -1,24 +1,21 @@
-// ion-col{
-//   border: 1px solid purple;
-// }
-
-.register-form {
+.login-form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
 
-.register-form-item {
-  padding-top: 10px;
+.login-form-item{
+  width: 50%;
+  padding-top:20px;
 }
 
-.register-form-item-label {
+.login-form-item-label{
   width: 50%;
-  padding-top: 5px;
+  padding-top:5px;
   padding-left: 16px;
 }
 
-ion-button {
+ion-button{
   width: 50%;
 }

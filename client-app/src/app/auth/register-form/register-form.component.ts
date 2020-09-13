@@ -12,12 +12,6 @@ export class RegisterFormComponent implements OnInit {
   registerForm = new FormGroup({
     username: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [Validators.required]),
-    firstName: new FormControl("", [Validators.required]),
-    lastName: new FormControl("", [Validators.required]),
-    streetAndNo: new FormControl("", [Validators.required]),
-    city: new FormControl("", [Validators.required]),
-    zipCode: new FormControl("", [Validators.required]),
-    phone: new FormControl("", [Validators.required]),
   });
 
   @Output() segment: EventEmitter<string> = new EventEmitter<string>();
@@ -33,13 +27,6 @@ export class RegisterFormComponent implements OnInit {
   onRegister() {
     const username: string = this.registerForm.get("username").value;
     const password: string = this.registerForm.get("password").value;
-    const firstName: string = this.registerForm.get("firstName").value;
-    const lastName: string = this.registerForm.get("lastName").value;
-    const streetNameAndNumber: string = this.registerForm.get("streetAndNo")
-      .value;
-    const city: string = this.registerForm.get("city").value;
-    const zipCode: string = this.registerForm.get("zipCode").value;
-    const phone: string = this.registerForm.get("phone").value;
 
     this.loadingCtrl
       .create({ message: "Registracija u toku..." })
@@ -48,26 +35,17 @@ export class RegisterFormComponent implements OnInit {
         this.authService
           .register(
             username,
-            password,
-            firstName,
-            lastName,
-            streetNameAndNumber,
-            city,
-            zipCode,
-            phone
+            password
           )
           .subscribe(() => {
             this.alertCtrl
               .create({
                 header: "Registracija",
-                message: "Korisnik je uspesno registrovan. Moze se prijaviti.",
+                message: "Korisnik je uspesno registrovan. Link za verifikaciju naloga je poslat na uneti imejl.",
                 buttons: [
                   {
-                    text: "PRIJAVA",
+                    text: "OK",
                     role: "cancel",
-                    handler: () => {
-                      this.segment.emit('login');
-                    }
                   },
                 ],
               })

@@ -3,6 +3,7 @@ package com.fon.njt.auth.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +24,8 @@ public class UserEntity {
     private String firstName;
     private String lastName;
     private String role;
+    private boolean verified;
+    private LocalDateTime verificationDeadline;
 
     private String streetNameAndNumber;
     private String phone;

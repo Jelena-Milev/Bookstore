@@ -17,10 +17,15 @@ import java.util.Map;
 public class MyAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        Map<String,Object> response = new HashMap<>();
-        response.put("message", "Pogresno korisnicko ime ili lozinka.");
-
-        httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        Map<String, Object> response = new HashMap<>();
+        if (e.getMessage().equals("Bad credentials")) {
+            response.put("message", "Pogresno korisnicko ime ili lozinka");
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+        else{
+            response.put("message", e.getMessage());
+            httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
         OutputStream out = httpServletResponse.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter().writeValue(out, response);

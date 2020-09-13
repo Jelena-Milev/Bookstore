@@ -85,7 +85,7 @@ export class PaymentDialogComponent implements OnInit {
     const paymentIntent: PaymentIntent = {
       token: id,
       description: `Racun za kupovinu knjiga: ${new Date().toLocaleString('sr-RS')}`,
-      amount: this.paymentAmount*100,
+      amount: this.paymentAmount*100.0,
       currency: 'EUR'
     };
     this.loadingCtrl.create({message: 'Molimo sacekajte...'}).then(

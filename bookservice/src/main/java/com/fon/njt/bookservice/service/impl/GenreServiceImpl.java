@@ -51,7 +51,7 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public GenreResponseDto update(Long id, GenreRequestDto dto) {
         final GenreEntity genreToUpdate = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Zanr", id));
-        if (repository.existsByName(dto.getName()) && !dto.getName().equals(genreToUpdate.getName()))
+        if (repository.existsByName(dto.getName()) && !dto.getName().toLowerCase().equals(genreToUpdate.getName().toLowerCase()))
             throw new EntityAlreadyExistsException("Zanr sa unetim nazivom vec postoji.");
         genreToUpdate.setName(dto.getName());
         final GenreEntity updatedGenre = repository.save(genreToUpdate);

@@ -22,9 +22,9 @@ export class NewBookPage implements OnInit {
   bookForm: FormGroup = new FormGroup({
     isbn: new FormControl("", [
       Validators.required,
-      Validators.minLength(17),
-      Validators.maxLength(17),
-      Validators.pattern("[0-9]{3}-[0-9]{1,5}-[0-9]{1,7}-[0-9]{1,6}-[0-9]{1}"),
+      Validators.minLength(13),
+      Validators.maxLength(18),
+      Validators.pattern('^[0-9]{3}[-]?[0-9]{1,5}[-]?[0-9]{1,7}[-]?[0-9]{1,6}[-]?[0-9]{1}'),
     ]),
     title: new FormControl("", Validators.required),
     price: new FormControl(null, [
@@ -169,13 +169,14 @@ export class NewBookPage implements OnInit {
               () => {
                 loadingElem.dismiss();
                 this.router.navigate(["admin-panel", "tabs", "books"]);
+                this.bookForm.reset();
                 this.showToastMessage("Uspesno sacuvana nova knjiga");
               },
               (errorRes) => {
                 loadingElem.dismiss();
                 // this.router.navigate(["admin-panel", "tabs", "books"]);
                 this.showErrorMessage(
-                  "Greska pri unosu knjige",
+                  "Greska pri dodavanju nove knjige",
                   errorRes.error.message
                 );
               }

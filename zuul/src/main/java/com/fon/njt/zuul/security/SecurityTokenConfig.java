@@ -52,6 +52,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/bookstore/api/auth").permitAll()
+                .antMatchers(HttpMethod.POST, "/bookstore/api/auth/verification/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/bookstore/api/books/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/bookstore/api/books/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/bookstore/api/books/**").hasRole("ADMIN")

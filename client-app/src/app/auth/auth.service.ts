@@ -174,9 +174,19 @@ export class AuthService {
       );
   }
 
-  register(
-    username: string,
-    password: string,
+  register(username: string, password: string) {
+    return this.http.post(`${environment.apiUrl}/auth/register`, {
+      username,
+      password,
+    });
+  }
+
+  loadVerifyPage(userId: string) {
+    return this.http.get(`${environment.apiUrl}/auth/verification/${userId}`);
+  }
+
+  verifyUserAccount(
+    userId: string,
     firstName: string,
     lastName: string,
     streetNameAndNumber: string,
@@ -184,17 +194,9 @@ export class AuthService {
     zipCode: string,
     phone: string
   ) {
-    return this.http
-      .post(`${environment.apiUrl}/auth/register`, {
-        username,
-        password,
-        firstName,
-        lastName,
-        streetNameAndNumber,
-        city,
-        zipCode,
-        phone,
-      });
+    return this.http.post(`${environment.apiUrl}/auth/verification/${userId}`, {
+      firstName, lastName, streetNameAndNumber, city, zipCode, phone
+    });
   }
 
   logout() {

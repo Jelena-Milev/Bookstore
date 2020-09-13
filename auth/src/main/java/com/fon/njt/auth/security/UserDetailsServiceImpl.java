@@ -1,6 +1,7 @@
 package com.fon.njt.auth.security;
 
 import com.fon.njt.auth.entity.UserEntity;
+import com.fon.njt.auth.exception.UserNotVerifiedException;
 import com.fon.njt.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final UserEntity user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username: "+username+" not found"));
+        if(!user.isVerified())
+            throw new UserNotVerifiedException("Nalog nije verifikovan.");
         return new UserDetailsImpl(user);
     }
 }

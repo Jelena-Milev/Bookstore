@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/auth/auth.service";
 import { LoadingController, AlertController } from "@ionic/angular";
-import { BooksService } from "src/app/admin-panel/books/books.service";
 import { CartService } from "src/app/cart/cart.service";
 
 @Component({

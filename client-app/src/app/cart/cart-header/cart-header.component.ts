@@ -1,8 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/auth/auth.service";
-import { BooksService } from "src/app/admin-panel/books/books.service";
 import { LoadingController, AlertController } from "@ionic/angular";
-import { Router } from "@angular/router";
 
 @Component({
   selector: "app-cart-header",
@@ -21,8 +19,6 @@ export class CartHeaderComponent implements OnInit {
     private authService: AuthService,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
-    private booksService: BooksService,
-    private router: Router
   ) {}
 
   ngOnInit() {
@@ -59,17 +55,5 @@ export class CartHeaderComponent implements OnInit {
     }).then(alertEl => {
       alertEl.present();
     })
-  }
-
-  onSearch() {
-    this.loadingCtrl
-      .create({ message: "Ucitavanje knjiga..." })
-      .then((loadingEl) => {
-        loadingEl.present();
-        this.booksService.getBooksByTitle(this.searchText).subscribe(() => {
-          this.router.navigate(['/', 'home']);
-          loadingEl.dismiss();
-        });
-      });
   }
 }

@@ -24,9 +24,9 @@ export class EditBookPage implements OnInit {
   bookForm: FormGroup = new FormGroup({
     isbn: new FormControl("", [
       Validators.required,
-      Validators.minLength(17),
-      Validators.maxLength(17),
-      Validators.pattern("[0-9]{3}-[0-9]{1,5}-[0-9]{1,7}-[0-9]{1,6}-[0-9]{1}"),
+      Validators.minLength(13),
+      Validators.maxLength(18),
+      Validators.pattern("[0-9]{3}[-]?[0-9]{1,5}[-]?[0-9]{1,7}[-]?[0-9]{1,6}[-]?[0-9]{1}"),
     ]),
     title: new FormControl("", Validators.required),
     price: new FormControl(null, [
@@ -156,6 +156,7 @@ export class EditBookPage implements OnInit {
             .subscribe(
               () => {
                 loadingElem.dismiss();
+                this.bookForm.reset();
                 this.router.navigate(["admin-panel", "tabs", "books"]);
                 this.showToastMessage("Uspesno izmenjena knjiga");
               },

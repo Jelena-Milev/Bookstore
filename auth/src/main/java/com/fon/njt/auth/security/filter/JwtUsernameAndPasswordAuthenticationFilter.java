@@ -1,6 +1,7 @@
 package com.fon.njt.auth.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fon.njt.auth.exception.UserNotVerifiedException;
 import com.fon.njt.auth.repository.UserRepository;
 import com.fon.njt.auth.security.JwtConfig;
 import com.fon.njt.auth.security.UserDetailsImpl;
@@ -14,9 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -64,6 +63,8 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                     creds.getUsername(), creds.getPassword(), Collections.emptyList());
             // 3. Authentication manager authenticate the user, and use UserDetialsServiceImpl::loadUserByUsername() method to load the user.
             return authManager.authenticate(authToken);
+        } catch (UserNotVerifiedException e) {
+            return null;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

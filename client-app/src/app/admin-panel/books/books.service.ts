@@ -67,8 +67,7 @@ export class BooksService {
     let piecesAvailable: number;
     return this.http
       .get<StorageItem>(
-        `${environment.apiUrl}/books/${bookId}/pieces-available`
-      )
+        `${environment.apiUrl}/books/${bookId}/pieces-available`)
       .pipe(
         switchMap((res) => {
           piecesAvailable = res.piecesAvailable;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { LoadingController, ToastController } from "@ionic/angular";
+import { AlertController, LoadingController, ToastController } from "@ionic/angular";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BooksService } from "src/app/admin-panel/books/books.service";
 import { Book } from "src/app/admin-panel/books/book.model";
@@ -23,7 +23,8 @@ export class BookDetailPage implements OnInit {
     private bookService: BooksService,
     private cartService: CartService,
     private authService: AuthService,
-    public toastController: ToastController
+    public toastController: ToastController,
+    public alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -31,7 +32,7 @@ export class BookDetailPage implements OnInit {
     this.isLoading = true;
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       if (!paramMap.has("bookId")) {
-        this.router.navigate(["home", "books"]);
+        this.router.navigate(["/", "home", "books"]);
         return;
       }
       const bookId = paramMap.get("bookId");
@@ -42,6 +43,17 @@ export class BookDetailPage implements OnInit {
         this.authService.role.subscribe((role) => {
           this.userRole = role;
         });
+      }, (err)=>{
+        this.router.navigate(['.', 'home']);
+        this.alertCtrl.create({header:'Nije moguce prikazati podatke o trazenoj knjizi',
+        message: 'Trazena knjiga ne postoji', buttons:[
+          {
+            text: 'OK',
+            role: 'cancel'
+          }
+        ]}).then(alertEl=>{
+          alertEl.present();
+        })
       });
     });
   }

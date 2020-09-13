@@ -24,6 +24,7 @@ public class BookRequestDto {
     @Positive(message = "Cena knjige mora biti pozitivan broj veci od nule.")
     private BigDecimal price;
 
+    @Positive(message = "Broj strana mora biti pozitivan broj veci od nule.")
     private Integer numberOfPages;
     private String binding;
     private Integer publicationYear;

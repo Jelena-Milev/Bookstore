@@ -149,7 +149,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookResponseDto> getByIds(List<Long> bookIds) {
-        final List<BookEntity> books = bookRepository.findByIdInAndInStockTrue(bookIds);
+        final List<BookEntity> books = bookRepository.findByIdIn(bookIds);
         return mapper.mapToDtos(books);
     }
 

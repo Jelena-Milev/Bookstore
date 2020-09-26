@@ -40,7 +40,7 @@ export class PaymentDialogComponent implements OnInit {
     var style = {
       base: {
         color: '#32325d',
-        lineHeight: '30pt',
+        lineHeight: '24px',
         fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
         fontSmoothing: 'antialiased',
         fontSize: '16px',
@@ -105,7 +105,7 @@ export class PaymentDialogComponent implements OnInit {
     this.alertCtrl
       .create({
         header: "Potvrda placanja",
-        message: "Da li zelite da platite?",
+        message: "Da li zelite da platite",
         buttons: [
           {
             text: "Ne",
@@ -131,15 +131,15 @@ export class PaymentDialogComponent implements OnInit {
         loadingEl.present();
         this.paymentService.confirm(paymentTransactionId).subscribe(
           (data) => {
-            // console.log('confirm payment result data')
+            console.log('confirm payment result data')
             const orderId = data.charges.data[0].id;
             const receipt_url = data.charges.data[0].receipt_url;
             this.ordersService.createOrder(this.cartItems, orderId, receipt_url).subscribe(
               (order)=>{
                 // console.log(order);
                 this.cartService.resetCartItemsCount();
-                sessionStorage.clear();
                 this.modalCtrl.dismiss();
+                sessionStorage.clear();
                 this.router.navigate(["/", "orders"]);
                 loadingEl.dismiss();
                 this.showToastMessage(`Narudzbenica je uspesno kreirana`)

@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
-    List<BookEntity> findByIdInAndInStockTrue(List<Long> ids);
+//    List<BookEntity> findByIdInAndInStockTrue(List<Long> ids);
+    List<BookEntity> findByIdIn(List<Long> ids);
 
     List<BookEntity> findAllByOrderByTitleAsc();
 

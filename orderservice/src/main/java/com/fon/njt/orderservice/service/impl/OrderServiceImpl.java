@@ -46,7 +46,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderResponseDto> getOrdersByUserId(String userId, UserInfoDto userInfoDto) {
         final List<OrderEntity> orders = repository.findByUserIdEqualsOrderByDateDesc(userId);
-        orders.forEach(order -> setBooks(order));
+        orders.forEach(order -> {
+            setBooks(order);
+        });
         final List<OrderResponseDto> orderResponseDtos = new ArrayList<>(orders.size());
         orders.forEach(order -> orderResponseDtos.add(mapper.mapToDto(order, userInfoDto)));
         return orderResponseDtos;

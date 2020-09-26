@@ -37,9 +37,7 @@
       <ion-col size-md="5" class="order-info-book">          
           <ion-item
           class="ion-no-padding"
-          lines="none"
-          button="true"
-          (click)="onBookClicked(item.book.id)">
+          lines="none">
           <img
             *ngIf="item.book.imageUrl !== null && item.book.imageUrl !== ''"
             [src]="item.book.imageUrl"

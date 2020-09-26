@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class OrderDetailComponent implements OnInit {
   @Input() order: Order;
-  itemsPerPage = 3;
+  itemsPerPage = 4;
   cp = 1;
   constructor(private modalCtrl: ModalController, private router:Router) {}
 

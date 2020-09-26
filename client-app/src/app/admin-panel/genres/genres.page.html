@@ -1,20 +1,21 @@
 <head>
   <link
     rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-  />
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
 </head>
 
 <ion-content>
-  <ion-grid>
+  <ion-grid class="ion-padding-end">
     <ion-row>
-      <ion-col size-lg="4" offset-lg="4" class="td-fab-button">
+      <ion-col size-lg="4" offset-lg="4">
         <ion-searchbar
           [(ngModel)]="searchText"
           placeholder="Pretraga"
           (ionInput)="onSearchTextTyped()"
         ></ion-searchbar>
-        <ion-fab-button (click)="onAddGenre()" class="ion-margin-start">
+      </ion-col>
+      <ion-col size-lg="1">
+        <ion-fab-button (click)="onAddGenre()" >
           <ion-icon name="add-outline"></ion-icon>
         </ion-fab-button>
       </ion-col>
@@ -26,9 +27,6 @@
         </div>
       </ion-col>
     </ion-row>
-  </ion-grid>
-  
-    <ion-grid class="ion-padding-top">
     <ion-row class="ion-justify-content-center">
       <ion-col size-lg="4" class="ion-align-items-center">
         <table *ngIf="!isLoading" class="table table-hover">
@@ -53,9 +51,11 @@
               <td>{{itemsPerPage*(cp-1)+i+1}}</td>
               <td>{{genre.name}}</td>
               <td class="td-fab-button">
-                <ion-fab-button size="small" (click)="onEditGenre(genre)">
-                  <ion-icon name="pencil" size="small"></ion-icon>
-                </ion-fab-button>
+                <span style="text-align: center;">
+                  <ion-fab-button size="small" (click)="onEditGenre(genre)">
+                    <ion-icon name="pencil" size="small"></ion-icon>
+                  </ion-fab-button>
+                </span>
               </td>
             </tr>
           </tbody>

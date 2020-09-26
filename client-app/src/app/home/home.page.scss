@@ -3,7 +3,7 @@
 // }
 
 .left-padding-genres {
-  padding-left: 30px;
+  padding-left: 120px;
 }
 
 .books-container {
@@ -21,19 +21,23 @@
 }
 
 .all-books-page-part {
-  text-align: center;
 
   ion-list-header{
-    margin-left: -35px;
+    margin-left: 45px;
   }
 
   .no-books-message{
     margin-top: 50px;    
-
+    text-align: center;
     ion-label{
       font-size:20px;
       margin-left: -35px;
     }
   }
-  
+}
+
+ion-list-header{
+  ion-title{
+    font-size:24px;
+  }
 }

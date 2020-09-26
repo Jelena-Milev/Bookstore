@@ -1,7 +1,7 @@
-<ion-content >
-  <ion-grid>
+<ion-content>
+  <app-book-detail-header></app-book-detail-header>
+  <ion-grid class="ion-padding-top">
     <!-- header -->
-    <app-book-detail-header></app-book-detail-header>
     <ion-row class="ion-justify-content-center">
       <!-- spinner -->
       <ion-col size-lg="4" style="text-align: center;">
@@ -26,6 +26,9 @@
           <p>Broj strana: {{bookToShow.numberOfPages}}</p>
           <p>Godina izdanja: {{bookToShow.publicationYear}}</p>
           <p>Povez: {{bookToShow.binding}}</p>
+          <!-- <p> Izdavac:
+            <a href="{{bookToShow.publisher.siteUrl}}" target="_blank">{{bookToShow.publisher.name}}</a>
+          </p> -->
         </ion-label>
         <h4>Cena: {{bookToShow.price | currency:'EUR':'symbol-narrow'}}</h4>
         <div class="add-to-cart">
@@ -56,23 +59,26 @@
           </ion-segment-button>
         </ion-segment>
         <div class="segment-content" [ngSwitch]="segment">
-          <ion-note *ngSwitchCase="'description'">
+          <ion-note *ngSwitchCase="'description'" class="ion-text-justify">
             {{bookToShow.description}}
           </ion-note>
           <ion-text *ngSwitchCase="'authors'">
             <app-author-item *ngFor="let author of bookToShow.authors" [author]="author"></app-author-item>
           </ion-text>
           <ion-text *ngSwitchCase="'publisher'">
+          <div class="publisher-info">
             <ion-label>
               <ion-title class="ion-no-padding ion-padding-bottom">{{bookToShow.publisher.name}}</ion-title>
-              <ion-note>
-                {{bookToShow.publisher.address}} <br><br>
-                {{bookToShow.publisher.email}} <br><br>
-                <a href="{{bookToShow.publisher.siteUrl}}">{{bookToShow.publisher.siteUrl}}</a>
-            </ion-note>
-            </ion-label>
-          </ion-text>
-        </div>
+                <ion-note>
+                  {{bookToShow.publisher.address}} <br>
+                  {{bookToShow.publisher.email}} <br>
+                  <a href="{{bookToShow.publisher.siteUrl}}" target="_blank">
+                    {{bookToShow.publisher.siteUrl}}</a>
+                </ion-note>
+              </ion-label>
+            </div>
+            </ion-text>
+          </div>
       </ion-col>
     </ion-row>
     <ion-row *ngIf="!isLoading" class="ion-justify-content-center">

@@ -1,7 +1,28 @@
 // ion-col {
-//   border: 1px solid blue;
+//   border: 1px solid white;
 // }
+
+.header{
+  background-color: var(--ion-color-primary-shade);
+  padding: 7px 0px;
+}
+
+.logo {
+  font-family: var(--title-font);
+  font-size: 30pt;
+}
 
 .cart {
   font-size: 28px;
+}
+
+.header-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+ion-button{
+  font-size: 16px;
 }

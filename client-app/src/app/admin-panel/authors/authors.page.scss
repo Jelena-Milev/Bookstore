@@ -1,19 +1,22 @@
+// ion-col{
+//   border: 1px solid seagreen;
+// }
 table {
   table-layout: fixed;
   width: 100%;
 }
 
 th,
-td {
+td{
   text-align: center;
 }
 
-.table td{
+.table td, .table tr{
   vertical-align: middle;
 }
 
 .author-img img {
-  width: 100%;
+  width: 70%;
   margin: auto;
   display: block;
 }
@@ -21,4 +24,12 @@ td {
 .author-bio{
   font-size: 10pt;
   text-align: justify;
+}
+
+.td-fab-button{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

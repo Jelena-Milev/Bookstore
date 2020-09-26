@@ -94,20 +94,26 @@
               <td>{{book.inStock ? 'Da' : 'Ne'}}</td>
               <td>{{book.publisher?.name}}</td>
               <td>{{book.genresNames}}</td>
-              <td class="td-fab-button">
-                <ion-fab-button size="small" (click)="onViewDescription(book)">
-                  <ion-icon name="search-outline"></ion-icon>
-                </ion-fab-button>
+              <td>
+                <div class="td-fab-button">
+                  <ion-fab-button size="small" (click)="onViewDescription(book)">
+                    <ion-icon name="search-outline"></ion-icon>
+                  </ion-fab-button>
+                </div>
               </td>
-              <td class="td-fab-button">
-                <ion-fab-button size="small" (click)="onEditBook(book.id)">
-                  <ion-icon name="pencil"></ion-icon>
-                </ion-fab-button>
+              <td>
+                <div class="td-fab-button">
+                  <ion-fab-button size="small" (click)="onEditBook(book.id)">
+                    <ion-icon name="pencil"></ion-icon>
+                  </ion-fab-button>
+                </div>
               </td>
-              <td class="td-fab-button">
-                <ion-fab-button size="small" (click)="onDeleteBook(book)">
-                  <ion-icon name="trash"></ion-icon>
-                </ion-fab-button>
+              <td>
+                <div class="td-fab-button">
+                  <ion-fab-button size="small" (click)="onDeleteBook(book)">
+                    <ion-icon name="trash"></ion-icon>
+                  </ion-fab-button>
+                </div>
               </td>
             </tr>
           </tbody>

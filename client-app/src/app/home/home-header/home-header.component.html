@@ -1,10 +1,10 @@
 <!-- <ion-toolbar class="ion-no-padding ion-no-margin"> -->
-  <ion-row class="ion-padding header">
-    <ion-col size-lg="2" class="ion-text-end">
-      <ion-title>Bookstore</ion-title>
+  <ion-row class="header ion-justify-content-center ion-align-items-center">
+    <ion-col size-lg="2" class="ion-text-start ion-no-padding ion-align-self-center">
+      <ion-title class="logo ion-no-padding" color="light">Bookstore</ion-title>
     </ion-col>
-    <ion-col size-lg="5"></ion-col>
-    <ion-col size-lg="5">
+    <ion-col size-lg="4"></ion-col>
+    <ion-col size-lg="5" class="ion-no-padding">
       <div class="header-buttons">
         <div class="searchbar-col">
           <ion-searchbar placeholder="Pretraga po naslovu" search-icon="book-outline" style="width: 300px" [(ngModel)]="searchText" inputmode="search" class="ion-no-padding"></ion-searchbar>
@@ -12,19 +12,19 @@
             <ion-icon name="search-outline" class="search-icon"></ion-icon>
           </ion-fab-button>
         </div>
-        <ion-button *ngIf="userRole === 'USER'" color="primary" fill="clear" class="button-clear" [routerLink]="['/', 'cart']">
+        <ion-button *ngIf="userRole === 'USER'" color="light" fill="clear" [routerLink]="['/', 'cart']">
           <ion-icon name="cart" class="cart" slot="start"></ion-icon>
-          <ion-badge color="primary">{{cartItemsCount}}</ion-badge>
+          <ion-badge color="light">{{cartItemsCount}}</ion-badge>
         </ion-button>
-        <ion-button *ngIf="userRole === 'ADMIN'" color="primary" fill="clear" class="button-clear" [routerLink]="['/', 'admin-panel']">
+        <ion-button *ngIf="userRole === 'ADMIN'" color="light" fill="clear"  [routerLink]="['/', 'admin-panel']">
           <ion-icon name="create" slot="start"></ion-icon>
           <ion-label>PANEL</ion-label>
         </ion-button>
-        <ion-button *ngIf="!isAuthenticated" color="primary" fill="clear" class="button-clear" [routerLink]="['/', 'auth']">
+        <ion-button *ngIf="!isAuthenticated" color="light" fill="clear" [routerLink]="['/', 'auth']">
           <ion-icon name="person" slot="start"></ion-icon>
           <ion-label>PRIJAVA</ion-label>
         </ion-button>
-        <ion-button *ngIf="isAuthenticated" color="primary" fill="clear" class="button-clear" (click)="onLogout()">
+        <ion-button *ngIf="isAuthenticated" color="light" fill="clear" (click)="onLogout()">
           <ion-icon name="person" slot="start"></ion-icon>
           <ion-label>ODJAVI SE</ion-label>
         </ion-button>        

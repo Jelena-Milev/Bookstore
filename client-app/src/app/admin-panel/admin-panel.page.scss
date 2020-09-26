@@ -1,3 +1,12 @@
+.header{
+  background-color: var(--ion-color-primary-shade);
+  padding: 7px 0px;
+}
+.logo {
+  font-family: var(--title-font);
+  font-size: 30pt;
+}
+
 ion-icon {
   padding: 3px;
 }
@@ -7,7 +16,7 @@ ion-tab-button {
   // --padding-end:200px;
   margin-left: 50px;
   margin-right: 60px;
-  --color-selected: #3dc2ff;
+  --color-selected: var(--ion-color-tertiary);
 }
 
 ion-tab-bar {
@@ -18,5 +27,9 @@ ion-tab-bar {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+}
+
+ion-button{
+  font-size: 16px;
 }

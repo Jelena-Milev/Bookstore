@@ -28,3 +28,20 @@
 ul.ngx-pagination{
     padding: 0px;
 }
+
+ion-header{
+    ion-toolbar{
+        --ion-background-color: var(--ion-color-tertiary-shade);
+    }
+    ion-title, ion-buttons{
+        color: white;
+    }
+}
+
+.alert-head.sc-ion-alert-md{
+    text-align: center;
+}
+
+.alert-head.sc-ion-alert-md+.alert-message.sc-ion-alert-md{
+    text-align: center;
+}

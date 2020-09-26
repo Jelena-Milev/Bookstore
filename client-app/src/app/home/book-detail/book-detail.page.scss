@@ -41,6 +41,10 @@
   ion-item {
     font-size: 14pt;
   }
+
+  input{
+    text-align: center;
+  }
 }
 
 .increment-btn {
@@ -58,7 +62,6 @@
 input {
   border: none;
   width: 60px;
-  text-align: center;
 }
 
 .segment-content {
@@ -68,4 +71,9 @@ input {
 
 ion-note {
   white-space: pre-line;
+}
+
+.publisher-info{
+  text-align: left;
+  margin-left:60px;
 }

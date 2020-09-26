@@ -1,19 +1,19 @@
-  <ion-row>
-    <ion-col size-lg="2" class="ion-text-end">
-      <ion-title>Bookstore</ion-title>
-    </ion-col>
-    <ion-col size-lg="6"></ion-col>
-    <ion-col size-lg="4">
-      <div class="searchbar-col">
-        <ion-button color="primary" fill="clear" class="button-clear" [routerLink]="['/', 'home']">
+<ion-row class="header ion-justify-content-center ion-align-items-center">
+  <ion-col size-lg="2" class="ion-text-start ion-no-padding ion-align-self-center">
+    <ion-title class="logo ion-no-padding" color="light">Bookstore</ion-title>
+  </ion-col>
+  <ion-col size-lg="4"></ion-col>
+  <ion-col size-lg="5" class="ion-no-padding">
+    <div class="header-buttons">
+        <ion-button color="light" fill="clear" class="button-clear" [routerLink]="['/', 'home']">
           <ion-icon name="home" slot="start"></ion-icon>
           <ion-label>POCETNA</ion-label>
         </ion-button>
-        <ion-button color="primary" fill="clear" class="button-clear" [routerLink]="['/', 'cart']">
+        <ion-button color="light" fill="clear" class="button-clear" [routerLink]="['/', 'cart']">
           <ion-icon name="cart" slot="start" class="cart"></ion-icon>
-          <ion-badge color="primary">{{cartItemsCount}}</ion-badge>
+          <ion-badge color="light">{{cartItemsCount}}</ion-badge>
         </ion-button>
-        <ion-button color="primary" fill="clear" class="button-clear" (click)="onLogout()">
+        <ion-button color="light" fill="clear" class="button-clear" (click)="onLogout()">
           <ion-icon name="person" slot="start"></ion-icon>
           <ion-label>ODJAVI SE</ion-label>
         </ion-button>

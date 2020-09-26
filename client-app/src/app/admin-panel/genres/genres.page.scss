@@ -1,25 +1,17 @@
+// ion-col{
+//   border: 1px solid red;
+// }
+
 table {
   table-layout: fixed;
   width: 100%;
+  margin: 0;
 }
 
-th,
-td {
+.table td,
+.table th {
   text-align: center;
-}
-
-.table td {
   vertical-align: middle;
-  border: none;
-}
-
-.error-label {
-  font-size: 10pt;
-}
-
-ion-fab-button{
-  width: 35px;
-  height: 35px;
 }
 
 .td-fab-button{
@@ -27,8 +19,4 @@ ion-fab-button{
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-}
-
-ion-margin-start{
-  padding-left: 8px;
 }

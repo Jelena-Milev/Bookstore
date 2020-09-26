@@ -1,7 +1,33 @@
-// ion-col{
-//     border: 1px solid red;
+// ion-col {
+//   border: 1px solid white;
 // }
 
-.header-row{
-    margin-bottom: 40px;
+.header {
+  background-color: var(--ion-color-primary-shade);
+  padding: 7px 0px;
+}
+
+.logo {
+  font-family: var(--title-font);
+  font-size: 30pt;
+}
+
+.cart {
+  font-size: 28px;
+}
+
+.header-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+ion-button {
+  font-size: 16px;
+}
+
+.forms {
+  padding-top: 32px;
 }

@@ -31,7 +31,6 @@ export class OrdersService {
       }),
       tap(orders=>{
         this._orders.next(orders);
-        console.log(orders);
       })
     )
   }

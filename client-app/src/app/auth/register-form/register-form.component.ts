@@ -11,7 +11,7 @@ import { LoadingController, AlertController } from "@ionic/angular";
 export class RegisterFormComponent implements OnInit {
   registerForm = new FormGroup({
     username: new FormControl("", [Validators.required, Validators.email]),
-    password: new FormControl("", [Validators.required]),
+    password: new FormControl("", [Validators.required, Validators.minLength(8)]),
   });
 
   @Output() segment: EventEmitter<string> = new EventEmitter<string>();
@@ -41,7 +41,7 @@ export class RegisterFormComponent implements OnInit {
             this.alertCtrl
               .create({
                 header: "Registracija",
-                message: "Korisnik je uspesno registrovan. Link za verifikaciju naloga je poslat na uneti imejl.",
+                message: "Korisnik je uspešno registrovan. Link za verifikaciju naloga je poslat na uneti imejl.",
                 buttons: [
                   {
                     text: "OK",
@@ -67,7 +67,7 @@ export class RegisterFormComponent implements OnInit {
 
   private showErrorMessage(errorMsg: string){
     this.alertCtrl.create({
-      header: 'Greska pri registraciji',
+      header: 'Greška pri registraciji',
       message: errorMsg,
       buttons:[
         {

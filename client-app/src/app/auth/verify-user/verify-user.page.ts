@@ -41,7 +41,7 @@ export class VerifyUserPage implements OnInit {
         this.isLoading = false;
       }, (err)=>{
         this.router.navigate(['.', 'home']);
-        this.alertCtrl.create({header:'Greska pri verifikaciji korisnickog naloga',
+        this.alertCtrl.create({header:'Greška pri verifikaciji korisničkog naloga',
         message: err.error.message, buttons:[
           {
             text: 'OK',
@@ -72,7 +72,7 @@ export class VerifyUserPage implements OnInit {
             this.alertCtrl
               .create({
                 header: "Verifikacija",
-                message: "Nalog je uspesno verifikovam. Mozete se prijaviti.",
+                message: "Nalog je uspešno verifikovan. Možete se prijaviti.",
                 buttons: [
                   {
                     text: "PRIJAVA",
@@ -97,7 +97,7 @@ export class VerifyUserPage implements OnInit {
 
   private showErrorMessage(errorMsg: string){
     this.alertCtrl.create({
-      header: 'Greska pri verifikaciji naloga',
+      header: 'Greška pri verifikaciji naloga',
       message: errorMsg,
       buttons:[
         {

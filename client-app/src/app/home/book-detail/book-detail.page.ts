@@ -45,8 +45,8 @@ export class BookDetailPage implements OnInit {
         });
       }, (err)=>{
         this.router.navigate(['.', 'home']);
-        this.alertCtrl.create({header:'Nije moguce prikazati podatke o trazenoj knjizi',
-        message: 'Trazena knjiga ne postoji', buttons:[
+        this.alertCtrl.create({header:'Nije moguće prikazati podatke o traženoj knjizi',
+        message: 'Tražena knjiga ne postoji', buttons:[
           {
             text: 'OK',
             role: 'cancel'

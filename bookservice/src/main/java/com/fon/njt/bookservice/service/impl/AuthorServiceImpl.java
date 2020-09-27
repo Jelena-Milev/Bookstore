@@ -41,7 +41,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public AuthorResponseDto save(AuthorRequestDto dto) {
         if (repository.existsByFirstNameAndLastName(dto.getFirstName(), dto.getLastName()))
-            throw new EntityAlreadyExistsException("Autor sa unetim imenom i prezimenom vec postoji.");
+            throw new EntityAlreadyExistsException("Autor sa unetim imenom i prezimenom već postoji.");
         final AuthorEntity authorToSave = mapper.mapToEntity(dto);
         final AuthorEntity savedAuthor = repository.save(authorToSave);
         return mapper.mapToDto(savedAuthor);
@@ -52,7 +52,7 @@ public class AuthorServiceImpl implements AuthorService {
         final AuthorEntity authorToUpdate = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Autor", id));
         if (repository.existsByFirstNameAndLastName(dto.getFirstName(), dto.getLastName()) && !dto.getFirstName().toLowerCase().equals(authorToUpdate.getFirstName().toLowerCase())
                 && !dto.getLastName().toLowerCase().equals(authorToUpdate.getLastName().toLowerCase()))
-            throw new EntityAlreadyExistsException("Autor sa unetim imenom i prezimenom vec postoji.");
+            throw new EntityAlreadyExistsException("Autor sa unetim imenom i prezimenom već postoji.");
         updateAuthor(authorToUpdate, dto);
         final AuthorEntity updatedAuthor = repository.save(authorToUpdate);
         return mapper.mapToDto(updatedAuthor);

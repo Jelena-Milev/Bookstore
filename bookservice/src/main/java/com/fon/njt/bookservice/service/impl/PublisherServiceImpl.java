@@ -40,7 +40,7 @@ public class PublisherServiceImpl implements PublisherService {
     @Override
     public PublisherResponseDto save(PublisherRequestDto dto) {
         if(repository.existsByName(dto.getName()))
-            throw new EntityAlreadyExistsException("Izdavac sa unetim nazivom vec postoji.");
+            throw new EntityAlreadyExistsException("Izdavač sa unetim nazivom već postoji.");
         final PublisherEntity publisherToSave = mapper.mapToEntity(dto);
         final PublisherEntity savedPublisher = repository.save(publisherToSave);
         return mapper.mapToDto(savedPublisher);
@@ -50,7 +50,7 @@ public class PublisherServiceImpl implements PublisherService {
     public PublisherResponseDto update(Long id, PublisherRequestDto dto) {
         final PublisherEntity publisherToUpdate = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Izdavac", id));
         if (repository.existsByName(dto.getName()) && !dto.getName().toLowerCase().equals(publisherToUpdate.getName().toLowerCase()))
-            throw new EntityAlreadyExistsException("Izdavac sa unetim nazivom vec postoji.");
+            throw new EntityAlreadyExistsException("Izdavač sa unetim nazivom već postoji.");
         updatePublisher(publisherToUpdate, dto);
         final PublisherEntity updatedPublisher = repository.save(publisherToUpdate);
         return mapper.mapToDto(updatedPublisher);

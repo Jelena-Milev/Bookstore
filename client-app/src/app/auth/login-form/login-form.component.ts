@@ -12,7 +12,7 @@ import { AlertController, LoadingController, ToastController } from '@ionic/angu
 export class LoginFormComponent implements OnInit {
   loginForm = new FormGroup({
     username: new FormControl("", [Validators.required, Validators.email]),
-    password: new FormControl("", [Validators.required]),
+    password: new FormControl("", [Validators.required, Validators.minLength(8)]),
   });
   constructor(private authService: AuthService, 
     private router:Router,
@@ -47,7 +47,7 @@ export class LoginFormComponent implements OnInit {
 
   private showErrorMessage(errorMsg: string){
     this.alertCtrl.create({
-      header: 'Greska pri prijavljivanju',
+      header: 'Greška pri prijavljivanju',
       message: errorMsg,
       buttons:[
         {
@@ -63,7 +63,7 @@ export class LoginFormComponent implements OnInit {
   createToastMessage(){
     this.toastController
         .create({
-          message: "Uspesno ste se prijavili",
+          message: "Uspešno ste se prijavili",
           buttons: [
             {
               text: "OK",

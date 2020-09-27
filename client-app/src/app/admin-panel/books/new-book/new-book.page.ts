@@ -108,7 +108,7 @@ export class NewBookPage implements OnInit {
     }
 
     this.loadingCtrl
-      .create({ message: "Cuvanje knjige" })
+      .create({ message: "Čuvanje knjige" })
       .then((loadingElem) => {
         loadingElem.present();
         if (this.imageSelected !== undefined) {
@@ -137,13 +137,13 @@ export class NewBookPage implements OnInit {
               () => {
                 loadingElem.dismiss();
                 this.router.navigate(["admin-panel", "tabs", "books"]);
-                this.showToastMessage("Uspesno sacuvana nova knjiga");
+                this.showToastMessage("Uspešno sačuvana nova knjiga");
               },
               (errorRes) => {
                 loadingElem.dismiss();
                 // this.router.navigate(["admin-panel", "tabs", "books"]);
                 this.showErrorMessage(
-                  "Greska pri dodavanju nove knjige",
+                  "Greška pri dodavanju nove knjige",
                   errorRes.error.message
                 );
               }
@@ -170,13 +170,13 @@ export class NewBookPage implements OnInit {
                 loadingElem.dismiss();
                 this.router.navigate(["admin-panel", "tabs", "books"]);
                 this.bookForm.reset();
-                this.showToastMessage("Uspesno sacuvana nova knjiga");
+                this.showToastMessage("Uspešno sačuvana nova knjiga");
               },
               (errorRes) => {
                 loadingElem.dismiss();
                 // this.router.navigate(["admin-panel", "tabs", "books"]);
                 this.showErrorMessage(
-                  "Greska pri dodavanju nove knjige",
+                  "Greška pri dodavanju nove knjige",
                   errorRes.error.message
                 );
               }

@@ -32,17 +32,11 @@ export class AuthPage implements OnInit {
     this.authService.autoLogin().subscribe();
   }
 
-  // onLogout() {
-  //   this.loginForm?.resetForm();
-  //   this.registerForm?.resetForm();
-  //   this.authService.logout();
-  // }
-
   onLogout() {
     this.alertCtrl
       .create({
         header: "Odjava",
-        message: "Da li zaista zelite da se odjavite?",
+        message: "Da li zaista želite da se odjavite?",
         buttons: [
           {
             text: "NE",

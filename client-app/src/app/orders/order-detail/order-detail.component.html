@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Narudzbenica: {{order.orderIdentifier}}</ion-title>
+    <ion-title>Narudžbenica: {{order.orderIdentifier}}</ion-title>
     <ion-buttons slot="primary">
       <ion-button (click)="onCancel()">
         <ion-icon name="close"></ion-icon>
@@ -20,7 +20,7 @@
       ><ion-label>Cena</ion-label></ion-col
     >
     <ion-col size-md="2" class="order-info header"
-      ><ion-label>Kolicina</ion-label></ion-col
+      ><ion-label>Količina</ion-label></ion-col
     >
     <ion-col size-md="2" class="order-info header"
       ><ion-label>Iznos</ion-label></ion-col
@@ -60,7 +60,7 @@
         <ion-col style="text-align: center" size-lg="7">
           <pagination-controls
             previousLabel="Prethodna"
-            nextLabel="Sledeca"
+            nextLabel="Sledeća"
             (pageChange)="cp=$event"
           ></pagination-controls>
         </ion-col>

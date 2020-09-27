@@ -106,7 +106,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public BookResponseDto save(BookRequestDto dto) {
         if (bookRepository.existsByISBN(dto.getISBN()))
-            throw new EntityAlreadyExistsException("Knjiga sa unetim ISBN brojem vec postoji.");
+            throw new EntityAlreadyExistsException("Knjiga sa unetim ISBN brojem već postoji.");
         final BookEntity bookToSave = mapper.mapToEntity(dto);
         final BookEntity savedBook = bookRepository.save(bookToSave);
         this.bookStorageAPI.createBookStorageItem(new StorageItemRequestDto(savedBook.getId(), dto.getPiecesAvailable(), savedBook.isInStock()));
@@ -128,7 +128,7 @@ public class BookServiceImpl implements BookService {
     public BookResponseDto update(Long id, BookRequestDto dto) {
         final BookEntity bookToUpdate = bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Knjiga", id));
         if (bookRepository.existsByISBN(dto.getISBN()) && !dto.getISBN().equals(bookToUpdate.getISBN()))
-            throw new EntityAlreadyExistsException("Knjiga sa unetim ISBN brojem vec postoji.");
+            throw new EntityAlreadyExistsException("Knjiga sa unetim ISBN brojem već postoji.");
         updateBook(bookToUpdate, dto);
         final BookEntity updatedBook = bookRepository.save(bookToUpdate);
         this.bookStorageAPI.updatePiecesAvailable(updatedBook.getId(), new StorageItemRequestDto(id, dto.getPiecesAvailable(), dto.isInStock()));

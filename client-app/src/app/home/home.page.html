@@ -39,7 +39,7 @@
             <ion-title class="ion-no-padding">Svi naslovi</ion-title>
           </ion-list-header>
         <div *ngIf="books.length === 0" class="no-books-message">
-          <ion-label>Nije pronadjena nijedna knjiga.</ion-label>
+          <ion-label>Nije pronađena nijedna knjiga.</ion-label>
         </div>
         <div *ngIf="books.length !== 0" class="books-container">
           <app-book-item *ngFor="let book of books | paginate: {itemsPerPage: booksPerPage, currentPage:cp}" [book]="book" [userRole]="userRole"></app-book-item>
@@ -54,7 +54,7 @@
       <ion-col size-lg="6" class="pagination-row">
         <pagination-controls
         previousLabel="Prethodna"
-        nextLabel="Sledeca"
+        nextLabel="Sledeća"
         (pageChange)="onPageChange($event)"
       ></pagination-controls>
       </ion-col>

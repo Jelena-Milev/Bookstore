@@ -1,8 +1,3 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title> Nova knjiga </ion-title>
-  </ion-toolbar>
-</ion-header> -->
 <ion-content>
   <form [formGroup]="bookForm" (ngSubmit)="onSaveBook()">
     <ion-grid>
@@ -21,7 +16,7 @@
         </ion-col>
         <ion-col size-lg="3">
           <ion-item>
-            <ion-label position="floating">Naziv*</ion-label>
+            <ion-label position="floating">Naslov*</ion-label>
             <ion-input type="text" formControlName="title"></ion-input>
           </ion-item>
           <div class="ion-padding-start ion-padding-end">
@@ -37,7 +32,7 @@
           </ion-item>
           <div class="ion-padding-start ion-padding-end">
             <ion-label class="error-label" *ngIf="bookForm.get('price').invalid && bookForm.get('price').touched">
-              Morate uneti cenu knjige vecu od 0.
+              Morate uneti cenu knjige veću od 0.
             </ion-label>
           </div>
         </ion-col>
@@ -46,14 +41,14 @@
       <ion-row class="ion-justify-content-center ion-padding">        
         <ion-col size-lg="3">
           <ion-item>
-            <ion-label>Izdavac*</ion-label>
+            <ion-label>Izdavač*</ion-label>
             <ion-select cancelText="Nazad" formControlName="publisherId">
               <ion-select-option *ngFor="let publisher of publishers" [value]="publisher.id">{{publisher.name}}</ion-select-option>
             </ion-select>
           </ion-item>
           <div class="ion-padding-start ion-padding-end">
             <ion-label class="error-label" *ngIf="bookForm.get('publisherId').invalid && bookForm.get('publisherId').touched">
-              Morate izabrati izdavaca.
+              Morate izabrati izdavača.
             </ion-label>
           </div>
         </ion-col>
@@ -66,20 +61,20 @@
           </ion-item>
           <div class="ion-padding-start ion-padding-end">
             <ion-label class="error-label" *ngIf="bookForm.get('authorsIds').invalid && bookForm.get('authorsIds').touched">
-              Morate izabrati najmanje jednog autora.
+              Morate izabrati bar jednog autora.
             </ion-label>
           </div>
         </ion-col>
         <ion-col size-lg="3">
           <ion-item>
-            <ion-label>Zanrovi*</ion-label>
+            <ion-label>Žanrovi*</ion-label>
             <ion-select cancelText="Nazad" multiple formControlName="genresIds">
               <ion-select-option *ngFor="let genre of genres" [value]="genre.id">{{genre.name}}</ion-select-option>
             </ion-select>
           </ion-item>
           <div class="ion-padding-start ion-padding-end">
             <ion-label class="error-label" *ngIf="bookForm.get('genresIds').invalid && bookForm.get('genresIds').touched">
-              Morate izabrati najmanje jedan zanr.
+              Morate izabrati bar jedan žanr.
             </ion-label>
           </div>
         </ion-col>
@@ -139,7 +134,7 @@
         <ion-col size-lg="3" class="ion-no-padding">
           <div class="ion-padding-start ion-padding-end">
             <ion-label class="error-label" *ngIf="bookForm.get('piecesAvailable').invalid && bookForm.get('piecesAvailable').touched">
-              Broj primeraka ne moze biti najmanje 0.
+              Broj primeraka može biti najmanje 0.
             </ion-label>
           </div>
         </ion-col>
@@ -164,7 +159,7 @@
       <ion-row>
         <ion-col style="text-align: center">
           <ion-button type="submit" color="primary" [disabled]="bookForm.invalid">
-            Sacuvaj knjigu
+            Sačuvaj knjigu
           </ion-button>
         </ion-col>
       </ion-row>

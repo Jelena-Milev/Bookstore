@@ -45,7 +45,7 @@ export class PublishersPage implements OnInit {
       .create({
         component: PublisherFormComponent,
         componentProps:{
-          title: "Novi izdavac"
+          title: "Novi izdavač"
         }
       })
       .then((modal) => {
@@ -55,7 +55,7 @@ export class PublishersPage implements OnInit {
       .then((resData) => {
         if (resData.role === "confirm") {
           this.loadingCtrl
-            .create({ message: "Cuvanje izdavaca..." })
+            .create({ message: "Čuvanje izdavača..." })
             .then((loadingElem) => {
               loadingElem.present();
               this.publishersService
@@ -67,11 +67,11 @@ export class PublishersPage implements OnInit {
                 )
                 .subscribe(() => {
                   loadingElem.dismiss();
-                  this.showToastMessage('Uspesno sacuvan novi izdavac');
+                  this.showToastMessage('Uspešno sačuvan novi izdavač');
                 },
                 (errorRes)=>{
                   loadingElem.dismiss();
-                  this.showErrorMessage('Greska pri dodavanju izdavaca', errorRes.error.message);
+                  this.showErrorMessage('Greška pri dodavanju izdavača', errorRes.error.message);
                 });
             });
         }
@@ -83,7 +83,7 @@ export class PublishersPage implements OnInit {
       .create({
         component: PublisherFormComponent,
         componentProps:{
-          title: "Izmena izdavaca",
+          title: "Izmena izdavača",
           publisher: publisher
         }
       })
@@ -94,7 +94,7 @@ export class PublishersPage implements OnInit {
       .then((resData) => {
         if (resData.role === "confirm") {
           this.loadingCtrl
-            .create({ message: "Cuvanje izdavaca..." })
+            .create({ message: "Čuvanje izdavača..." })
             .then((loadingElem) => {
               loadingElem.present();
               this.publishersService
@@ -107,11 +107,11 @@ export class PublishersPage implements OnInit {
                 )
                 .subscribe(() => {
                   loadingElem.dismiss();
-                  this.showToastMessage('Izdavac je uspesno izmenjen.');
+                  this.showToastMessage('Izdavač je uspešno izmenjen.');
                 },
                 (errorRes)=>{
                   loadingElem.dismiss();
-                  this.showErrorMessage('Greska pri izmeni izdavaca', errorRes.error.message);
+                  this.showErrorMessage('Greška pri izmeni izdavača', errorRes.error.message);
                 });
             });
         }

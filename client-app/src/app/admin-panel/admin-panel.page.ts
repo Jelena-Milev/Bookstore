@@ -22,7 +22,7 @@ export class AdminPanelPage implements OnInit {
     this.alertCtrl
       .create({
         header: "Odjava",
-        message: "Da li zaista zelite da se odjavite?",
+        message: "Da li zaista želite da se odjavite?",
         buttons: [
           {
             text: "NE",

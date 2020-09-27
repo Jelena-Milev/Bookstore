@@ -66,7 +66,7 @@ export class HomePage implements OnInit {
 
   onAllBooksSelected() {
     this.loadingCtrl
-      .create({ message: "Ucitavanje knjiga..." })
+      .create({ message: "Učitavanje knjiga..." })
       .then((loadingEl) => {
         loadingEl.present();
         this.booksService.getBooksInStock().subscribe(() => {
@@ -78,7 +78,7 @@ export class HomePage implements OnInit {
 
   onGenreSelected(genre: Genre) {
     this.loadingCtrl
-      .create({ message: "Ucitavanje knjiga..." })
+      .create({ message: "Učitavanje knjiga..." })
       .then((loadingEl) => {
         loadingEl.present();
         this.booksService.getBooksByGenre(genre.id).subscribe(() => {

@@ -26,9 +26,6 @@
           <p>Broj strana: {{bookToShow.numberOfPages}}</p>
           <p>Godina izdanja: {{bookToShow.publicationYear}}</p>
           <p>Povez: {{bookToShow.binding}}</p>
-          <!-- <p> Izdavac:
-            <a href="{{bookToShow.publisher.siteUrl}}" target="_blank">{{bookToShow.publisher.name}}</a>
-          </p> -->
         </ion-label>
         <h4>Cena: {{bookToShow.price | currency:'EUR':'symbol-narrow'}}</h4>
         <div class="add-to-cart">
@@ -55,7 +52,7 @@
             Autori
           </ion-segment-button>
           <ion-segment-button value="publisher">
-            Izdavac
+            Izdavač
           </ion-segment-button>
         </ion-segment>
         <div class="segment-content" [ngSwitch]="segment">

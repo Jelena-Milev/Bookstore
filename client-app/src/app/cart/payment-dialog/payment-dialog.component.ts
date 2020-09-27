@@ -84,11 +84,11 @@ export class PaymentDialogComponent implements OnInit {
   private makePayment(id: string){
     const paymentIntent: PaymentIntent = {
       token: id,
-      description: `Racun za kupovinu knjiga: ${new Date().toLocaleString('sr-RS')}`,
+      description: `Račun za kupovinu knjiga: ${new Date().toLocaleString('sr-RS')}`,
       amount: this.paymentAmount*100.0,
       currency: 'EUR'
     };
-    this.loadingCtrl.create({message: 'Molimo sacekajte...'}).then(
+    this.loadingCtrl.create({message: 'Molimo sačekajte...'}).then(
       loadingEl => {
         loadingEl.present();
         this.paymentService.pay(paymentIntent).subscribe(
@@ -104,8 +104,8 @@ export class PaymentDialogComponent implements OnInit {
   private showConfirmCancelDialog(paymentTransactionId: string) {
     this.alertCtrl
       .create({
-        header: "Potvrda placanja",
-        message: "Da li zelite da platite",
+        header: "Potvrda plaćanja",
+        message: "Da li želite da platite?",
         buttons: [
           {
             text: "Ne",
@@ -125,7 +125,7 @@ export class PaymentDialogComponent implements OnInit {
   private confirmPaymentTransaction(paymentTransactionId: string) {
     this.loadingCtrl
       .create({
-        message: "Potvrda placanja...",
+        message: "Potvrda plaćanja...",
       })
       .then((loadingEl) => {
         loadingEl.present();
@@ -142,7 +142,7 @@ export class PaymentDialogComponent implements OnInit {
                 sessionStorage.clear();
                 this.router.navigate(["/", "orders"]);
                 loadingEl.dismiss();
-                this.showToastMessage(`Narudzbenica je uspesno kreirana`)
+                this.showToastMessage(`Narudžbenica je uspešno kreirana.`)
               },
               (errorRes)=>{
                 loadingEl.dismiss();
@@ -161,14 +161,15 @@ export class PaymentDialogComponent implements OnInit {
   private cancelPaymentTransaction(paymentTransactionId: string) {
     this.loadingCtrl
       .create({
-        message: "Otkazivanje placanja...",
+        message: "Otkazivanje plaćanja...",
       })
       .then((loadingEl) => {
         loadingEl.present();
         this.paymentService.cancel(paymentTransactionId).subscribe(
           (data) => {
             loadingEl.dismiss();
-            this.showToastMessage(`Uspesno otkazana transakcija ${data[`id`]}`);
+            this.modalCtrl.dismiss();
+            this.showToastMessage(`Uspešno otkazana transakcija ${data[`id`]}`);
           },
           (err) => {
             loadingEl.dismiss();
@@ -198,7 +199,7 @@ export class PaymentDialogComponent implements OnInit {
 
   private showErrorMessage(errorMsg: string){
     this.alertCtrl.create({
-      header: 'Greska pri narucivanju knjiga',
+      header: 'Greška pri naručivanju knjiga',
       message: errorMsg,
       buttons:[
         {

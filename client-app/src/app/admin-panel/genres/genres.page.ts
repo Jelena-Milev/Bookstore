@@ -52,7 +52,7 @@ export class GenresPage implements OnInit {
       .create({
         component: GenreFormComponent,
         componentProps:{
-          title: 'Novi zanr'
+          title: 'Novi žanr'
         }
       })
       .then((modal) => {
@@ -62,17 +62,17 @@ export class GenresPage implements OnInit {
       .then((resData) => {
         if (resData.role === "confirm") {
           this.loadingCtrl
-            .create({ message: "Cuvanje zanra..." })
+            .create({ message: "Čuvanje žanra..." })
             .then((loadingElem) => {
               loadingElem.present();
               this.genresService.saveGenre(resData.data.genre.name).subscribe(
                 () => {
                   this.loadingCtrl.dismiss();
-                  this.showToastMessage('Uspesno sacuvan novi zanr');
+                  this.showToastMessage('Uspešno sačuvan novi žanr');
                 },
                 (errorRes) => {
                   loadingElem.dismiss();
-                  this.showErrorMessage('Greska pri dodavanju novog zanra',errorRes.error.message);
+                  this.showErrorMessage('Greška pri dodavanju novog žanra',errorRes.error.message);
                 }
               );
             });
@@ -85,7 +85,7 @@ export class GenresPage implements OnInit {
       .create({
         component: GenreFormComponent,
         componentProps:{
-          title: 'Izmena zanra',
+          title: 'Izmena žanra',
           genre: genre
         }
       })
@@ -96,17 +96,17 @@ export class GenresPage implements OnInit {
       .then((resData) => {
         if (resData.role === "confirm") {
           this.loadingCtrl
-            .create({ message: "Cuvanje zanra..." })
+            .create({ message: "Čuvanje žanra..." })
             .then((loadingElem) => {
               loadingElem.present();
               this.genresService.updateGenre(genre.id, resData.data.genre.name).subscribe(
                 () => {
                   this.loadingCtrl.dismiss();
-                  this.showToastMessage('Zanr je uspesno izmenjen');
+                  this.showToastMessage('Žanr je uspešno izmenjen');
                 },
                 (errorRes) => {
                   loadingElem.dismiss();
-                  this.showErrorMessage('Greska pri izmeni zanra', errorRes.error.message);
+                  this.showErrorMessage('Greška pri izmeni žanra', errorRes.error.message);
                 }
               );
             });

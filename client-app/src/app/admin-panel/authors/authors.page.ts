@@ -59,7 +59,7 @@ export class AuthorsPage implements OnInit {
         if (resData.role === "confirm") {
           const imageToUpload = resData.data.authorData.image; 
           this.loadingCtrl
-            .create({ message: "Cuvanje autora..." })
+            .create({ message: "Čuvanje autora..." })
             .then((loadingElem) => {
               loadingElem.present();
               if(imageToUpload !== null && imageToUpload !== undefined){
@@ -75,11 +75,11 @@ export class AuthorsPage implements OnInit {
                   })
                 ).subscribe(() => {
                     loadingElem.dismiss();
-                    this.showToastMessage('Uspesno sacuvan novi autor');
+                    this.showToastMessage('Uspešno sačuvan novi autor');
                   },
                   (errorRes)=>{
                     loadingElem.dismiss();
-                    this.showErrorMessage('Greska pri dodavanju novog autora', errorRes.error.message);
+                    this.showErrorMessage('Greška pri dodavanju novog autora', errorRes.error.message);
                   });
               }else{
                 return this.authorsService
@@ -90,11 +90,11 @@ export class AuthorsPage implements OnInit {
                       ""
                     ).subscribe(() => {
                     loadingElem.dismiss();
-                    this.showToastMessage('Uspesno sacuvan novi autor');
+                    this.showToastMessage('Uspešno sačuvan novi autor');
                   },
                   (errorRes)=>{
                     loadingElem.dismiss();
-                    this.showErrorMessage('Greska pri dodavanju novog autora', errorRes.error.message);
+                    this.showErrorMessage('Greška pri dodavanju novog autora', errorRes.error.message);
                   });
               }
             });
@@ -119,7 +119,7 @@ export class AuthorsPage implements OnInit {
         if (resData.role === "confirm") {
           const imageToUpload = resData.data.authorData.image; 
           this.loadingCtrl
-            .create({ message: "Cuvanje autora..." })
+            .create({ message: "Čuvanje autora..." })
             .then((loadingElem) => {
               loadingElem.present();
               if(imageToUpload !== null && imageToUpload !== undefined){
@@ -136,11 +136,11 @@ export class AuthorsPage implements OnInit {
                   })
                 ).subscribe(() => {
                     loadingElem.dismiss();
-                    this.showToastMessage('Autor je uspesno izmenjen');
+                    this.showToastMessage('Autor je uspešno izmenjen');
                   },
                   (errorRes)=>{
                     loadingElem.dismiss();
-                    this.showErrorMessage('Greska pri izmeni autora', errorRes.error.message);
+                    this.showErrorMessage('Greška pri izmeni autora', errorRes.error.message);
                   });
               }else{
                 return this.authorsService
@@ -152,11 +152,11 @@ export class AuthorsPage implements OnInit {
                       author.imageUrl
                     ).subscribe(() => {
                     loadingElem.dismiss();
-                    this.showToastMessage('Autor je uspesno izmenjen');
+                    this.showToastMessage('Autor je uspešno izmenjen');
                   },
                   (errorRes)=>{
                     loadingElem.dismiss();
-                    this.showErrorMessage('Greska pri izmeni autora', errorRes.error.message);
+                    this.showErrorMessage('Greška pri izmeni autora', errorRes.error.message);
                   });
               }
             });

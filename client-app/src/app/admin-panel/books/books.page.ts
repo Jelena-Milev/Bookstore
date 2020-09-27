@@ -4,7 +4,6 @@ import { BooksService } from "./books.service";
 import { ModalController, AlertController, LoadingController, ToastController } from "@ionic/angular";
 import { BookDescComponent } from "./book-desc/book-desc.component";
 import { Router } from '@angular/router';
-import { BooksPageRoutingModule } from './books-routing.module';
 
 @Component({
   selector: "app-books",
@@ -81,7 +80,7 @@ export class BooksPage implements OnInit {
     }
     this.alertCtrl.create({
       header: "Brisanje knjige",
-      message: "Da li zaista zelite da povucete iz prodaje knjigu "+book.title,
+      message: "Da li zaista želite da povučete iz prodaje knjigu "+book.title,
       buttons: [
         {
           text: 'Nazad',
@@ -91,17 +90,17 @@ export class BooksPage implements OnInit {
           text: 'Da',
           handler: () => {
             this.loadingCtrl.create({
-              message: 'Povlacenje knjige...'
+              message: 'Povlačenje knjige iz prodaje...'
             }).then(loadingEl=>{
               loadingEl.present();
               this.booksService.deleteBook(book.id).subscribe(res=>{
                 loadingEl.dismiss();
                 this.router.navigate(['admin-panel', 'tabs', 'books']);
-                this.showToastMessage('Knjiga je uspesno povucena iz prodaje.')
+                this.showToastMessage('Knjiga je uspešno povučena iz prodaje.')
               },
               (errorRes)=>{
                 loadingEl.dismiss();
-                this.showErrorMessage('Greska pri povlacenju knjige iz prodaje', errorRes.error.message);
+                this.showErrorMessage('Greška pri povlačenju knjige iz prodaje', errorRes.error.message);
               })
             })            
           }

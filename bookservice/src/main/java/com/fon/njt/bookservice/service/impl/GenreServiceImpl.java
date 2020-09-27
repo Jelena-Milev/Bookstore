@@ -42,7 +42,7 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public GenreResponseDto save(GenreRequestDto dto) {
         if(repository.existsByName(dto.getName()))
-            throw new EntityAlreadyExistsException("Zanr sa unetim nazivom vec postoji.");
+            throw new EntityAlreadyExistsException("Žanr sa unetim nazivom već postoji.");
         final GenreEntity genreToSave = mapper.mapToEntity(dto);
         final GenreEntity savedGenre = repository.save(genreToSave);
         return mapper.mapToDto(savedGenre);
@@ -52,7 +52,7 @@ public class GenreServiceImpl implements GenreService {
     public GenreResponseDto update(Long id, GenreRequestDto dto) {
         final GenreEntity genreToUpdate = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Zanr", id));
         if (repository.existsByName(dto.getName()) && !dto.getName().toLowerCase().equals(genreToUpdate.getName().toLowerCase()))
-            throw new EntityAlreadyExistsException("Zanr sa unetim nazivom vec postoji.");
+            throw new EntityAlreadyExistsException("Žanr sa unetim nazivom već postoji.");
         genreToUpdate.setName(dto.getName());
         final GenreEntity updatedGenre = repository.save(genreToUpdate);
         return mapper.mapToDto(updatedGenre);

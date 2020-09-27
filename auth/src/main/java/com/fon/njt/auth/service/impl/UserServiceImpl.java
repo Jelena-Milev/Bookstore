@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(UserRegisterDto userDto) throws MessagingException, IOException, TemplateException {
         if(userRepository.existsByUsername(userDto.getUsername()))
-            throw new UserAlreadyExistsException("Nalog sa unetim mejlom vec postoji.");
+            throw new UserAlreadyExistsException("Nalog sa unetim imejlom već postoji.");
         final UserEntity newUser = userMapper.mapToEntity(userDto);
         newUser.setIdentifier(UUID.randomUUID().toString());
         newUser.setRole("USER");
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
         Mail mail = new Mail();
         mail.setTo(mailTo);
         mail.setFrom("noreply.bookstore0@gmail.com");
-        mail.setSubject("Bookstore: Verification link for your account");
+        mail.setSubject("Bookstore: Verifikacija imejl adrese");
         Map model = new HashMap();
         model.put("link", verificationUrl);
         mail.setModel(model);
@@ -83,10 +83,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void validateVerificationAttempt(String identifier) {
         UserEntity user = userRepository.findByIdentifier(identifier).orElseThrow(() -> new BadVerificationLinkException("Link za verifikaciju ne postoji."));
-        if(user.isVerified()) throw new BadVerificationLinkException("Link za verifikaciju je iskoriscen.");
+        if(user.isVerified()) throw new BadVerificationLinkException("Link za verifikaciju je iskorišćen.");
         if(user.getVerificationDeadline().isBefore(LocalDateTime.now())){
             userRepository.delete(user);
-            throw new VerificationLinkExpiredException("Link za verifikaciju je istekao");
+            throw new VerificationLinkExpiredException("Link za verifikaciju je istekao.");
         }
     }
 

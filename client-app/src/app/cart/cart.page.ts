@@ -98,36 +98,6 @@ export class CartPage implements OnInit {
     })
   }
 
-  /*onBuyItems() {
-    this.loadingCtrl
-      .create({ message: "Porucivanje u toku..." })
-      .then((loadingEl) => {
-        loadingEl.present();
-        this.ordersService.createOrder(this.cartItems).subscribe(
-          (res) => {
-            this.cartService.resetCartItemsCount();
-            sessionStorage.clear();
-            this.router.navigate(["/", "orders"]);
-            loadingEl.dismiss();
-            this.showToastMessage(`Narudzbenica je uspesno kreirana`)
-          },
-          (errorRes)=>{
-            loadingEl.dismiss();
-            this.showErrorMessage(errorRes.error.message);
-          }
-        );
-      });
-  }*/
-
-  /*onBuyItems(){
-    // this.modalCtrl.create({
-    //   component: PaymentDialogComponent
-    // }).then(modalEl => {
-    //   modalEl.present();
-    // })
-    this.router.navigate(['/', 'cart', 'payment']);
-  }*/
-
   incrementQty(item: CartItem) {
     item.quantity += 1;
     this.totalPrice += item.book.price;
@@ -155,7 +125,7 @@ export class CartPage implements OnInit {
 
   private showErrorMessage(errorMsg: string){
     this.alertCtrl.create({
-      header: 'Greska pri narucivanju knjiga',
+      header: 'Greška pri naručivanju knjiga',
       message: errorMsg,
       buttons:[
         {

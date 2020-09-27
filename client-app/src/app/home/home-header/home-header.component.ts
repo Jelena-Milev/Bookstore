@@ -45,7 +45,7 @@ export class HomeHeaderComponent implements OnInit {
   onLogout() {
     this.alertCtrl.create({
       header:'Odjava',
-      message: 'Da li zaista zelite da se odjavite?',
+      message: 'Da li zaista želite da se odjavite?',
       buttons:[
         {
           text: 'NE',
@@ -72,7 +72,7 @@ export class HomeHeaderComponent implements OnInit {
 
   onSearch() {
     this.loadingCtrl
-      .create({ message: "Ucitavanje knjiga..." })
+      .create({ message: "Učitavanje knjiga..." })
       .then((loadingEl) => {
         loadingEl.present();
         this.booksService

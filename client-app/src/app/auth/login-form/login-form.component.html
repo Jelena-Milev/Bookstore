@@ -1,10 +1,10 @@
 <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form">
   <ion-item class="login-form-item">
-    <ion-label position="floating">Email:</ion-label>
+    <ion-label position="floating">Imejl:</ion-label>
     <ion-input type="text" formControlName="username"></ion-input>
   </ion-item>
   <ion-label class="login-form-item-label" *ngIf="loginForm.get('username').invalid && 
-                    loginForm.get('username').touched">Morate uneti validan email.</ion-label>
+                    loginForm.get('username').touched">Morate uneti validan imejl.</ion-label>
   <ion-item class="login-form-item">
     <ion-label position="floating">Lozinka:</ion-label>
     <ion-input type="password" formControlName="password"></ion-input>
